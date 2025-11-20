@@ -1,4 +1,3 @@
-import React from "react"
 import { Box, Text } from "ink"
 
 export interface Parameters {
@@ -31,7 +30,7 @@ export const ParameterPanel: React.FC<ParameterPanelProps> = ({ params, selected
       </Text>
       <Text dimColor> </Text>
       {paramNames.map((name, i) => (
-        <Box key={i} flexDirection="column" marginY={0}>
+        <Box key={name} flexDirection="column" marginY={0}>
           <Box>
             <Text color={selectedParam === i ? "yellow" : "white"} bold={selectedParam === i}>
               {selectedParam === i ? "▶ " : "  "}

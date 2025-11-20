@@ -1,7 +1,6 @@
-import React from "react"
+import type { SearchResult } from "@kellemes/core"
 import { Box, Text } from "ink"
 import Spinner from "ink-spinner"
-import type { SearchResult } from "@kellemes/core"
 
 interface ResponsePanelProps {
   response: string | null
@@ -46,7 +45,7 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, sources,
                 Sources ({sources.length}):
               </Text>
               {sources.map((source, i) => (
-                <Text key={i} dimColor>
+                <Text key={source.question} dimColor>
                   {i + 1}. [{(source.score * 100).toFixed(1)}%] {source.question}
                 </Text>
               ))}
@@ -55,9 +54,7 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, sources,
         </Box>
       )}
 
-      {!isLoading && !error && !response && (
-        <Text dimColor>Submit a query to see results...</Text>
-      )}
+      {!isLoading && !error && !response && <Text dimColor>Submit a query to see results...</Text>}
     </Box>
   )
 }

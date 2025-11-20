@@ -1,9 +1,9 @@
 import { serve } from "@hono/node-server"
 import "dotenv/config"
+import { ollamaService, ragService } from "@kellemes/core"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
-import { ollamaService, ragService } from "@kellemes/core"
 import chatRoutes from "./routes/chat.routes"
 
 const app = new Hono()

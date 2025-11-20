@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
-import { Box, Text, useInput, useApp } from "ink"
 import { ollamaService, ragService, type SearchResult } from "@kellemes/core"
-import { StatusBar } from "./components/StatusBar"
+import { Box, Text, useApp, useInput } from "ink"
+import { useEffect, useState } from "react"
 import { ParameterPanel, type Parameters } from "./components/ParameterPanel"
 import { QueryPanel } from "./components/QueryPanel"
 import { ResponsePanel } from "./components/ResponsePanel"
+import { StatusBar } from "./components/StatusBar"
 
 type OllamaStatus = "connected" | "disconnected" | "checking"
 type RAGStatus = "ready" | "not ready" | "initializing"

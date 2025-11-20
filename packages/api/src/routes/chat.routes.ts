@@ -1,5 +1,5 @@
+import { type ChatRequest, type ChatResponse, ragService } from "@kellemes/core"
 import { Hono } from "hono"
-import { ragService, type ChatRequest, type ChatResponse } from "@kellemes/core"
 
 const app = new Hono()
 
