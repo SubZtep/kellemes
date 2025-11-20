@@ -13,7 +13,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "evalite"
   },
   "dependencies": {
     "@kellemes/types": "workspace:*",
@@ -23,6 +24,9 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "typescript": "^5.9.3"
+    "autoevals": "^0.0.131",
+    "evalite": "^0.19.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.12"
   }
 }

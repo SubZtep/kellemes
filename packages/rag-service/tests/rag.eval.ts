@@ -1,6 +1,6 @@
 import { Levenshtein } from "autoevals"
 import { evalite } from "evalite"
-import { ragService } from "@kellemes/core"
+import { ragService } from "../src/index"
 import { LoggerScorer } from "./setup/scorers"
 
 evalite("RAG test", {

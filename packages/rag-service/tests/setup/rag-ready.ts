@@ -1,5 +1,5 @@
 import { vi } from "vitest"
-import { ragService } from "@kellemes/core"
+import { ragService } from "../../src/index"
 
 async function waitForRagReady() {
   try {

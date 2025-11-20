@@ -12,7 +12,7 @@
     "dev:chat": "pnpm --filter @kellemes/chat-cli dev",
     "dev:tweak": "pnpm --filter @kellemes/tweak-cli dev",
     "start": "pnpm --filter @kellemes/api start",
-    "test": "evalite",
+    "test": "pnpm -r test",
     "lint": "pnpm -r lint",
     "ingest": "pnpm --filter @kellemes/api ingest",
     "chat": "pnpm --filter @kellemes/chat-cli start",

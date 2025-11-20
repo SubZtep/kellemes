@@ -1,5 +1,5 @@
 import { vi } from "vitest"
-import { ollamaService } from "@kellemes/core"
+import { ollamaService } from "@kellemes/ollama-service"
 
 async function waitForOllamaReady() {
   if (await ollamaService.checkHealth()) {
