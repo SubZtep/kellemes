@@ -51,15 +51,9 @@ async function retrieve(query: string, topK: number = 5): Promise<void> {
 
 async function main() {
   console.log("keLLeMes Document Retrieval Example\n")
-
-  // Example 1: Find documents about chemotherapy
-  await retrieve("What is chemotherapy?", 5)
-
-  // Example 2: Find documents about hospital procedures
-  await retrieve("blood test", 3)
-
-  // Example 3: Find documents about medical equipment
-  await retrieve("medical machines and equipment", 5)
+  await retrieve("Any favorite movie?", 5)
+  await retrieve("I’m down for a coffee date there.", 3)
+  await retrieve("So, what’s your favorite way to spend a weekend?", 5)
 }
 
 main()

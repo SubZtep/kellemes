@@ -6,9 +6,9 @@
  * Run with: pnpm chat
  */
 
+import { ollamaService, ragService } from "@kellemes/core"
 import "dotenv/config"
 import * as readline from "node:readline"
-import { ollamaService, ragService } from "@kellemes/core"
 
 // ANSI color codes
 const colors = {
@@ -51,7 +51,7 @@ class ChatCLI {
     console.log(`\n${colors.bright}${colors.magenta}╔═══════════════════════════════════════╗${colors.reset}`)
     console.log(`${colors.bright}${colors.magenta}║   keLLeMes RAG Chat Interface         ║${colors.reset}`)
     console.log(`${colors.bright}${colors.magenta}╚═══════════════════════════════════════╝${colors.reset}\n`)
-    console.log(`${colors.dim}A friendly AI companion for medical questions${colors.reset}\n`)
+    console.log(`${colors.dim}A friendly AI companion for personal questions${colors.reset}\n`)
     console.log(`${colors.yellow}Commands:${colors.reset}`)
     console.log(`  ${colors.green}/help${colors.reset}     - Show available commands`)
     console.log(

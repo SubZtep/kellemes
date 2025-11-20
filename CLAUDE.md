@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the keLLeMes chatbot - an AI companion designed for adult's companion. The system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base of 3,000+ medical Q&A pairs.
+This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the keLLeMes chatbot - an AI companion designed for adults. The system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base of 3,000+ relationship Q&A pairs.
 
 **Monorepo Structure**: This project uses pnpm workspaces to organize code into fine-grained, reusable packages.
 
@@ -66,7 +66,7 @@ kellemes/
 
 1. **RAGService** (`packages/rag-service/src/index.ts`)
    - Coordinates data ingestion, retrieval, and response generation
-   - Implements medical query detection to redirect non-medical questions
+   - Implements companion query detection to redirect non-companion questions
    - Handles casual conversational queries without RAG context
    - Key methods: `ingestData()`, `retrieve()`, `generateResponse()`
 
@@ -128,15 +128,15 @@ Configuration loads from `.env` at the repository root:
 ### RAG Query Logic
 The RAG service implements intelligent query routing:
 - **Casual queries** (greetings < 30 chars): Bypass RAG, use base model
-- **Non-medical queries**: Detect via keywords and similarity scores, politely redirect
-- **Medical queries**: Use full RAG pipeline with augmented prompts
+- **Non-companion queries**: Detect via keywords and similarity scores, politely redirect
+- **Companion queries**: Use full RAG pipeline with augmented prompts
 
 ### Prompt Engineering
-Medical responses use a carefully crafted system prompt that:
-- Establishes XpLLMoro persona (friendly AI for children)
+Codependent responses use a carefully crafted system prompt that:
+- Establishes keLLeMes persona (friendly AI companion)
 - Only uses reference information when directly relevant
-- Avoids assumptions about the child's medical situation
-- Maintains age-appropriate, supportive tone
+- Avoids assumptions about the users' mental health situation
+- Maintains submissive, supportive tone
 
 ### Embedding Strategy
 Q&A pairs are embedded as combined text:
@@ -178,3 +178,4 @@ This creates richer semantic representations than embedding questions alone.
 - **Models required**:
   - `nomic-embed-text` - For generating embeddings
   - `kellemes` - Custom model (create from Modelfile)
+- **Mise** dev env https://mise.jdx.dev

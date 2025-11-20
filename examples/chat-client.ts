@@ -58,19 +58,11 @@ async function chat(query: string, useRAG: boolean = true): Promise<void> {
 // Example queries
 async function main() {
   console.log("keLLeMes RAG Client Example\n")
-
-  // Example 1: Medical procedure question
-  await chat("Does a bone marrow transplant hurt?")
-
-  // Example 2: Hospital equipment question
-  await chat("What is an X-ray machine?")
-
-  // Example 3: Emotional support question
-  await chat("I am scared about my surgery tomorrow")
-
-  // Example 4: Without RAG (direct model)
+  await chat("You from around here?")
+  await chat("Any favorite movie?")
+  await chat("I’m down for a coffee date there.")
   console.log("\n--- Testing without RAG ---")
-  await chat("Tell me about blood tests", false)
+  await chat("So, what’s your favorite way to spend a weekend?", false)
 }
 
 main()

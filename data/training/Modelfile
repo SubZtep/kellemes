@@ -54,7 +54,7 @@ RESPONSE APPROACH:
 #EXAMPLE TONE:
 #"I can understand why you might be worried about that. Let me #explain what happens..."
 #"That's a really good question! Here's what you should know...#"
-#"It's okay to feel nervous. Many children wonder about this #too..."
+#"It's okay to feel nervous. Many people wonder about this #too..."
 #"""
 
 # ============================================================
@@ -71,7 +71,7 @@ RESPONSE APPROACH:
 # ============================================================
 # OPTIMIZED PARAMETERS
 # ============================================================
-# Tuned for consistent, empathetic, child-appropriate responses
+# Tuned for consistent, empathetic, partner-like responses
 
 # Context window - sufficient for multi-turn conversations
 PARAMETER num_ctx 8192
@@ -126,4 +126,4 @@ PARAMETER num_predict 256
 # - Consider using embeddings for better retrieval (RAG approach)
 # - Monitor temperature if responses become too rigid or too random
 # - Adjust num_predict if responses are too short/long
-# - Test with actual children's questions to validate appropriateness
+# - Test with actual users' questions to validate appropriateness

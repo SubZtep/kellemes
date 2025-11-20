@@ -107,19 +107,18 @@ export class RAGService {
   }
 
   /**
-   * Check if a query is medical/health-related
+   * Check if a query is somewhat personal
    */
-  private isMedicalQuery(query: string, sources: SearchResult[]): boolean {
-    // If no relevant sources found or all scores are very low, likely not medical
+  private isCompanionQuery(query: string, sources: SearchResult[]): boolean {
+    // If no relevant sources found or all scores are very low, likely gibberish
     if (sources.length === 0 || !sources[0] || sources[0].score < 0.5) {
       return false
     }
 
-    // Check for obvious non-medical keywords
-    const nonMedicalKeywords =
-      /\b(nvidia|gpu|computer|gaming|software|programming|code|app|phone|company|business|brand|product|movie|game|sports|football|basketball|music|song|video|youtube|tiktok|instagram|facebook|twitter)\b/i
+    const nonCompanionKeywords =
+      /\b(nvidia|gpu|computer|gaming|software|programming|code|app|phone|business|brand|product|sports|football|basketball|youtube|tiktok|instagram|facebook|twitter)\b/i
 
-    if (nonMedicalKeywords.test(query)) {
+    if (nonCompanionKeywords.test(query)) {
       return false
     }
 
@@ -150,14 +149,15 @@ export class RAGService {
     // Retrieve relevant context
     const sources = await this.retrieve(query, topK)
 
-    // Check if this is actually a medical query
-    if (!this.isMedicalQuery(query, sources)) {
-      // Non-medical query - politely redirect
-      const redirectPrompt = `You are XpLLMoro, a friendly AI companion for children in medical settings.
+    // Check if this is actually a companion query
+    if (!this.isCompanionQuery(query, sources)) {
+      // Non-companion query - politely redirect
+      const redirectPrompt = `You are keLLeMes, a friendly AI companion for talking any sensitive topics.
 
-The child asked: "${query}"
+The user asked: "${query}"
 
-This question is not about medical topics or hospital care. Politely let them know that you're specifically designed to help with medical questions, procedures, and hospital experiences. Be friendly and encouraging, and invite them to ask any medical or health-related questions they might have.
+This question is not about my interests or desires. Politely let them know that you're specifically designed to help with flare and velvet.
+Be friendly and encouraging, and invite them to ask any intimacy or kinky questions they might have.
 
 Response:`
 
@@ -174,18 +174,19 @@ Response:`
     // Build augmented prompt with retrieved context
     const context = sources.map((s, i) => `${i + 1}. Q: ${s.question}\n   A: ${s.answer}`).join("\n\n")
 
-    const augmentedPrompt = `You are XpLLMoro, a friendly AI companion for children in medical settings. Answer the child's question using ONLY the relevant information provided below if it applies. Always maintain a warm, supportive, and age-appropriate tone.
+    const augmentedPrompt = `You are keLLeMes, a friendly AI companion for lonely hearts. Answer the user's question using
+    ONLY the relevant information provided below if it applies. Always maintain a warm, supportive, and flirty tone.
 
 IMPORTANT RULES:
 - ONLY use the reference information if it directly relates to the question
-- Do NOT make assumptions about the child's situation (e.g., don't assume they have an operation scheduled)
-- If the question is casual or conversational (like "hey", "how are you"), respond naturally without medical context
+- Do NOT make assumptions about the user's situation (e.g., don't assume they have any mental health issues)
+- If the question is casual or conversational (like "hey", "how are you"), respond naturally, with romantic and flirty tone
 - Be helpful and friendly, but stick to what is actually asked
 
 Reference Information (use only if relevant):
 ${context}
 
-Child's Question: ${query}
+User's Question: ${query}
 
 Response:`
 
