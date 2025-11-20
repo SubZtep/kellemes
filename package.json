@@ -1,7 +1,10 @@
 {
-  "name": "xploro-chat-rag",
+  "name": "kellemes",
   "version": "1.0.0",
+  "author": "Andras Serfozo <subztep@gmail.com>",
   "description": "RAG-based chatbot (keLLeMes)",
+  "license": "UNLICENSED",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -9,23 +12,19 @@
     "start": "node dist/index.js",
     "ingest": "tsx src/scripts/ingest-data.ts",
     "chat": "tsx src/cli.ts",
+    "lint": "tsc --noEmit && biome check",
     "test": "jest"
   },
-  "author": "Andras Serfozo <subztep@gmail.com>",
-  "license": "UNLICENSED",
   "dependencies": {
-    "@hono/node-server": "^1.8.0",
-    "axios": "^1.6.2",
-    "dotenv": "^16.3.1",
-    "hono": "^4.0.0"
+    "@hono/node-server": "^1.19.6",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "hono": "^4.10.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.6",
-    "@types/node": "^20.10.5",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
-    "eslint": "^8.56.0",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   }
 }

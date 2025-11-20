@@ -38,7 +38,7 @@ app.get("/health", async (c) => {
 // Root endpoint
 app.get("/", (c) => {
   return c.json({
-    name: "XpLLMoro RAG API",
+    name: "keLLeMes RAG API",
     version: "1.0.0",
     endpoints: {
       chat: "POST /api/chat",
@@ -73,7 +73,7 @@ app.onError((err, c) => {
 // Initialize and start server
 async function startServer() {
   try {
-    console.log("=== XpLLMoro RAG Server ===\n")
+    console.log("=== keLLeMes RAG Server ===\n")
 
     // Check Ollama connection
     console.log("Checking Ollama connection...")

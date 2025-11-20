@@ -1,7 +1,7 @@
 /**
  * Example: Retrieve relevant documents without generating a response
  *
- * Run with: tsx examples/retrieve-example.ts
+ * Run with: node --experimental-strip-types examples/retrieve-example.ts
  */
 
 interface RetrieveResponse {

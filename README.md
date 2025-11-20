@@ -8,7 +8,7 @@ Get up and running in 5 minutes!
 
 ### Prerequisites
 
-- Node.js 18+ installed
+- Node.js installed
 - Ollama installed and running
 
 ### Setup
@@ -395,7 +395,3 @@ npm run build
 - **Caching**: The vector database is saved to disk and loaded on startup for fast retrieval.
 - **Top-K Tuning**: Adjust `TOP_K_RESULTS` in `.env` to balance between context quality and response time.
 - **Similarity Threshold**: Increase `SIMILARITY_THRESHOLD` for more relevant results (but potentially fewer matches).
-
-## License
-
-UNLICENSED

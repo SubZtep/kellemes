@@ -1,7 +1,7 @@
 /**
  * Example TypeScript client for the keLLeMes RAG API
  *
- * Run with: tsx examples/chat-client.ts
+ * Run with: node --experimental-strip-types examples/chat-client.ts
  */
 
 interface ChatResponse {
