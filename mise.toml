@@ -1,0 +1,14 @@
+[env]
+PORT = "3000"
+NODE_ENV = "development"
+OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_MODEL = "kellemes"
+EMBEDDING_MODEL = "nomic-embed-text"
+EMBEDDING_DIMENSION = "768"
+VECTOR_DB_PATH = "./data/vectors"
+TOP_K_RESULTS = "3"
+SIMILARITY_THRESHOLD = "0.7"
+_.file = ".env"
+
+[tools]
+node = "24.11.1"

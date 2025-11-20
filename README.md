@@ -10,6 +10,7 @@ Get up and running in 5 minutes!
 
 - [Node.js](.nvmrc) installed
 - Ollama installed and running
+- [Mise](https://mise.jdx.dev/) recommended
 
 ### Environment
 
@@ -35,6 +36,8 @@ VECTOR_DB_PATH=./data/vectors
 TOP_K_RESULTS=3
 SIMILARITY_THRESHOLD=0.7
 ```
+
+> Skippable, the defaults are always available via Mise.
 
 ### Install dependencies
 
