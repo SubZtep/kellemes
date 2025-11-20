@@ -6,8 +6,8 @@
  * Run with: npm run chat
  */
 
+import "dotenv/config"
 import * as readline from "node:readline"
-import config from "./config"
 import { ollamaService } from "./services/ollama.service"
 import { ragService } from "./services/rag.service"
 
@@ -79,8 +79,8 @@ class ChatCLI {
     )
     console.log(`  Top-K: ${stats.topK}`)
     console.log(`  Similarity Threshold: ${stats.similarityThreshold}`)
-    console.log(`  Model: ${config.ollama.model}`)
-    console.log(`  Embedding Model: ${config.ollama.embeddingModel}\n`)
+    console.log(`  Model: ${process.env.OLLAMA_MODEL}`)
+    console.log(`  Embedding Model: ${process.env.EMBEDDING_MODEL}\n`)
   }
 
   private printHelp(): void {
@@ -203,7 +203,7 @@ class ChatCLI {
         console.error(`\n${colors.red}✗ Error: Ollama is not running${colors.reset}`)
         console.error(`${colors.yellow}Please start Ollama and ensure models are available:${colors.reset}`)
         console.error(`  ollama pull nomic-embed-text`)
-        console.error(`  ollama create kellemes -f Modelfile\n`)
+        console.error(`  ollama create kellemes -f data/training/Modelfile\n`)
         process.exit(1)
       }
 

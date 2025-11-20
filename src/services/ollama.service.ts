@@ -1,12 +1,12 @@
 import axios from "axios"
-import config from "../config"
+import "dotenv/config"
 import type { OllamaChatRequest, OllamaChatResponse, OllamaEmbedRequest, OllamaEmbedResponse } from "../types"
 
 export class OllamaService {
   private baseUrl: string
 
   constructor() {
-    this.baseUrl = config.ollama.baseUrl
+    this.baseUrl = process.env.OLLAMA_BASE_URL!
   }
 
   /**
@@ -15,7 +15,7 @@ export class OllamaService {
   async generateEmbedding(text: string): Promise<number[]> {
     try {
       const request: OllamaEmbedRequest = {
-        model: config.ollama.embeddingModel,
+        model: process.env.EMBEDDING_MODEL!,
         prompt: text,
       }
 
@@ -48,7 +48,7 @@ export class OllamaService {
   async chat(prompt: string, stream = false): Promise<string> {
     try {
       const request: OllamaChatRequest = {
-        model: config.ollama.model,
+        model: process.env.OLLAMA_MODEL!,
         prompt,
         stream,
       }

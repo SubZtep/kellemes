@@ -29,9 +29,6 @@ OLLAMA_MODEL=kellemes
 EMBEDDING_MODEL=nomic-embed-text
 EMBEDDING_DIMENSION=768
 
-# Vector Database
-VECTOR_DB_PATH=./data/vectors
-
 # RAG Configuration
 TOP_K_RESULTS=3
 SIMILARITY_THRESHOLD=0.7
@@ -52,7 +49,7 @@ npm install
 ollama pull nomic-embed-text
 
 # Create your custom model from the Modelfile
-ollama create kellemes -f Modelfile
+ollama create kellemes -f data/training/Modelfile
 ```
 
 ### Data Ingestion
@@ -160,34 +157,6 @@ npm start
 ```
 
 [Server](API.md) starts on `http://localhost:3000` by default.
-
-## Project Structure
-
-```
-xploro-chat/
-├── src/
-│   ├── config/
-│   │   └── index.ts              # Configuration management
-│   ├── routes/
-│   │   └── chat.routes.ts        # API routes (Hono)
-│   ├── services/
-│   │   ├── ollama.service.ts     # Ollama API integration
-│   │   ├── vector.service.ts     # Vector database operations
-│   │   └── rag.service.ts        # RAG orchestration
-│   ├── scripts/
-│   │   └── ingest-data.ts        # Data ingestion script
-│   ├── types/
-│   │   └── index.ts              # TypeScript type definitions
-│   ├── cli.ts                    # Interactive CLI chat
-│   └── index.ts                  # Main server entry point
-├── data/
-│   └── vectors/                  # Generated vector database
-├── qa.json                       # Source Q&A knowledge base (2017 pairs)
-├── Modelfile                     # Ollama model configuration
-├── package.json
-├── tsconfig.json
-└── .env
-```
 
 ## How RAG Works
 

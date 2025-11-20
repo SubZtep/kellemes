@@ -1,5 +1,5 @@
 .claude/
-data/
+data/vectors/
 dist/
 node_modules/
 .env

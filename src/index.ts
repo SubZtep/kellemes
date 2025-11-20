@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server"
+import "dotenv/config"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
-import config from "./config"
 import chatRoutes from "./routes/chat.routes"
 import { ollamaService } from "./services/ollama.service"
 import { ragService } from "./services/rag.service"
@@ -100,17 +100,17 @@ async function startServer() {
     }
 
     // Start Hono server
-    console.log(`✓ Server running on http://localhost:${config.port}`)
-    console.log(`✓ Environment: ${config.nodeEnv}\n`)
+    console.log(`✓ Server running on http://localhost:${process.env.PORT}`)
+    console.log(`✓ Environment: ${process.env.NODE_ENV}\n`)
     console.log("Available endpoints:")
-    console.log(`  POST   http://localhost:${config.port}/api/chat`)
-    console.log(`  POST   http://localhost:${config.port}/api/retrieve`)
-    console.log(`  GET    http://localhost:${config.port}/api/stats`)
-    console.log(`  GET    http://localhost:${config.port}/health\n`)
+    console.log(`  POST   http://localhost:${process.env.PORT}/api/chat`)
+    console.log(`  POST   http://localhost:${process.env.PORT}/api/retrieve`)
+    console.log(`  GET    http://localhost:${process.env.PORT}/api/stats`)
+    console.log(`  GET    http://localhost:${process.env.PORT}/health\n`)
 
     serve({
       fetch: app.fetch,
-      port: config.port,
+      port: Number(process.env.PORT),
     })
   } catch (error) {
     console.error("Failed to start server:", error)

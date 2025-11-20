@@ -1,5 +1,5 @@
+import "dotenv/config"
 import * as fs from "node:fs/promises"
-import config from "../config"
 import type { EmbeddedQAPair, QAPair, SearchResult } from "../types"
 import { ollamaService } from "./ollama.service"
 import { VectorService } from "./vector.service"
@@ -12,7 +12,7 @@ export class RAGService {
   private vectorService: VectorService
 
   constructor() {
-    this.vectorService = new VectorService(`${config.vectorDb.path}/qa_vectors.json`)
+    this.vectorService = new VectorService("../data/vectors/qa_vectors.json")
   }
 
   /**
@@ -41,7 +41,7 @@ export class RAGService {
 
     try {
       // Load Q&A data
-      const data = await fs.readFile(config.dataPath, "utf-8")
+      const data = await fs.readFile("./data/training/qa.json", "utf-8")
       const qaPairs: QAPair[] = JSON.parse(data)
 
       console.log(`Loaded ${qaPairs.length} Q&A pairs`)
@@ -94,13 +94,13 @@ export class RAGService {
    * Retrieve relevant documents for a query
    */
   async retrieve(query: string, topK?: number): Promise<SearchResult[]> {
-    const k = topK || config.rag.topK
+    const k = topK || Number(process.env.TOP_K_RESULTS)
 
     // Generate embedding for the query
     const queryEmbedding = await ollamaService.generateEmbedding(query)
 
     // Search for similar documents
-    const results = this.vectorService.search(queryEmbedding, k, config.rag.similarityThreshold)
+    const results = this.vectorService.search(queryEmbedding, k, Number(process.env.SIMILARITY_THRESHOLD))
 
     return results
   }
@@ -215,8 +215,8 @@ Response:`
     return {
       totalDocuments: this.vectorService.getCount(),
       isReady: this.isReady(),
-      topK: config.rag.topK,
-      similarityThreshold: config.rag.similarityThreshold,
+      topK: Number(process.env.TOP_K_RESULTS),
+      similarityThreshold: Number(process.env.SIMILARITY_THRESHOLD),
     }
   }
 }
