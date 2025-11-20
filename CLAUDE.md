@@ -10,20 +10,20 @@ This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the k
 
 ### Running the Application
 ```bash
-npm run dev          # Start API server with auto-reload
-npm run build        # Compile TypeScript to dist/
-npm start            # Run production server (requires build first)
-npm run chat         # Start interactive CLI chat interface
+pnpm dev             # Start API server with auto-reload
+pnpm build           # Compile TypeScript to dist/
+pnpm start           # Run production server (requires build first)
+pnpm chat            # Start interactive CLI chat interface
 ```
 
 ### Data Management
 ```bash
-npm run ingest       # Ingest Q&A data and generate embeddings (10-15 min)
+pnpm ingest          # Ingest Q&A data and generate embeddings (10-15 min)
 ```
 
 ### Code Quality
 ```bash
-npm run lint         # Run TypeScript type checking and Biome linter
+pnpm lint            # Run TypeScript type checking and Biome linter
 ```
 
 ## Architecture
