@@ -1,0 +1,8 @@
+{
+  "biome.lsp.bin": "./node_modules/@biomejs/biome/bin/biome",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome"
+}

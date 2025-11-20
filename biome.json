@@ -21,6 +21,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "complexity": {
+        "noUselessEmptyExport": "off"
+      },
       "style": {
         "noNonNullAssertion": "off"
       }

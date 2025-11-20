@@ -1,0 +1,4 @@
+{
+  "recommendations": ["biomejs.biome", "hverlin.mise-vscode", "tamasfe.even-better-toml"],
+  "unwantedRecommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+}
