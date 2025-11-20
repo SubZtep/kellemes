@@ -8,7 +8,7 @@ const app = new Hono()
  * POST /api/chat
  * Main chat endpoint with RAG support
  */
-app.post("/chat", async (c) => {
+app.post("/chat", async c => {
   try {
     const { query, topK, useRAG = true }: ChatRequest = await c.req.json()
 
@@ -63,7 +63,7 @@ app.post("/chat", async (c) => {
  * POST /api/retrieve
  * Retrieve relevant documents without generating a response
  */
-app.post("/retrieve", async (c) => {
+app.post("/retrieve", async c => {
   try {
     const { query, topK } = await c.req.json()
 
@@ -107,7 +107,7 @@ app.post("/retrieve", async (c) => {
  * GET /api/stats
  * Get RAG system statistics
  */
-app.get("/stats", (c) => {
+app.get("/stats", c => {
   try {
     const stats = ragService.getStats()
     return c.json(stats)

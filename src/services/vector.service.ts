@@ -53,7 +53,7 @@ export class VectorService {
    * Search for similar vectors using cosine similarity
    */
   search(queryEmbedding: number[], topK: number = 5, threshold: number = 0.0): SearchResult[] {
-    const results = this.vectors.map((item) => ({
+    const results = this.vectors.map(item => ({
       question: item.question,
       answer: item.answer,
       score: this.cosineSimilarity(queryEmbedding, item.embedding),
@@ -61,7 +61,7 @@ export class VectorService {
 
     // Filter by threshold and sort by score
     return results
-      .filter((result) => result.score >= threshold)
+      .filter(result => result.score >= threshold)
       .sort((a, b) => b.score - a.score)
       .slice(0, topK)
   }

@@ -21,9 +21,6 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "complexity": {
-        "noUselessEmptyExport": "off"
-      },
       "style": {
         "noNonNullAssertion": "off"
       }
@@ -31,6 +28,7 @@
   },
   "javascript": {
     "formatter": {
+      "arrowParentheses": "asNeeded",
       "quoteStyle": "double",
       "semicolons": "asNeeded"
     }

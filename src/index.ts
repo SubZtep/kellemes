@@ -17,7 +17,7 @@ app.use("*", logger())
 app.route("/api", chatRoutes)
 
 // Health check
-app.get("/health", async (c) => {
+app.get("/health", async c => {
   const ollamaHealthy = await ollamaService.checkHealth()
   const ragReady = ragService.isReady()
 
@@ -36,7 +36,7 @@ app.get("/health", async (c) => {
 })
 
 // Root endpoint
-app.get("/", (c) => {
+app.get("/", c => {
   return c.json({
     name: "keLLeMes RAG API",
     version: "1.0.0",
@@ -50,7 +50,7 @@ app.get("/", (c) => {
 })
 
 // 404 handler
-app.notFound((c) => {
+app.notFound(c => {
   return c.json(
     {
       error: "Endpoint not found",

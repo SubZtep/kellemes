@@ -2,6 +2,13 @@ import { vi } from "vitest"
 import { ragService } from "../../src/services/rag.service"
 
 async function waitForRagReady() {
+  try {
+    await ragService.initialize()
+  } catch (error) {
+    console.error("Error initializing RAG service:", error.message)
+    throw error
+  }
+
   if (ragService.isReady()) {
     return
   }
@@ -21,5 +28,3 @@ async function waitForRagReady() {
 }
 
 await waitForRagReady()
-
-export {}

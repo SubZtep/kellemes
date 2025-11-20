@@ -21,5 +21,3 @@ async function waitForOllamaReady() {
 }
 
 await waitForOllamaReady()
-
-export {}

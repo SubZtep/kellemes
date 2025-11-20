@@ -1,6 +1,7 @@
 import { Levenshtein } from "autoevals"
 import { evalite } from "evalite"
 import { ragService } from "../src/services/rag.service"
+import { LoggerScorer } from "./setup/scorers"
 
 evalite("RAG test", {
   data: [
@@ -9,9 +10,9 @@ evalite("RAG test", {
       expected: "Yes.",
     },
   ],
-  task: async (input) => {
+  task: async input => {
     const response = await ragService.generateResponse(input)
     return response.response
   },
-  scorers: [Levenshtein],
+  scorers: [Levenshtein, LoggerScorer],
 })

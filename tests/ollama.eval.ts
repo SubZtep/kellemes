@@ -9,7 +9,7 @@ evalite("Ollama test", {
       expected: "Yes.",
     },
   ],
-  task: async (input) => {
+  task: async input => {
     return await ollamaService.chat(input)
   },
   scorers: [Levenshtein],
