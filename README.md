@@ -34,12 +34,12 @@ TOP_K_RESULTS=3
 SIMILARITY_THRESHOLD=0.7
 ```
 
-> Skippable, the defaults are always available via Mise.
+> …or do nothing, Mise sets the defaults.
 
 ### Install dependencies
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Ollama Models
@@ -57,7 +57,7 @@ ollama create kellemes -f data/training/Modelfile
 Before using the RAG system, populate the vector database:
 
 ```sh
-npm run ingest
+pnpm run ingest
 ```
 
 This will:
@@ -135,7 +135,7 @@ That's it! You're now chatting with keLLeMes powered by RAG.
 ### Interactive CLI (Recommended)
 
 ```bash
-npm run chat
+pnpm run chat
 ```
 
 Features:
@@ -149,11 +149,11 @@ Features:
 
 ```bash
 # Development mode (with auto-reload)
-npm run dev
+pnpm run dev
 
 # Production mode
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 [Server](API.md) starts on `http://localhost:3000` by default.
