@@ -1,17 +1,12 @@
-import axios from 'axios';
-import config from '../config';
-import {
-  OllamaEmbedRequest,
-  OllamaEmbedResponse,
-  OllamaChatRequest,
-  OllamaChatResponse,
-} from '../types';
+import axios from "axios"
+import config from "../config"
+import type { OllamaChatRequest, OllamaChatResponse, OllamaEmbedRequest, OllamaEmbedResponse } from "../types"
 
 export class OllamaService {
-  private baseUrl: string;
+  private baseUrl: string
 
   constructor() {
-    this.baseUrl = config.ollama.baseUrl;
+    this.baseUrl = config.ollama.baseUrl
   }
 
   /**
@@ -22,17 +17,14 @@ export class OllamaService {
       const request: OllamaEmbedRequest = {
         model: config.ollama.embeddingModel,
         prompt: text,
-      };
+      }
 
-      const response = await axios.post<OllamaEmbedResponse>(
-        `${this.baseUrl}/api/embeddings`,
-        request
-      );
+      const response = await axios.post<OllamaEmbedResponse>(`${this.baseUrl}/api/embeddings`, request)
 
-      return response.data.embedding;
+      return response.data.embedding
     } catch (error) {
-      console.error('Error generating embedding:', error);
-      throw new Error('Failed to generate embedding');
+      console.error("Error generating embedding:", error)
+      throw new Error("Failed to generate embedding")
     }
   }
 
@@ -40,14 +32,14 @@ export class OllamaService {
    * Generate embeddings for multiple texts in batch
    */
   async generateEmbeddings(texts: string[]): Promise<number[][]> {
-    const embeddings: number[][] = [];
+    const embeddings: number[][] = []
 
     for (const text of texts) {
-      const embedding = await this.generateEmbedding(text);
-      embeddings.push(embedding);
+      const embedding = await this.generateEmbedding(text)
+      embeddings.push(embedding)
     }
 
-    return embeddings;
+    return embeddings
   }
 
   /**
@@ -59,25 +51,22 @@ export class OllamaService {
         model: config.ollama.model,
         prompt,
         stream,
-      };
-
-      const response = await axios.post<OllamaChatResponse>(
-        `${this.baseUrl}/api/generate`,
-        request
-      );
-
-      // Clean up response by removing any stop tokens that leaked through
-      let cleanResponse = response.data.response;
-      const stopTokens = ['</|assistant|>', '<|assistant|>', '<|user|>', '<|system|>', '</s>'];
-
-      for (const token of stopTokens) {
-        cleanResponse = cleanResponse.replace(new RegExp(token, 'g'), '');
       }
 
-      return cleanResponse.trim();
+      const response = await axios.post<OllamaChatResponse>(`${this.baseUrl}/api/generate`, request)
+
+      // Clean up response by removing any stop tokens that leaked through
+      let cleanResponse = response.data.response
+      const stopTokens = ["</|assistant|>", "<|assistant|>", "<|user|>", "<|system|>", "</s>"]
+
+      for (const token of stopTokens) {
+        cleanResponse = cleanResponse.replace(new RegExp(token, "g"), "")
+      }
+
+      return cleanResponse.trim()
     } catch (error) {
-      console.error('Error generating chat response:', error);
-      throw new Error('Failed to generate chat response');
+      console.error("Error generating chat response:", error)
+      throw new Error("Failed to generate chat response")
     }
   }
 
@@ -86,13 +75,13 @@ export class OllamaService {
    */
   async checkHealth(): Promise<boolean> {
     try {
-      await axios.get(`${this.baseUrl}/api/tags`);
-      return true;
+      await axios.get(`${this.baseUrl}/api/tags`)
+      return true
     } catch (error) {
-      console.error('Ollama health check failed:', error);
-      return false;
+      console.error("Ollama health check failed:", error)
+      return false
     }
   }
 }
 
-export const ollamaService = new OllamaService();
+export const ollamaService = new OllamaService()
