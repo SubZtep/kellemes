@@ -59,6 +59,12 @@ export class RAGService {
         }
 
         const qa = qaPairs[i]
+
+        if (!qa || !qa.question || !qa.answer) {
+          console.warn(`Skipping Q&A pair ${i} because it is missing question or answer.`)
+          continue
+        }
+
         // Combine question and answer for richer embeddings
         const text = `Question: ${qa.question}\nAnswer: ${qa.answer}`
         const embedding = await ollamaService.generateEmbedding(text)
@@ -104,7 +110,7 @@ export class RAGService {
    */
   private isMedicalQuery(query: string, sources: SearchResult[]): boolean {
     // If no relevant sources found or all scores are very low, likely not medical
-    if (sources.length === 0 || sources[0].score < 0.5) {
+    if (sources.length === 0 || !sources[0] || sources[0].score < 0.5) {
       return false
     }
 
