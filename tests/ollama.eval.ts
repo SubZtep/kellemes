@@ -1,6 +1,6 @@
 import { Levenshtein } from "autoevals"
 import { evalite } from "evalite"
-import { ollamaService } from "../src/services/ollama.service"
+import { ollamaService } from "@kellemes/core"
 
 evalite("Ollama test", {
   data: [

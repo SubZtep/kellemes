@@ -4,16 +4,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the keLLeMes chatbot - an AI companion designed for adtult's companion. The system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base of 3,000+ medical Q&A pairs.
+This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the keLLeMes chatbot - an AI companion designed for adult's companion. The system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base of 3,000+ medical Q&A pairs.
+
+**Monorepo Structure**: This project uses pnpm workspaces to organize code into fine-grained, reusable packages.
 
 ## Development Commands
 
 ### Running the Application
 ```bash
-pnpm dev             # Start API server with auto-reload
-pnpm build           # Compile TypeScript to dist/
-pnpm start           # Run production server (requires build first)
-pnpm chat            # Start interactive CLI chat interface
+# API Server
+pnpm dev:api         # Start API server with auto-reload
+pnpm start           # Run production API server
+
+# Chat CLI
+pnpm dev:chat        # Start interactive chat CLI with auto-reload
+pnpm chat            # Run chat CLI
+
+# Tweak CLI (NEW!)
+pnpm dev:tweak       # Start interactive parameter tweaking UI
+pnpm tweak           # Run tweak CLI
+
+# Build & Quality
+pnpm build           # Build all packages
+pnpm lint            # Lint all packages
 ```
 
 ### Data Management
@@ -21,38 +34,76 @@ pnpm chat            # Start interactive CLI chat interface
 pnpm ingest          # Ingest Q&A data and generate embeddings (10-15 min)
 ```
 
-### Code Quality
-```bash
-pnpm lint            # Run TypeScript type checking and Biome linter
-```
-
 ## Architecture
 
-### Service Layer Pattern
-The codebase follows a service-oriented architecture with three core services:
+### Monorepo Structure
+```
+kellemes/
+├── packages/
+│   ├── types/              # @kellemes/types - Shared TypeScript interfaces
+│   ├── ollama-service/     # @kellemes/ollama-service - Ollama API client
+│   ├── vector-service/     # @kellemes/vector-service - Vector DB & similarity search
+│   ├── rag-service/        # @kellemes/rag-service - RAG orchestration
+│   ├── core/               # @kellemes/core - Convenience re-export of all services
+│   ├── api/                # @kellemes/api - Hono HTTP API server
+│   ├── chat-cli/           # @kellemes/chat-cli - Interactive chat CLI
+│   └── tweak-cli/          # @kellemes/tweak-cli - Ink-based parameter tweaking UI
+├── data/                   # Shared data (vectors, training data)
+└── package.json            # Root workspace config
+```
 
-1. **RAGService** (`src/services/rag.service.ts`) - Main orchestrator
+### Package Dependency Graph
+- `@kellemes/types` → Base types, no dependencies
+- `@kellemes/ollama-service` → Depends on types
+- `@kellemes/vector-service` → Depends on types
+- `@kellemes/rag-service` → Depends on types, ollama-service, vector-service
+- `@kellemes/core` → Re-exports all services (convenience package)
+- `@kellemes/api` → Depends on core (HTTP layer)
+- `@kellemes/chat-cli` → Depends on core (CLI interface)
+- `@kellemes/tweak-cli` → Depends on core (Interactive UI with Ink)
+
+### Core Services
+
+1. **RAGService** (`packages/rag-service/src/index.ts`)
    - Coordinates data ingestion, retrieval, and response generation
    - Implements medical query detection to redirect non-medical questions
    - Handles casual conversational queries without RAG context
    - Key methods: `ingestData()`, `retrieve()`, `generateResponse()`
 
-2. **VectorService** (`src/services/vector.service.ts`) - In-memory vector database
-   - Implements cosine similarity search
+2. **VectorService** (`packages/vector-service/src/index.ts`)
+   - In-memory vector database with cosine similarity search
    - Persists vectors to JSON file at `./data/vectors/qa_vectors.json`
    - Key methods: `search()`, `save()`, `load()`, `cosineSimilarity()`
 
-3. **OllamaService** (`src/services/ollama.service.ts`) - Ollama API client
-   - Generates embeddings via `nomic-embed-text` model
-   - Generates chat completions via `kellemes` custom model
+3. **OllamaService** (`packages/ollama-service/src/index.ts`)
+   - Ollama API client for embeddings and chat completions
+   - Uses `nomic-embed-text` for embeddings, `kellemes` for chat
    - Key methods: `generateEmbedding()`, `chat()`, `checkHealth()`
+
+### Applications
+
+1. **API Server** (`packages/api/src/index.ts`)
+   - Hono-based HTTP server exposing RAG endpoints
+   - Routes: `/api/chat`, `/api/retrieve`, `/api/stats`, `/health`
+   - Runs on port specified in `.env` (default: 3000)
+
+2. **Chat CLI** (`packages/chat-cli/src/index.ts`)
+   - Terminal-based interactive chat interface
+   - Commands: `/rag`, `/sources`, `/topk`, `/stats`, `/help`
+   - Color-coded output with ANSI escape codes
+
+3. **Tweak CLI** (`packages/tweak-cli/src/index.tsx`) **NEW!**
+   - Interactive Ink-based UI for parameter tuning
+   - Real-time parameter adjustment (topK, similarity threshold, temperature)
+   - Live query testing with source visualization
+   - Keyboard controls: ↑/↓ navigate, ←/→ adjust, Enter for input, Q to quit
 
 ### Data Flow
 1. **Ingestion**: Load Q&A pairs → Generate embeddings → Store in vector DB
 2. **Query**: User query → Generate query embedding → Search vectors (cosine similarity) → Retrieve top-K results → Augment prompt → Generate response
 
 ### Configuration
-All configuration is centralized in `src/config/index.ts`, loading from `.env`:
+Configuration loads from `.env` at the repository root:
 - Ollama base URL and model names
 - Vector database path
 - RAG parameters (topK, similarity threshold)
@@ -97,16 +148,29 @@ This creates richer semantic representations than embedding questions alone.
 
 ## Dependencies
 
-### Runtime
-- `hono` - Web framework for API routes
-- `@hono/node-server` - Node.js adapter for Hono
+### Core Services
 - `axios` - HTTP client for Ollama API
 - `dotenv` - Environment configuration
+
+### API Server
+- `hono` - Web framework for HTTP routes
+- `@hono/node-server` - Node.js adapter for Hono
+
+### Chat CLI
+- Node.js `readline` - Built-in terminal input/output
+
+### Tweak CLI (Interactive UI)
+- `ink` - React-based CLI rendering framework
+- `ink-spinner` - Loading spinner component
+- `ink-text-input` - Text input component
+- `react` - UI component library
+- `yoga-wasm-web` - Flexbox layout engine
 
 ### Development
 - `tsx` - TypeScript execution and watch mode
 - `@biomejs/biome` - Fast linter and formatter
 - `typescript` - Type checking and compilation
+- `pnpm` - Fast, disk-efficient package manager
 
 ## External Requirements
 

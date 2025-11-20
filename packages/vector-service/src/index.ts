@@ -1,6 +1,6 @@
 import * as fs from "node:fs/promises"
 import * as path from "node:path"
-import type { EmbeddedQAPair, SearchResult } from "../types"
+import type { EmbeddedQAPair, SearchResult } from "@kellemes/types"
 
 /**
  * Simple in-memory vector database with persistence

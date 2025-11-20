@@ -7,7 +7,12 @@ EMBEDDING_MODEL = "nomic-embed-text"
 EMBEDDING_DIMENSION = "768"
 TOP_K_RESULTS = "3"
 SIMILARITY_THRESHOLD = "0.7"
+DATA_DIR = "{{cwd}}/data"
 _.file = ".env"
 
 [tools]
 node = "24.11.1"
+
+[hooks]
+enter = "echo 'keLLeMes is waiting for 🫵 you!'"
+leave = "echo 'Here comes the door. 🚪'"

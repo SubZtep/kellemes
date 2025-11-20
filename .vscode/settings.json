@@ -4,13 +4,5 @@
     "source.organizeImports": "always"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "biomejs.biome",
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.expand": false,
-  "explorer.fileNesting.patterns": {
-    "package.json": "pnpm-*.yaml",
-    "README.md": "API.md",
-    "tsconfig.json": "biome.json, commitlint.config.js, evalite.config.ts, mise.toml"
-  },
-  "explorer.excludeGitIgnore": true
+  "editor.defaultFormatter": "biomejs.biome"
 }

@@ -3,8 +3,6 @@
     "target": "ES2022",
     "module": "Preserve",
     "lib": ["ES2022"],
-    "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -24,7 +22,5 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  }
 }

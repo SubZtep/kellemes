@@ -1,0 +1,27 @@
+{
+  "name": "@kellemes/core",
+  "version": "1.0.0",
+  "description": "Core services bundle for keLLeMes",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kellemes/types": "workspace:*",
+    "@kellemes/ollama-service": "workspace:*",
+    "@kellemes/vector-service": "workspace:*",
+    "@kellemes/rag-service": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

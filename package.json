@@ -1,26 +1,23 @@
 {
-  "name": "kellemes",
+  "name": "kellemes-monorepo",
   "version": "1.0.0",
   "author": "Andras Serfozo <subztep@gmail.com>",
-  "description": "RAG-based chatbot (keLLeMes)",
+  "description": "RAG-based chatbot (keLLeMes) - Monorepo",
   "license": "UNLICENSED",
+  "private": true,
   "type": "module",
-  "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "pnpm -r build",
+    "dev:api": "pnpm --filter @kellemes/api dev",
+    "dev:chat": "pnpm --filter @kellemes/chat-cli dev",
+    "dev:tweak": "pnpm --filter @kellemes/tweak-cli dev",
+    "start": "pnpm --filter @kellemes/api start",
     "test": "evalite",
-    "lint": "tsc --noEmit && biome check",
-    "ingest": "tsx src/scripts/ingest-data.ts",
-    "chat": "tsx src/cli.ts",
+    "lint": "pnpm -r lint",
+    "ingest": "pnpm --filter @kellemes/api ingest",
+    "chat": "pnpm --filter @kellemes/chat-cli start",
+    "tweak": "pnpm --filter @kellemes/tweak-cli start",
     "prepare": "husky"
-  },
-  "dependencies": {
-    "@hono/node-server": "^1.19.6",
-    "axios": "^1.13.2",
-    "dotenv": "^17.2.3",
-    "hono": "^4.10.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.6",

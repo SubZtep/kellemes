@@ -3,9 +3,8 @@ import "dotenv/config"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
+import { ollamaService, ragService } from "@kellemes/core"
 import chatRoutes from "./routes/chat.routes"
-import { ollamaService } from "./services/ollama.service"
-import { ragService } from "./services/rag.service"
 
 const app = new Hono()
 
@@ -93,7 +92,7 @@ async function startServer() {
 
     if (!ragService.isReady()) {
       console.warn("⚠ Warning: RAG database is empty")
-      console.warn("Run `npm run ingest` to populate the vector database\n")
+      console.warn("Run `pnpm ingest` to populate the vector database\n")
     } else {
       const stats = ragService.getStats()
       console.log(`✓ RAG service ready with ${stats.totalDocuments} documents\n`)

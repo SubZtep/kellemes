@@ -3,13 +3,12 @@
 /**
  * Interactive CLI chat interface for keLLeMes RAG
  *
- * Run with: npm run chat
+ * Run with: pnpm chat
  */
 
 import "dotenv/config"
 import * as readline from "node:readline"
-import { ollamaService } from "./services/ollama.service"
-import { ragService } from "./services/rag.service"
+import { ollamaService, ragService } from "@kellemes/core"
 
 // ANSI color codes
 const colors = {
@@ -212,7 +211,7 @@ class ChatCLI {
 
       if (!ragService.isReady()) {
         console.warn(`\n${colors.yellow}⚠ Warning: Vector database is empty${colors.reset}`)
-        console.warn(`${colors.yellow}Run 'npm run ingest' to populate the database${colors.reset}`)
+        console.warn(`${colors.yellow}Run 'pnpm ingest' to populate the database${colors.reset}`)
         console.warn(`${colors.yellow}RAG features will not work until ingestion is complete${colors.reset}\n`)
 
         // Disable RAG by default if not ready

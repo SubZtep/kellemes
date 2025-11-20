@@ -1,8 +1,9 @@
+import { ollamaService } from "@kellemes/ollama-service"
+import type { EmbeddedQAPair, QAPair, SearchResult } from "@kellemes/types"
+import { VectorService } from "@kellemes/vector-service"
 import "dotenv/config"
 import * as fs from "node:fs/promises"
-import type { EmbeddedQAPair, QAPair, SearchResult } from "../types"
-import { ollamaService } from "./ollama.service"
-import { VectorService } from "./vector.service"
+import { join } from "node:path"
 
 /**
  * RAG (Retrieval-Augmented Generation) Service
@@ -12,7 +13,7 @@ export class RAGService {
   private vectorService: VectorService
 
   constructor() {
-    this.vectorService = new VectorService("../data/vectors/qa_vectors.json")
+    this.vectorService = new VectorService(join(process.env.DATA_DIR!, "vectors/qa_vectors.json"))
   }
 
   /**
@@ -41,7 +42,7 @@ export class RAGService {
 
     try {
       // Load Q&A data
-      const data = await fs.readFile("./data/training/qa.json", "utf-8")
+      const data = await fs.readFile(join(process.env.DATA_DIR!, "training/qa.json"), "utf-8")
       const qaPairs: QAPair[] = JSON.parse(data)
 
       console.log(`Loaded ${qaPairs.length} Q&A pairs`)

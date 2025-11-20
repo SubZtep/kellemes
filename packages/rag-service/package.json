@@ -1,0 +1,28 @@
+{
+  "name": "@kellemes/rag-service",
+  "version": "1.0.0",
+  "description": "RAG orchestration service for keLLeMes",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kellemes/types": "workspace:*",
+    "@kellemes/ollama-service": "workspace:*",
+    "@kellemes/vector-service": "workspace:*",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  }
+}
