@@ -103,7 +103,7 @@ class ChatCLI {
 
   private async handleCommand(command: string): Promise<boolean> {
     const parts = command.trim().split(/\s+/)
-    const cmd = parts[0].toLowerCase()
+    const cmd = parts[0]!.toLowerCase()
 
     switch (cmd) {
       case "/help":
@@ -127,7 +127,7 @@ class ChatCLI {
         if (parts.length < 2) {
           console.log(`\n${colors.red}Usage: /topk <number>${colors.reset}\n`)
         } else {
-          const n = parseInt(parts[1], 10)
+          const n = parseInt(parts[1]!, 10)
           if (Number.isNaN(n) || n < 1 || n > 10) {
             console.log(`\n${colors.red}Please provide a number between 1 and 10${colors.reset}\n`)
           } else {
