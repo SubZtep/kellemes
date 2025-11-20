@@ -50,7 +50,7 @@ async function retrieve(query: string, topK: number = 5): Promise<void> {
 }
 
 async function main() {
-  console.log('XplLMoro Document Retrieval Example\n');
+  console.log('keLLeMes Document Retrieval Example\n');
 
   // Example 1: Find documents about chemotherapy
   await retrieve('What is chemotherapy?', 5);

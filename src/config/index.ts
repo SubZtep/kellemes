@@ -8,7 +8,7 @@ export const config = {
 
   ollama: {
     baseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
-    model: process.env.OLLAMA_MODEL || 'xpllmoro',
+    model: process.env.OLLAMA_MODEL || 'kellemes',
     embeddingModel: process.env.EMBEDDING_MODEL || 'nomic-embed-text',
     embeddingDimension: parseInt(process.env.EMBEDDING_DIMENSION || '768', 10),
   },

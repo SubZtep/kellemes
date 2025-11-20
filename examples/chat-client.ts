@@ -1,5 +1,5 @@
 /**
- * Example TypeScript client for the XplLMoro RAG API
+ * Example TypeScript client for the keLLeMes RAG API
  *
  * Run with: tsx examples/chat-client.ts
  */
@@ -57,7 +57,7 @@ async function chat(query: string, useRAG: boolean = true): Promise<void> {
 
 // Example queries
 async function main() {
-  console.log('XplLMoro RAG Client Example\n');
+  console.log('keLLeMes RAG Client Example\n');
 
   // Example 1: Medical procedure question
   await chat('Does a bone marrow transplant hurt?');

@@ -1,7 +1,7 @@
 {
   "name": "xploro-chat-rag",
   "version": "1.0.0",
-  "description": "RAG-based chatbot for pediatric medical support (XplLMoro)",
+  "description": "RAG-based chatbot for pediatric medical support (keLLeMes)",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

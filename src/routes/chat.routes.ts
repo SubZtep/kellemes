@@ -31,13 +31,13 @@ app.post('/chat', async (c) => {
       response = {
         response: result.response,
         sources: result.sources,
-        model: 'xpllmoro-rag',
+        model: 'kellemes-rag',
       };
     } else {
       const directResponse = await ragService.generateDirectResponse(query);
       response = {
         response: directResponse,
-        model: 'xpllmoro',
+        model: 'kellemes',
       };
     }
 

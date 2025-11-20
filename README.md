@@ -1,6 +1,6 @@
-# XplLMoro RAG System
+# keLLeMes RAG System
 
-A TypeScript-based Retrieval-Augmented Generation (RAG) system for the XplLMoro pediatric medical chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base of 1,500+ medical Q&A pairs.
+A TypeScript-based Retrieval-Augmented Generation (RAG) system for the keLLeMes freestyle chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base.
 
 ## ⚡ Quick Start
 
@@ -22,7 +22,7 @@ cp .env.example .env
 
 # 3. Prepare Ollama models
 ollama pull nomic-embed-text
-ollama create xpllmoro -f Modelfile
+ollama create kellemes -f Modelfile
 
 # 4. Ingest the data (takes ~10-15 minutes)
 npm run ingest
@@ -31,22 +31,7 @@ npm run ingest
 npm run chat
 ```
 
-That's it! You're now chatting with XplLMoro powered by RAG.
-
-### Example Chat
-
-```
-You > Does a bone marrow transplant hurt?
-
-XpLLMoro > A bone marrow transplant doesn't hurt. It's a bit like
-having a blood transfusion. You'll be given medicine to help you
-relax during the procedure...
-
-📚 Sources (3):
-  1. [95.2%] Does a bone marrow transplant hurt?
-  2. [78.3%] What is a bone marrow transplant?
-  3. [72.1%] Will I feel pain during the procedure?
-```
+That's it! You're now chatting with keLLeMes powered by RAG.
 
 ### CLI Commands
 
@@ -82,11 +67,11 @@ relax during the procedure...
        v
 ┌─────────────────────────────────────┐
 │     Hono API Server                 │
-│  ┌─────────────────────────────┐   │
-│  │  POST /api/chat             │   │
-│  │  POST /api/retrieve         │   │
-│  │  GET  /api/stats            │   │
-│  └─────────────────────────────┘   │
+│  ┌─────────────────────────────┐    │
+│  │  POST /api/chat             │    │
+│  │  POST /api/retrieve         │    │
+│  │  GET  /api/stats            │    │
+│  └─────────────────────────────┘    │
 └──────────┬──────────────────────────┘
            │
            v
@@ -105,7 +90,7 @@ relax during the procedure...
       v              v
 ┌──────────┐ ┌─────────────┐
 │ qa.json  │ │ nomic-embed │
-│ vectors  │ │ xpllmoro    │
+│ vectors  │ │ kellemes    │
 └──────────┘ └─────────────┘
 ```
 
@@ -132,7 +117,7 @@ NODE_ENV=development
 
 # Ollama Configuration
 OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=xpllmoro
+OLLAMA_MODEL=kellemes
 EMBEDDING_MODEL=nomic-embed-text
 EMBEDDING_DIMENSION=768
 
@@ -151,7 +136,7 @@ SIMILARITY_THRESHOLD=0.7
 ollama pull nomic-embed-text
 
 # Create your custom model from the Modelfile
-ollama create xpllmoro -f Modelfile
+ollama create kellemes -f Modelfile
 ```
 
 ### 4. Data Ingestion
@@ -163,7 +148,7 @@ npm run ingest
 ```
 
 This will:
-- Load all 2,017 Q&A pairs from `qa.json`
+- Load all 3,000+ Q&A pairs from `qa.json`
 - Generate embeddings for each pair using Ollama
 - Save the vector database to `./data/vectors/qa_vectors.json`
 
@@ -225,7 +210,7 @@ curl -X POST http://localhost:3000/api/chat \
       "score": 0.95
     }
   ],
-  "model": "xpllmoro-rag"
+  "model": "kellemes-rag"
 }
 ```
 
@@ -331,7 +316,7 @@ xploro-chat/
    - Search vector database using cosine similarity
    - Retrieve top-K most relevant Q&A pairs
    - Augment prompt with retrieved context
-   - Generate response using `xpllmoro`
+   - Generate response using `kellemes`
 
 ## Client Examples
 
@@ -387,7 +372,7 @@ ollama serve
 ```bash
 # Pull required models
 ollama pull nomic-embed-text
-ollama create xpllmoro -f Modelfile
+ollama create kellemes -f Modelfile
 ```
 
 ### Empty vector database

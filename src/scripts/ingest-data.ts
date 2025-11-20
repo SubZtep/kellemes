@@ -9,7 +9,7 @@ import { ragService } from '../services/rag.service';
 import { ollamaService } from '../services/ollama.service';
 
 async function main() {
-  console.log('=== XplLMoro RAG Data Ingestion ===\n');
+  console.log('=== keLLeMes RAG Data Ingestion ===\n');
 
   try {
     // Check Ollama connectivity

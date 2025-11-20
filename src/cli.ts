@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Interactive CLI chat interface for XplLMoro RAG
+ * Interactive CLI chat interface for keLLeMes RAG
  *
  * Run with: npm run chat
  */
@@ -50,7 +50,7 @@ class ChatCLI {
 
   private printWelcome(): void {
     console.log(`\n${colors.bright}${colors.magenta}╔═══════════════════════════════════════╗${colors.reset}`);
-    console.log(`${colors.bright}${colors.magenta}║   XplLMoro RAG Chat Interface         ║${colors.reset}`);
+    console.log(`${colors.bright}${colors.magenta}║   keLLeMes RAG Chat Interface         ║${colors.reset}`);
     console.log(`${colors.bright}${colors.magenta}╚═══════════════════════════════════════╝${colors.reset}\n`);
     console.log(`${colors.dim}A friendly AI companion for medical questions${colors.reset}\n`);
     console.log(`${colors.yellow}Commands:${colors.reset}`);
@@ -146,14 +146,14 @@ class ChatCLI {
 
   private async processQuery(query: string): Promise<void> {
     try {
-      console.log(`\n${colors.blue}XplLMoro${colors.reset} > ${colors.dim}Thinking...${colors.reset}`);
+      console.log(`\n${colors.blue}keLLeMes${colors.reset} > ${colors.dim}Thinking...${colors.reset}`);
 
       if (this.options.useRAG) {
         const result = await ragService.generateResponse(query, this.options.topK);
 
         // Clear the "Thinking..." line
         process.stdout.write('\x1b[1A\x1b[2K');
-        console.log(`${colors.blue}XplLMoro${colors.reset} > ${result.response}\n`);
+        console.log(`${colors.blue}keLLeMes${colors.reset} > ${result.response}\n`);
 
         if (this.options.showSources && result.sources.length > 0) {
           console.log(`${colors.dim}${colors.yellow}📚 Sources (${result.sources.length}):${colors.reset}`);
@@ -168,7 +168,7 @@ class ChatCLI {
 
         // Clear the "Thinking..." line
         process.stdout.write('\x1b[1A\x1b[2K');
-        console.log(`${colors.blue}XplLMoro${colors.reset} > ${response}\n`);
+        console.log(`${colors.blue}keLLeMes${colors.reset} > ${response}\n`);
       }
     } catch (error) {
       process.stdout.write('\x1b[1A\x1b[2K');
@@ -187,7 +187,7 @@ class ChatCLI {
         console.error(`\n${colors.red}✗ Error: Ollama is not running${colors.reset}`);
         console.error(`${colors.yellow}Please start Ollama and ensure models are available:${colors.reset}`);
         console.error(`  ollama pull nomic-embed-text`);
-        console.error(`  ollama create xpllmoro -f Modelfile\n`);
+        console.error(`  ollama create kellemes -f Modelfile\n`);
         process.exit(1);
       }
 
