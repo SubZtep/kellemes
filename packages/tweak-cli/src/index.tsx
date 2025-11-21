@@ -10,9 +10,15 @@ if (!process.stdin.isTTY) {
   process.exit(1)
 }
 
-const version = await ollama.version()
-console.log(`Ollama version: ${version.version}`, version)
+// Check if Ollama is installed
+try {
+  const version = await ollama.version()
+  console.log("Ollama version:", version.version)
+} catch (error: any) {
+  console.error("Error: Ollama required for this application.", error.message)
+  console.log("Please install Ollama and try again. https://ollama.com/")
+  process.exit(1)
+}
 
-// Render the app
 withFullScreen(<App />, { exitOnCtrlC: false }).start()
 // render(<App />)
