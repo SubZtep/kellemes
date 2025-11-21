@@ -164,7 +164,6 @@ This creates richer semantic representations than embedding questions alone.
 - `ink-spinner` - Loading spinner component
 - `ink-text-input` - Text input component
 - `react` - UI component library
-- `yoga-wasm-web` - Flexbox layout engine
 
 ### Development
 - `tsx` - TypeScript execution and watch mode

@@ -8,8 +8,8 @@ Get up and running in 5 minutes!
 
 ### Prerequisites
 
-- [Node.js](.nvmrc) installed
-- Ollama installed and running
+- [Node.js](mise.toml#L14) installed (by Mise:)
+- [Ollama](https://ollama.com/library/smollm2) installed and running
 - [Mise](https://mise.jdx.dev/) recommended
 
 ### Environment

@@ -148,6 +148,7 @@ export const App: React.FC = () => {
           keLLeMes Tweak CLI - Interactive Parameter Tuning
         </Text>
       </Box>
+      {/* <Logo /> */}
 
       <StatusBar ollamaStatus={ollamaStatus} ragStatus={ragStatus} documentsCount={documentsCount} />
 

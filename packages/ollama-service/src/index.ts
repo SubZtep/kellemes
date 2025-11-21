@@ -1,6 +1,6 @@
+import type { OllamaChatRequest, OllamaChatResponse, OllamaEmbedRequest, OllamaEmbedResponse } from "@kellemes/types"
 import axios from "axios"
 import "dotenv/config"
-import type { OllamaChatRequest, OllamaChatResponse, OllamaEmbedRequest, OllamaEmbedResponse } from "@kellemes/types"
 
 export class OllamaService {
   private baseUrl: string
