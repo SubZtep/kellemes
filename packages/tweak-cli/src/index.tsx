@@ -12,8 +12,7 @@ if (!process.stdin.isTTY) {
 
 // Check if Ollama is installed
 try {
-  const version = await ollama.version()
-  console.log("Ollama version:", version.version)
+  await ollama.version()
 } catch (error: any) {
   console.error("Error: Ollama required for this application.", error.message)
   console.log("Please install Ollama and try again. https://ollama.com/")

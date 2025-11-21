@@ -48,12 +48,7 @@ export default function ChatPanel(props: BoxProps) {
   })
 
   return (
-    <Box
-      flexDirection="column"
-      // borderColor="white"
-      // borderStyle="round"
-      {...props}
-    >
+    <Box flexDirection="column" {...props}>
       <ResponsePanel isLoading={isLoading} error={error} />
       <PromptPanel submitPrompt={submitPrompt} isLoading={isLoading} />
     </Box>

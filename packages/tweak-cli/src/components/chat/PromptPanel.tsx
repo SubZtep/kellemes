@@ -11,10 +11,11 @@ export default function PromptPanel({
   isLoading: boolean
   submitPrompt: UseMutateFunction
 }) {
+  const activeModel = useStore(state => state.activeModel)
   const prompt = useStore(state => state.prompt)
   const setPrompt = useStore(state => state.setPrompt)
   const setInputActive = useStore(state => state.setInputActive)
-  const { isFocused } = useFocus({ autoFocus: true, id: "prompt" })
+  const { isFocused } = useFocus({ autoFocus: !!activeModel, id: "prompt" })
 
   // Update inputActive state based on focus
   useEffect(() => {

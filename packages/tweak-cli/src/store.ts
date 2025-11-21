@@ -10,6 +10,9 @@ export interface State {
   keyPressed: Hotkey | null
   inputActive: boolean
 
+  /** Active Ollama model in the chat panel. */
+  activeModel: string | null
+
   /** User input text prompt. */
   prompt: string
   /** Responses from the RAG service. */
@@ -28,6 +31,7 @@ export interface State {
 export interface Actions {
   setKeyPressed: (keyPressed: Hotkey | null) => void
   setInputActive: (inputActive: boolean) => void
+  setActiveModel: (activeModel: string | null) => void
   addResponse: (response: ChatMessage) => void
   setPrompt: (prompt: string) => void
   setOllamaStatus: (ollamaStatus: OllamaStatus) => void
@@ -44,6 +48,7 @@ type Store = State & Actions
 const initialState: State = {
   keyPressed: null,
   inputActive: false,
+  activeModel: null,
   prompt: "",
   responses: [],
   ollamaStatus: "checking",
@@ -59,6 +64,7 @@ export const useStore = create<Store>()((set, get) => ({
   ...initialState,
   setKeyPressed: keyPressed => set({ keyPressed }),
   setInputActive: inputActive => set({ inputActive }),
+  setActiveModel: activeModel => set({ activeModel }),
   setPrompt: prompt => set({ prompt }),
   addResponse: response => set({ responses: [...get().responses, response] }),
   setOllamaStatus: ollamaStatus => set({ ollamaStatus }),

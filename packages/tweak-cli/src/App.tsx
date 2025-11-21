@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Box } from "ink"
 import ChatPanel from "./components/layout/ChatPanel"
 import InfoPanel from "./components/layout/InfoPanel"
-import SettingsBar from "./components/layout/SettingsPanel"
+import SettingsPanel from "./components/layout/SettingsPanel"
 import useHotkeys from "./hooks/useHotkeys"
 
 // import { useStore } from "./store"
@@ -93,7 +93,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Box flexDirection="row" minHeight={20} width="100%">
-        <SettingsBar minWidth={36} />
+        <SettingsPanel minWidth={36} />
         <ChatPanel flexGrow={1} />
         <InfoPanel minWidth={36} />
       </Box>
