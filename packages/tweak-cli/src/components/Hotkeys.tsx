@@ -1,14 +1,14 @@
 import { Box, Text } from "ink"
 
-export default function KeyboardShortcuts() {
+export default function Hotkeys() {
   return (
     <Box flexDirection="column" paddingX={1} borderStyle="classic" borderColor="greenBright">
       <Text bold color="cyan">
-        Keyboard Shortcuts
+        Hotkeys
       </Text>
       <Box justifyContent="space-between">
         <Text>Quit:</Text>
-        <Text>Q</Text>
+        <Text>Esc</Text>
       </Box>
       <Box justifyContent="space-between">
         <Text>Navigate up/down:</Text>
@@ -27,6 +27,10 @@ export default function KeyboardShortcuts() {
         <Text bold>
           <Text>Enter</Text>
         </Text>
+      </Box>
+      <Box justifyContent="space-between">
+        <Text>Change focus:</Text>
+        <Text>Tab/Shift+Tab</Text>
       </Box>
     </Box>
   )

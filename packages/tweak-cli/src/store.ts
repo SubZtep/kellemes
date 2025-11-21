@@ -4,8 +4,12 @@ import { create } from "zustand"
 export type ChatMessage = ChatResponse & { sender: "user" | "assistant"; createdAt: Date }
 export type OllamaStatus = "connected" | "disconnected" | "checking"
 export type RAGStatus = "ready" | "not ready" | "initializing"
+export type Hotkey = "escape" | "return" | "space" | "leftArrow" | "rightArrow" | "upArrow" | "downArrow"
 
 export interface State {
+  keyPressed: Hotkey | null
+  inputActive: boolean
+
   /** User input text prompt. */
   prompt: string
   /** Responses from the RAG service. */
@@ -22,6 +26,8 @@ export interface State {
 }
 
 export interface Actions {
+  setKeyPressed: (keyPressed: Hotkey | null) => void
+  setInputActive: (inputActive: boolean) => void
   addResponse: (response: ChatMessage) => void
   setPrompt: (prompt: string) => void
   setOllamaStatus: (ollamaStatus: OllamaStatus) => void
@@ -36,6 +42,8 @@ export interface Actions {
 type Store = State & Actions
 
 const initialState: State = {
+  keyPressed: null,
+  inputActive: false,
   prompt: "",
   responses: [],
   ollamaStatus: "checking",
@@ -49,6 +57,8 @@ const initialState: State = {
 
 export const useStore = create<Store>()((set, get) => ({
   ...initialState,
+  setKeyPressed: keyPressed => set({ keyPressed }),
+  setInputActive: inputActive => set({ inputActive }),
   setPrompt: prompt => set({ prompt }),
   addResponse: response => set({ responses: [...get().responses, response] }),
   setOllamaStatus: ollamaStatus => set({ ollamaStatus }),

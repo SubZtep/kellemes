@@ -1,7 +1,7 @@
-import { Box, useFocus } from "ink"
-import ParameterPanel from "../components/ParameterPanel"
+import { Box, type BoxProps, useFocus } from "ink"
+import ParameterBox from "./ParameterBox"
 
-export default function SettingsBar() {
+export default function SettingsPanel(props: BoxProps) {
   const { isFocused } = useFocus()
 
   // Parameters
@@ -20,11 +20,12 @@ export default function SettingsBar() {
       borderStyle={isFocused ? "bold" : "round"}
       borderColor={isFocused ? "redBright" : "red"}
       paddingX={2}
+      {...props}
     >
       {/* @ts-ignore */}
       {/* <BigText text="Settings" font="tiny" colors={["yellow", "green"]} spaceless={true} /> */}
       {/* <InfoPanel /> */}
-      <ParameterPanel />
+      <ParameterBox />
     </Box>
   )
 }

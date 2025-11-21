@@ -1,9 +1,9 @@
 import type { UseMutateFunction } from "@tanstack/react-query"
 import { Box, Text } from "ink"
 import TextInput from "ink-text-input"
-import { useStore } from "../store"
+import { useStore } from "../../store"
 
-export default function QueryPanel({
+export default function PromptBox({
   isLoading,
   submitPrompt,
 }: {

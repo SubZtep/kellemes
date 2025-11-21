@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 type OllamaStatus = "connected" | "disconnected" | "checking"
 type RAGStatus = "ready" | "not ready" | "initializing"
 
-export default function StatusBar() {
+export default function StatusBox() {
   const [ollamaStatus, setOllamaStatus] = useState<OllamaStatus>("checking")
   const [ragStatus, setRAGStatus] = useState<RAGStatus>("initializing")
   const [documentsCount, setDocumentsCount] = useState(0)

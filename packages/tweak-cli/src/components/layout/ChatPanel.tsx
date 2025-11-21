@@ -2,11 +2,11 @@ import { ragService } from "@kellemes/core"
 import { useMutation } from "@tanstack/react-query"
 import { Box, type BoxProps, useFocus } from "ink"
 import { useState } from "react"
-import PromptPanel from "../components/chat/PromptPanel"
-import ResponsePanel from "../components/chat/ResponsePanel"
-import { useStore } from "../store"
+import { useStore } from "../../store"
+import PromptPanel from "../chat/PromptPanel"
+import ResponsePanel from "../chat/ResponsePanel"
 
-export default function ChatCenter(props: BoxProps) {
+export default function ChatPanel(props: BoxProps) {
   const { isFocused } = useFocus()
   const { prompt, topK, useRAG, addResponse, setPrompt } = useStore()
   const [error, setError] = useState<string | null>(null)

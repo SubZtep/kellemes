@@ -1,6 +1,7 @@
 import type { UseMutateFunction } from "@tanstack/react-query"
-import { Box, Text } from "ink"
+import { Box, Text, useFocus } from "ink"
 import TextInput from "ink-text-input"
+import { useEffect } from "react"
 import { useStore } from "../../store.js"
 
 export default function PromptPanel({
@@ -10,7 +11,13 @@ export default function PromptPanel({
   isLoading: boolean
   submitPrompt: UseMutateFunction
 }) {
-  const { prompt, setPrompt } = useStore()
+  const { prompt, setPrompt, setInputActive } = useStore()
+  const { isFocused } = useFocus({ autoFocus: true })
+
+  // Update inputActive state based on focus
+  useEffect(() => {
+    setInputActive(isFocused && !isLoading)
+  }, [isFocused, isLoading, setInputActive])
 
   return (
     <Box flexDirection="column" borderStyle="bold" paddingX={1} borderColor={isLoading ? "green" : "gray"}>
@@ -19,13 +26,20 @@ export default function PromptPanel({
           Prompt:{" "}
         </Text>
         {isLoading ? (
-          <Text color="gray">{prompt || "(Enter to activate)"}</Text>
+          <Text color="gray">{prompt || "(Press Tab to focus input)"}</Text>
         ) : (
-          <TextInput value={prompt} onChange={setPrompt} onSubmit={() => submitPrompt()} />
+          <TextInput
+            value={prompt}
+            onChange={setPrompt}
+            onSubmit={() => submitPrompt()}
+            focus={isFocused}
+          />
         )}
       </Box>
       <Text dimColor> </Text>
-      <Text dimColor>Enter: {isLoading ? "Activate input" : "Submit query"} | Esc: Exit input</Text>
+      <Text dimColor>
+        {isFocused ? "Enter: Submit | Tab: Change focus" : "Tab: Focus input"} | Esc: Quit
+      </Text>
     </Box>
   )
 }

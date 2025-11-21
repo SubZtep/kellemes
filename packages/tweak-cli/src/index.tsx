@@ -2,7 +2,7 @@
 
 import "dotenv/config"
 import { render } from "ink"
-import { App } from "./App"
+import App from "./App"
 
 // Check if stdin supports raw mode (required for keyboard input)
 if (!process.stdin.isTTY) {

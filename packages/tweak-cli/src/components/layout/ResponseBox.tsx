@@ -1,8 +1,8 @@
 import { Box, Text } from "ink"
 import Spinner from "ink-spinner"
-import { useStore } from "../store"
+import { useStore } from "../../store"
 
-export default function ResponsePanel({ isLoading, error }: { isLoading: boolean; error: string | null }) {
+export default function ResponseBox({ isLoading, error }: { isLoading: boolean; error: string | null }) {
   const { responses } = useStore()
 
   return (

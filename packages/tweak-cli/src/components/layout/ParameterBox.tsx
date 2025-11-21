@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/correctness/noUnusedVariables: <explanation> */
 import { Box, Text } from "ink"
+import { useStore } from "../../store"
 // import { useState } from "react"
 // import { useStore } from "../store"
 
@@ -23,7 +24,8 @@ import { Box, Text } from "ink"
 //   "Enable/disable RAG retrieval",
 // ]
 
-export default function ParameterPanel() {
+export default function ParameterBox() {
+  const keyPressed = useStore(state => state.keyPressed)
   // const values = [params.topK, params.similarityThreshold, params.temperature, params.useRAG ? "ON" : "OFF"]
   // const { topK, similarityThreshold, temperature, useRAG } = useStore()
   // const values = [topK, similarityThreshold, temperature, useRAG ? "ON" : "OFF"]
@@ -35,6 +37,7 @@ export default function ParameterPanel() {
       <Text bold color="cyan">
         Parameter Controls
       </Text>
+      <Text>{keyPressed}</Text>
       {/* <Text dimColor> </Text> */}
       {/* {paramNames.map((name, i) => (
         <Box key={name} flexDirection="column" marginY={0}>
