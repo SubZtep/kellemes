@@ -1,17 +1,12 @@
-import type { SearchResult } from "@kellemes/core"
 import { Box, Text } from "ink"
 import Spinner from "ink-spinner"
+import { useStore } from "../store"
 
-interface ResponsePanelProps {
-  response: string | null
-  sources: SearchResult[]
-  isLoading: boolean
-  error: string | null
-}
+export default function ResponsePanel({ isLoading, error }: { isLoading: boolean; error: string | null }) {
+  const { responses } = useStore()
 
-export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, sources, isLoading, error }) => {
   return (
-    <Box flexDirection="column" borderStyle="round" borderColor="magenta" padding={1} minHeight={15}>
+    <Box flexDirection="column" paddingX={2} flexGrow={1}>
       <Text bold color="magenta">
         Response Preview
       </Text>
@@ -32,7 +27,7 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, sources,
         </Box>
       )}
 
-      {!isLoading && !error && response && (
+      {/* {!isLoading && !error && response && (
         <Box flexDirection="column">
           <Box flexDirection="column" marginBottom={1}>
             <Text color="white">{response}</Text>
@@ -52,9 +47,15 @@ export const ResponsePanel: React.FC<ResponsePanelProps> = ({ response, sources,
             </Box>
           )}
         </Box>
-      )}
+      )} */}
 
-      {!isLoading && !error && !response && <Text dimColor>Submit a query to see results...</Text>}
+      {responses.map((response, i) => (
+        <Box key={i}>
+          <Text color="white">{response.response}</Text>
+        </Box>
+      ))}
+
+      {!isLoading && !error && responses.length === 0 && <Text dimColor>Submit a query to see results...</Text>}
     </Box>
   )
 }

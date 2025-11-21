@@ -37,6 +37,11 @@
       "arrowParentheses": "asNeeded",
       "quoteStyle": "double",
       "semicolons": "asNeeded"
+    },
+    "linter": {
+      "correctness": {
+        "noUnusedVariables": "warn"
+      }
     }
   },
   "assist": {
