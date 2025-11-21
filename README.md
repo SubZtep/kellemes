@@ -40,6 +40,7 @@ SIMILARITY_THRESHOLD=0.7
 
 ```sh
 pnpm install
+pnpm run build
 ```
 
 ### Ollama Models

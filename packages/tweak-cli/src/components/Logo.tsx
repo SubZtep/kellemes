@@ -1,25 +1,15 @@
-import figlet from "figlet"
 import { Box, Text } from "ink"
-import { useEffect, useState } from "react"
+import BigText from "ink-big-text"
+import Gradient from "ink-gradient"
 
-export default function Logo({ font = "Santa Clara", text = "keLLeMes" }: { font?: string; text?: string }) {
-  const [logo, setLogo] = useState<string | null>(null)
-
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const logo = await figlet.text(text, { font })
-        setLogo(logo)
-      } catch {
-        setLogo(`keLLeMes\n...\n${process.env.npm_package_name}\n...`)
-      }
-    })()
-  }, [])
-
+export default function Logo() {
   return (
-    <Box>
-      <Text>{logo}</Text>
-      <Text color="gray">v{process.env.npm_package_version ?? "?.?.?"}</Text>
+    <Box flexDirection="column" alignItems="center" borderStyle="round" borderColor="pink" padding={0}>
+      {/* @ts-ignore */}
+      <BigText text="keLLeMes" font="slick" colors={["red", "cyan"]} spaceless={true} />
+      <Gradient name="passion">
+        <Text dimColor>LLM Parameter Tweak CLI - v{process.env.npm_package_version ?? "?.?.?"}</Text>
+      </Gradient>
     </Box>
   )
 }

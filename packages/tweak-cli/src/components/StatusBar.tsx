@@ -1,4 +1,4 @@
-import { Box, Text } from "ink"
+import { Box, Newline, Text } from "ink"
 
 interface StatusBarProps {
   ollamaStatus: "connected" | "disconnected" | "checking"
@@ -14,15 +14,21 @@ export const StatusBar: React.FC<StatusBarProps> = ({ ollamaStatus, ragStatus, d
     <Box borderStyle="round" borderColor="blue" padding={1}>
       <Box flexDirection="row" gap={2}>
         <Text>
-          Ollama: <Text color={ollamaColor}>{ollamaStatus}</Text>
+          Ollama:
+          <Newline />
+          <Text color={ollamaColor}>{ollamaStatus}</Text>
         </Text>
         <Text>|</Text>
         <Text>
-          RAG: <Text color={ragColor}>{ragStatus}</Text>
+          RAG:
+          <Newline />
+          <Text color={ragColor}>{ragStatus}</Text>
         </Text>
         <Text>|</Text>
         <Text>
-          Documents: <Text color="cyan">{documentsCount}</Text>
+          Documents:
+          <Newline />
+          <Text color="cyan">{documentsCount}</Text>
         </Text>
       </Box>
     </Box>

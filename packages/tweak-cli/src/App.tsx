@@ -1,6 +1,7 @@
 import { ollamaService, ragService, type SearchResult } from "@kellemes/core"
 import { Box, Text, useApp, useInput } from "ink"
 import { useEffect, useState } from "react"
+import Logo from "./components/Logo"
 import { ParameterPanel, type Parameters } from "./components/ParameterPanel"
 import { QueryPanel } from "./components/QueryPanel"
 import { ResponsePanel } from "./components/ResponsePanel"
@@ -142,17 +143,13 @@ export const App: React.FC = () => {
   })
 
   return (
-    <Box flexDirection="column" padding={1}>
-      <Box marginBottom={1}>
-        <Text bold color="cyan">
-          keLLeMes Tweak CLI - Interactive Parameter Tuning
-        </Text>
+    <Box flexDirection="column" padding={3} borderStyle="classic" borderColor="red">
+      <Box marginBottom={0} justifyContent="flex-start">
+        <Logo />
+        <StatusBar ollamaStatus={ollamaStatus} ragStatus={ragStatus} documentsCount={documentsCount} />
       </Box>
-      {/* <Logo /> */}
 
-      <StatusBar ollamaStatus={ollamaStatus} ragStatus={ragStatus} documentsCount={documentsCount} />
-
-      <Box marginTop={1}>
+      <Box marginTop={0}>
         <Box flexDirection="column" width="40%" marginRight={1}>
           <ParameterPanel params={params} selectedParam={selectedParam} />
           <Box marginTop={1}>
