@@ -92,7 +92,7 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Box flexDirection="row" height={40}>
+      <Box flexDirection="row" minHeight={20} width="100%">
         <SettingsBar minWidth={36} />
         <ChatPanel flexGrow={1} />
         <InfoPanel minWidth={36} />

@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/noUnusedVariables: <explanation> */
 import { Box, Text } from "ink"
 import { useStore } from "../../store"
 // import { useState } from "react"

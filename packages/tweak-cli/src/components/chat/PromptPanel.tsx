@@ -11,8 +11,10 @@ export default function PromptPanel({
   isLoading: boolean
   submitPrompt: UseMutateFunction
 }) {
-  const { prompt, setPrompt, setInputActive } = useStore()
-  const { isFocused } = useFocus({ autoFocus: true })
+  const prompt = useStore(state => state.prompt)
+  const setPrompt = useStore(state => state.setPrompt)
+  const setInputActive = useStore(state => state.setInputActive)
+  const { isFocused } = useFocus({ autoFocus: true, id: "prompt" })
 
   // Update inputActive state based on focus
   useEffect(() => {
@@ -20,7 +22,12 @@ export default function PromptPanel({
   }, [isFocused, isLoading, setInputActive])
 
   return (
-    <Box flexDirection="column" borderStyle="bold" paddingX={1} borderColor={isLoading ? "green" : "gray"}>
+    <Box
+      flexDirection="column"
+      borderStyle={isFocused ? "bold" : "round"}
+      paddingX={1}
+      borderColor={isLoading ? "greenBright" : "green"}
+    >
       <Box>
         <Text bold color={isLoading ? "green" : "white"}>
           Prompt:{" "}
@@ -28,18 +35,11 @@ export default function PromptPanel({
         {isLoading ? (
           <Text color="gray">{prompt || "(Press Tab to focus input)"}</Text>
         ) : (
-          <TextInput
-            value={prompt}
-            onChange={setPrompt}
-            onSubmit={() => submitPrompt()}
-            focus={isFocused}
-          />
+          <TextInput value={prompt} onChange={setPrompt} onSubmit={() => submitPrompt()} focus={isFocused} />
         )}
       </Box>
       <Text dimColor> </Text>
-      <Text dimColor>
-        {isFocused ? "Enter: Submit | Tab: Change focus" : "Tab: Focus input"} | Esc: Quit
-      </Text>
+      <Text dimColor>{isFocused ? "Enter: Submit | Tab: Change focus" : "Tab: Focus input"} | Esc: Quit</Text>
     </Box>
   )
 }

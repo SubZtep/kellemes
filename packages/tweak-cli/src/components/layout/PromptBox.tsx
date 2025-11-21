@@ -10,10 +10,11 @@ export default function PromptBox({
   isLoading: boolean
   submitPrompt: UseMutateFunction
 }) {
-  const { prompt, setPrompt } = useStore()
+  const prompt = useStore(state => state.prompt)
+  const setPrompt = useStore(state => state.setPrompt)
 
   return (
-    <Box flexDirection="column" borderStyle="bold" paddingX={1} borderColor={isLoading ? "green" : "gray"}>
+    <Box flexDirection="column" borderStyle="bold" paddingX={1} borderColor={isLoading ? "redBright" : "red"}>
       <Box>
         <Text bold color={isLoading ? "green" : "white"}>
           Prompt:{" "}
@@ -24,7 +25,6 @@ export default function PromptBox({
           <TextInput value={prompt} onChange={setPrompt} onSubmit={() => submitPrompt()} />
         )}
       </Box>
-      <Text dimColor> </Text>
       <Text dimColor>Enter: {isLoading ? "Activate input" : "Submit query"} | Esc: Exit input</Text>
     </Box>
   )

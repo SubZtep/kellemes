@@ -2,15 +2,17 @@ import { Box, Text } from "ink"
 
 export default function Hotkeys() {
   return (
-    <Box flexDirection="column" paddingX={1} borderStyle="classic" borderColor="greenBright">
-      <Text bold color="cyan">
-        Hotkeys
-      </Text>
+    <Box flexDirection="column" paddingX={1} borderStyle="classic" borderColor="green">
+      <Box justifyContent="center">
+        <Text bold color="cyan">
+          Hotkeys
+        </Text>
+      </Box>
       <Box justifyContent="space-between">
         <Text>Quit:</Text>
         <Text>Esc</Text>
       </Box>
-      <Box justifyContent="space-between">
+      {/* <Box justifyContent="space-between">
         <Text>Navigate up/down:</Text>
         <Text>↑/↓</Text>
       </Box>
@@ -27,7 +29,7 @@ export default function Hotkeys() {
         <Text bold>
           <Text>Enter</Text>
         </Text>
-      </Box>
+      </Box> */}
       <Box justifyContent="space-between">
         <Text>Change focus:</Text>
         <Text>Tab/Shift+Tab</Text>

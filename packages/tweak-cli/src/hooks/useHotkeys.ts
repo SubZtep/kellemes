@@ -7,7 +7,7 @@ export default function useHotkeys() {
   const { exit } = useApp()
 
   useInput(
-    (input: string, key: any) => {
+    (input: string, key: Record<string, boolean>) => {
       const pressedKeys = Object.keys(key).filter(k => key[k])
 
       // Always allow escape to exit

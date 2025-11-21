@@ -4,15 +4,10 @@ import { useStore } from "../../store.js"
 import Response from "./Response.js"
 
 export default function ResponsePanel({ isLoading, error }: { isLoading: boolean; error: string | null }) {
-  const { responses } = useStore()
+  const responses = useStore(state => state.responses)
 
   return (
     <Box flexDirection="column" paddingX={1} flexGrow={1} gap={1}>
-      <Text bold color="magenta">
-        Response Preview
-      </Text>
-      <Text dimColor> </Text>
-
       {isLoading && (
         <Box>
           <Text color="yellow">

@@ -3,14 +3,13 @@ import Spinner from "ink-spinner"
 import { useStore } from "../../store"
 
 export default function ResponseBox({ isLoading, error }: { isLoading: boolean; error: string | null }) {
-  const { responses } = useStore()
+  const responses = useStore(state => state.responses)
 
   return (
     <Box flexDirection="column" paddingX={2} flexGrow={1}>
       <Text bold color="magenta">
         Response Preview
       </Text>
-      <Text dimColor> </Text>
 
       {isLoading && (
         <Box>

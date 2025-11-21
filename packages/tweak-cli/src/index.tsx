@@ -1,7 +1,5 @@
-#!/usr/bin/env node
-
 import "dotenv/config"
-import { render } from "ink"
+import { withFullScreen } from "fullscreen-ink"
 import App from "./App"
 
 // Check if stdin supports raw mode (required for keyboard input)
@@ -12,4 +10,5 @@ if (!process.stdin.isTTY) {
 }
 
 // Render the app
-render(<App />)
+withFullScreen(<App />, { exitOnCtrlC: false }).start()
+// render(<App />)
