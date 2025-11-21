@@ -1,14 +1,14 @@
 import { ragService } from "@kellemes/core"
 import { useMutation } from "@tanstack/react-query"
-import { Box, useFocus } from "ink"
+import { Box, type BoxProps, useFocus } from "ink"
 import { useState } from "react"
-import QueryPanel from "../components/QueryPanel"
-import ResponsePanel from "../components/ResponsePanel"
+import PromptPanel from "../components/chat/PromptPanel"
+import ResponsePanel from "../components/chat/ResponsePanel"
 import { useStore } from "../store"
 
-export default function ChatCenter() {
+export default function ChatCenter(props: BoxProps) {
   const { isFocused } = useFocus()
-  const { prompt, topK, useRAG, addResponse } = useStore()
+  const { prompt, topK, useRAG, addResponse, setPrompt } = useStore()
   const [error, setError] = useState<string | null>(null)
 
   const generateResponse = async () => {
@@ -21,9 +21,13 @@ export default function ChatCenter() {
   }
 
   const { mutate: submitPrompt, isPending: isLoading } = useMutation({
-    mutationFn: generateResponse,
+    mutationFn: () => {
+      addResponse({ model: process.env.MODEL!, sender: "user", createdAt: new Date(), response: prompt })
+      return generateResponse()
+    },
     onSuccess: data => {
-      addResponse({ model: process.env.MODEL!, ...data })
+      addResponse({ model: process.env.MODEL!, sender: "assistant", createdAt: new Date(), ...data })
+      setPrompt("")
     },
     onError: error => {
       setError(error.message)
@@ -33,12 +37,12 @@ export default function ChatCenter() {
   return (
     <Box
       flexDirection="column"
-      flexGrow={1}
       borderColor={isFocused ? "whiteBright" : "white"}
       borderStyle={isFocused ? "bold" : "round"}
+      {...props}
     >
       <ResponsePanel isLoading={isLoading} error={error} />
-      <QueryPanel submitPrompt={submitPrompt} isLoading={isLoading} />
+      <PromptPanel submitPrompt={submitPrompt} isLoading={isLoading} />
     </Box>
   )
 }

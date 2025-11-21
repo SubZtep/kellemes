@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.7/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -22,7 +22,8 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "useExhaustiveDependencies": "off"
+        "useExhaustiveDependencies": "off",
+        "noUnusedVariables": "warn"
       },
       "style": {
         "noNonNullAssertion": "off"
@@ -37,11 +38,6 @@
       "arrowParentheses": "asNeeded",
       "quoteStyle": "double",
       "semicolons": "asNeeded"
-    },
-    "linter": {
-      "correctness": {
-        "noUnusedVariables": "warn"
-      }
     }
   },
   "assist": {
