@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Check for updated dependencies",
+      "type": "shell",
+      "command": "pnpm -r exec npx npm-check-updates",
+      "problemMatcher": []
+    }
+  ]
+}
