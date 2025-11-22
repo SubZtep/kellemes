@@ -1,10 +1,10 @@
-import { formatDistanceToNowStrict } from "date-fns"
 import { Box, Text } from "ink"
 import SelectInput from "ink-select-input"
 import Spinner from "ink-spinner"
 import ollama from "ollama/browser"
 import { useEffect, useState } from "react"
 import { useStore } from "../../store"
+import ModelInfo from "./ModelInfo"
 
 export default function SelectModel() {
   const setActiveModel = useStore(state => state.setActiveModel)
@@ -44,7 +44,7 @@ export default function SelectModel() {
             <Spinner type="simpleDotsScrolling" />
           </Text>
         ) : (
-          <Text color="yellow">Available models:</Text>
+          <Text color="yellow">Please, select a model:</Text>
         )}
       </Box>
 
@@ -57,22 +57,7 @@ export default function SelectModel() {
             onSelect={item => setActiveModel(item.value)}
             isFocused={true}
           />
-          {highlightedModel && (
-            <Box marginTop={1} flexDirection="column">
-              <Text color="cyan">Highlighted model:</Text>
-              <Text bold>{highlightedModel}</Text>
-              <Box gap={1}>
-                <Text dimColor strikethrough={!getExpiresAt(highlightedModel)}>
-                  Suspending in
-                </Text>
-                <Text dimColor>
-                  {getExpiresAt(highlightedModel)
-                    ? formatDistanceToNowStrict(getExpiresAt(highlightedModel)!)
-                    : "(-.-)Zzz"}
-                </Text>
-              </Box>
-            </Box>
-          )}
+          {highlightedModel && <ModelInfo model={highlightedModel} expiresAt={getExpiresAt(highlightedModel)!} />}
         </>
       ) : (
         <Text dimColor>No models found</Text>

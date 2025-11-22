@@ -16,13 +16,9 @@ This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the k
 pnpm dev:api         # Start API server with auto-reload
 pnpm start           # Run production API server
 
-# Chat CLI
-pnpm dev:chat        # Start interactive chat CLI with auto-reload
-pnpm chat            # Run chat CLI
-
-# Tweak CLI (NEW!)
-pnpm dev:tweak       # Start interactive parameter tweaking UI
-pnpm tweak           # Run tweak CLI
+# CLI
+pnpm dev:cli         # Start interactive parameter tweaking UI
+pnpm cli             # Run CLI
 
 # Build & Quality
 pnpm build           # Build all packages
@@ -46,9 +42,8 @@ kellemes/
 │   ├── rag-service/        # @kellemes/rag-service - RAG orchestration
 │   ├── core/               # @kellemes/core - Convenience re-export of all services
 │   ├── api/                # @kellemes/api - Hono HTTP API server
-│   ├── chat-cli/           # @kellemes/chat-cli - Interactive chat CLI
-│   └── tweak-cli/          # @kellemes/tweak-cli - Ink-based parameter tweaking UI
-├── data/                   # Shared data (vectors, training data)
+│   └── cli/                # @kellemes/cli - Ink-based parameter tweaking UI
+├── data/                   # Local data (vectors, training data)
 └── package.json            # Root workspace config
 ```
 
@@ -59,8 +54,7 @@ kellemes/
 - `@kellemes/rag-service` → Depends on types, ollama-service, vector-service
 - `@kellemes/core` → Re-exports all services (convenience package)
 - `@kellemes/api` → Depends on core (HTTP layer)
-- `@kellemes/chat-cli` → Depends on core (CLI interface)
-- `@kellemes/tweak-cli` → Depends on core (Interactive UI with Ink)
+- `@kellemes/cli` → Depends on core (Text UI with Ink)
 
 ### Core Services
 
@@ -75,7 +69,7 @@ kellemes/
    - Persists vectors to JSON file at `./data/vectors/qa_vectors.json`
    - Key methods: `search()`, `save()`, `load()`, `cosineSimilarity()`
 
-3. **OllamaService** (`packages/ollama-service/src/index.ts`)
+3. @deprecated **OllamaService** (`packages/ollama-service/src/index.ts`)
    - Ollama API client for embeddings and chat completions
    - Uses `nomic-embed-text` for embeddings, `kellemes` for chat
    - Key methods: `generateEmbedding()`, `chat()`, `checkHealth()`
@@ -87,16 +81,12 @@ kellemes/
    - Routes: `/api/chat`, `/api/retrieve`, `/api/stats`, `/health`
    - Runs on port specified in `.env` (default: 3000)
 
-2. **Chat CLI** (`packages/chat-cli/src/index.ts`)
-   - Terminal-based interactive chat interface
-   - Commands: `/rag`, `/sources`, `/topk`, `/stats`, `/help`
-   - Color-coded output with ANSI escape codes
-
-3. **Tweak CLI** (`packages/tweak-cli/src/index.tsx`) **NEW!**
+2. **CLI** (`packages/cli/src/index.tsx`)
    - Interactive Ink-based UI for parameter tuning
    - Real-time parameter adjustment (topK, similarity threshold, temperature)
    - Live query testing with source visualization
-   - Keyboard controls: ↑/↓ navigate, ←/→ adjust, Enter for input, Q to quit
+   - Keyboard controls: ↑/↓ navigate, ←/→ adjust, Enter for input, Esc to quit
+   - Tab and Shift Tab is for moving the focus one step away
 
 ### Data Flow
 1. **Ingestion**: Load Q&A pairs → Generate embeddings → Store in vector DB

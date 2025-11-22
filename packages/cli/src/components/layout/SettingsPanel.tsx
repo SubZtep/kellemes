@@ -1,8 +1,8 @@
-import { Box, type BoxProps, useFocus } from "ink"
+import { Box, type BoxProps } from "ink"
 import ParameterBox from "./ParameterBox"
 
 export default function SettingsPanel(props: BoxProps) {
-  const { isFocused } = useFocus({ id: "settings" })
+  // const { isFocused } = useFocus({ id: "settings" })
 
   // Parameters
   // const [params, setParams] = useState<Parameters>({
@@ -17,8 +17,8 @@ export default function SettingsPanel(props: BoxProps) {
     <Box
       flexDirection="column"
       alignItems="flex-start"
-      borderStyle={isFocused ? "bold" : "round"}
-      borderColor={isFocused ? "redBright" : "red"}
+      // borderStyle={isFocused ? "bold" : "round"}
+      // borderColor={isFocused ? "redBright" : "red"}
       paddingX={2}
       {...props}
     >

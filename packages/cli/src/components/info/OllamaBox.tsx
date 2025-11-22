@@ -22,9 +22,10 @@ export default function OllamaBox({ isFocused = false, ...props }: { isFocused?:
   return (
     <Box
       flexDirection="column"
+      paddingY={1}
       padding={isFocused ? 0 : 1}
-      borderStyle={isFocused ? "bold" : undefined}
-      borderColor="green"
+      borderStyle={isFocused ? "doubleSingle" : undefined}
+      borderColor={isFocused ? "blue" : "green"}
       {...props}
     >
       <Box justifyContent="space-between">

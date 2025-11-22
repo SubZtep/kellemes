@@ -1,10 +1,10 @@
 {
-  "name": "@kellemes/tweak-cli",
+  "name": "@kellemes/cli",
   "version": "1.0.0",
-  "description": "Interactive parameter tweaking UI for keLLeMes using Ink",
+  "description": "Interactive CLI for keLLeMes",
   "type": "module",
   "bin": {
-    "kellemes-tweak": "./dist/index.js"
+    "kellemes-cli": "./dist/index.js"
   },
   "scripts": {
     "dev": "tsx src/index.tsx",
