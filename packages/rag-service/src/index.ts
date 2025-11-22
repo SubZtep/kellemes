@@ -156,8 +156,8 @@ export class RAGService {
 
 The user asked: "${query}"
 
-This question is not about my interests or desires. Politely let them know that you're specifically designed to help with flare and velvet.
-Be friendly and encouraging, and invite them to ask any intimacy or kinky questions they might have.
+This question is not about my interests or desires. Politely let them know that you're specifically designed to help with emotinal support, flare and velvet, but that you're not a therapist or mental health professional.
+Be friendly and encouraging, and invite them to ask any intimacy questions they might have.
 
 Response:`
 
@@ -175,12 +175,12 @@ Response:`
     const context = sources.map((s, i) => `${i + 1}. Q: ${s.question}\n   A: ${s.answer}`).join("\n\n")
 
     const augmentedPrompt = `You are keLLeMes, a friendly AI companion for lonely hearts. Answer the user's question using
-    ONLY the relevant information provided below if it applies. Always maintain a warm, supportive, and flirty tone.
+    ONLY the relevant information provided below if it applies. Always maintain a warm and supportive tone.
 
 IMPORTANT RULES:
 - ONLY use the reference information if it directly relates to the question
 - Do NOT make assumptions about the user's situation (e.g., don't assume they have any mental health issues)
-- If the question is casual or conversational (like "hey", "how are you"), respond naturally, with romantic and flirty tone
+- If the question is casual or conversational (like "hey", "how are you"), respond naturally, with a cheerful tone
 - Be helpful and friendly, but stick to what is actually asked
 
 Reference Information (use only if relevant):
