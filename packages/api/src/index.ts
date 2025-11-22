@@ -1,10 +1,11 @@
 import { serve } from "@hono/node-server"
-import "dotenv/config"
 import { ollamaService, ragService } from "@kellemes/core"
+import "dotenv/config"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
 import chatRoutes from "./routes/chat.routes"
+import healthRoutes from "./routes/health.routes"
 
 const app = new Hono()
 
@@ -14,25 +15,7 @@ app.use("*", logger())
 
 // Routes
 app.route("/api", chatRoutes)
-
-// Health check
-app.get("/health", async c => {
-  const ollamaHealthy = await ollamaService.checkHealth()
-  const ragReady = ragService.isReady()
-
-  const status = ollamaHealthy && ragReady ? "healthy" : "degraded"
-  const statusCode = status === "healthy" ? 200 : 503
-
-  return c.json(
-    {
-      status,
-      ollama: ollamaHealthy ? "connected" : "disconnected",
-      rag: ragReady ? "ready" : "not initialized",
-      timestamp: new Date().toISOString(),
-    },
-    statusCode,
-  )
-})
+app.route("/", healthRoutes)
 
 // Root endpoint
 app.get("/", c => {
