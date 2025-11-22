@@ -12,10 +12,11 @@ const GlitchBox = ({ children }: { children: (glitched: boolean) => ReactNode })
     }, 100)
     const timer2 = setTimeout(() => {
       clearInterval(timer)
-    }, 1000)
+    }, 10000)
     return () => {
       clearInterval(timer)
       clearTimeout(timer2)
+      setGlitched(false)
     }
   }, [])
 
@@ -25,6 +26,7 @@ const GlitchBox = ({ children }: { children: (glitched: boolean) => ReactNode })
 export default function Logo() {
   const bigColor = "rainbow"
   const smallColor = "cristal"
+  const smallerColor = "blue"
 
   return (
     <Box flexDirection="column" alignItems="center">
@@ -33,7 +35,7 @@ export default function Logo() {
           <GlitchBox>
             {glitched =>
               glitched ? (
-                <Text color="black">
+                <Text color={smallerColor}>
                   {/* @ts-ignore */}
                   <BigText text="ke" font="tiny" spaceless={true} />
                 </Text>
