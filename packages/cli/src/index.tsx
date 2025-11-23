@@ -20,4 +20,3 @@ try {
 }
 
 withFullScreen(<App />, { exitOnCtrlC: false }).start()
-// render(<App />)

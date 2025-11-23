@@ -22,7 +22,14 @@ export default function RagBox(props: Pick<BoxProps, "flexGrow">) {
   }, [])
 
   return (
-    <TitledBox titles={["RAG", "Stats"]} borderStyle={"round"} flexDirection="column" borderDimColor {...props}>
+    <TitledBox
+      titles={["RAG", "Stats"]}
+      borderStyle={"round"}
+      padding={1}
+      flexDirection="column"
+      borderDimColor={true}
+      {...props}
+    >
       <Box justifyContent="space-between">
         <Text>RAG:</Text>
         <Text color={ragColor}>{ragStatus}</Text>

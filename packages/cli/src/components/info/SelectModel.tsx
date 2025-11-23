@@ -1,12 +1,14 @@
-import { Box, Text } from "ink"
+import { Box, Text, useFocusManager } from "ink"
 import SelectInput from "ink-select-input"
 import Spinner from "ink-spinner"
 import ollama from "ollama/browser"
 import { useEffect, useState } from "react"
 import { useStore } from "../../store"
 import ModelInfo from "./ModelInfo"
+import PullModel from "./PullModel"
 
 export default function SelectModel() {
+  const { focus } = useFocusManager()
   const setActiveModel = useStore(state => state.setActiveModel)
   const [highlightedModel, setHightlightedModel] = useState<string | null>(null)
   const [models, setModels] = useState<
@@ -41,7 +43,7 @@ export default function SelectModel() {
         {!models ? (
           <Text color="yellowBright">
             Loading models
-            <Spinner type="simpleDotsScrolling" />
+            <Spinner type="simpleDots" />
           </Text>
         ) : (
           <Text color="yellow">Please, select a model:</Text>
@@ -52,16 +54,18 @@ export default function SelectModel() {
         (models.length > 0 ? (
           <>
             <SelectInput
-              initialIndex={models.findIndex(model => model.name === highlightedModel)}
-              items={models?.map(model => ({ label: model.name, value: model.name })) ?? []}
+              items={models.map(model => ({ label: model.name, value: model.name }))}
               onHighlight={item => setHightlightedModel(item?.value ?? null)}
-              onSelect={item => setActiveModel(item.value)}
+              onSelect={item => {
+                setActiveModel(item.value)
+                focus("promptbox")
+              }}
               isFocused={true}
             />
             {highlightedModel && <ModelInfo model={highlightedModel} expiresAt={getExpiresAt(highlightedModel)!} />}
           </>
         ) : (
-          <Text dimColor>No models found</Text>
+          <PullModel />
         ))}
     </>
   )

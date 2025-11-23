@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Box } from "ink"
+import KeyBindings from "./components/KeyBindings"
 import ChatPanel from "./components/layout/ChatPanel"
 import InfoPanel from "./components/layout/InfoPanel"
-import KeyBindings from "./components/layout/KeyBindings"
 import SettingsPanel from "./components/layout/SettingsPanel"
 import useHotkeys from "./hooks/useHotkeys"
 

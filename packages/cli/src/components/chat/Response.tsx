@@ -4,13 +4,13 @@ import ResponseSources from "./ResponseSources"
 
 export default function Response({ response }: { response: ChatMessage }) {
   return (
-    <Box flexDirection="column" borderStyle="round" borderColor={response.sender === "user" ? "green" : "white"}>
-      <Text>{response.response}</Text>
+    <Box flexDirection="column" alignSelf={response.sender === "user" ? "flex-end" : "flex-start"}>
+      <Text dimColor={response.sender === "user"}>
+        {`${response.sender !== "user" ? "🤖 " : ""} ${response.response} ${response.sender === "user" ? "👤" : ""}`}
+      </Text>
 
       {response.sources && <ResponseSources sources={response.sources} />}
-      {/* <Box paddingX={2} paddingY={1}>
-        <Text>{response.response}</Text>
-      </Box> */}
+
       {/* {response.sources && (
         <Text bold color="yellow">
           Sources ({response.sources.length}):

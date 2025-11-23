@@ -1,15 +1,14 @@
 import { TitledBox } from "@mishieck/ink-titled-box"
-import { Box, type BoxProps, Text } from "ink"
+import { Box, type BoxProps, Text, useFocus } from "ink"
 import ollama from "ollama/browser"
 import { useEffect, useState } from "react"
 import { useStore } from "../../store"
 import SelectModel from "./SelectModel"
 
-export default function OllamaBox({
-  isFocused = false,
-  ...props
-}: { isFocused?: boolean } & Pick<BoxProps, "flexGrow">) {
+export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   const activeModel = useStore(state => state.activeModel)
+  const { isFocused } = useFocus({ autoFocus: !activeModel, id: "ollamabox" })
+
   const [ollamaVersion, setOllamaVersion] = useState<string | null>(null)
 
   useEffect(() => {
@@ -27,6 +26,7 @@ export default function OllamaBox({
     <TitledBox
       titles={["Ollama", "Active model"]}
       borderStyle={"round"}
+      padding={1}
       flexDirection="column"
       borderDimColor={!isFocused}
       {...props}
