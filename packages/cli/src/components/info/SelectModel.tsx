@@ -8,7 +8,8 @@ import ModelInfo from "./ModelInfo"
 import PullModel from "./PullModel"
 
 export default function SelectModel() {
-  const { focus } = useFocusManager()
+  const { disableFocus, enableFocus, focus } = useFocusManager()
+  const activeModel = useStore(state => state.activeModel)
   const setActiveModel = useStore(state => state.setActiveModel)
   const [highlightedModel, setHightlightedModel] = useState<string | null>(null)
   const [models, setModels] = useState<
@@ -21,8 +22,23 @@ export default function SelectModel() {
   >(null)
 
   useEffect(() => {
+    if (activeModel) {
+      enableFocus()
+      focus("promptbox")
+    } else {
+      disableFocus()
+    }
+  }, [activeModel])
+
+  useEffect(() => {
     const interval = setInterval(async () => {
       const [list, ps] = await Promise.all([ollama.list(), ollama.ps()])
+
+      if (list.models.length === 1) {
+        setActiveModel(list.models.at(0)!.name)
+        return
+      }
+
       const currentModels = list.models.map(model => {
         const expires_at = ps.models.find(p => p.model === model.name)?.expires_at
         return { name: model.name, expires_at: expires_at ? new Date(expires_at) : null }
@@ -30,7 +46,10 @@ export default function SelectModel() {
       setModels(currentModels)
     }, 1000)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      enableFocus()
+    }
   }, [])
 
   const getExpiresAt = (modelName: string) => {
@@ -41,7 +60,7 @@ export default function SelectModel() {
     <>
       <Box marginTop={1}>
         {!models ? (
-          <Text color="yellowBright">
+          <Text color="yellow" dimColor={true}>
             Loading models
             <Spinner type="simpleDots" />
           </Text>
@@ -56,10 +75,7 @@ export default function SelectModel() {
             <SelectInput
               items={models.map(model => ({ label: model.name, value: model.name }))}
               onHighlight={item => setHightlightedModel(item?.value ?? null)}
-              onSelect={item => {
-                setActiveModel(item.value)
-                focus("promptbox")
-              }}
+              onSelect={item => setActiveModel(item.value)}
               isFocused={true}
             />
             {highlightedModel && <ModelInfo model={highlightedModel} expiresAt={getExpiresAt(highlightedModel)!} />}
