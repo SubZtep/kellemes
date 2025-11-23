@@ -18,7 +18,7 @@ app.use("*", logger())
 app.route("/", infoRoutes)
 
 // 404 handler
-app.notFound(c => c.json({ error: "But our princess is in another castle!" }, 404))
+app.notFound(c => c.json({ error: "🍄But our princess is in another castle!" }, 404))
 
 // Error handler
 app.onError((err, c) => {

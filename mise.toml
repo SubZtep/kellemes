@@ -9,9 +9,8 @@ TOP_K_RESULTS = "3"
 SIMILARITY_THRESHOLD = "0.7"
 DATA_DIR = "{{cwd}}/data"
 
-API_PORT = "3000"
+API_PORT = "8080"
 
-POSTGRES_DATA_DIR = "./data/postgres"
 POSTGRES_HOST = "localhost"
 POSTGRES_PORT = "5432"
 POSTGRES_DB = "kellemes"

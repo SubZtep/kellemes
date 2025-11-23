@@ -9,7 +9,7 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      - ${POSTGRES_DATA_DIR}:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
 
@@ -60,3 +60,6 @@ services:
               r => process.exit(r.statusCode === 200 ? 0 : 1)
             ).on("error", () => process.exit(1))
           '
+
+volumes:
+  pgdata:

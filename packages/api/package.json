@@ -16,7 +16,9 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.19.6",
+    "@hono/zod-openapi": "^1.1.5",
     "@kellemes/core": "workspace:*",
+    "@scalar/hono-api-reference": "^0.9.25",
     "@types/pg": "^8.15.6",
     "dotenv": "^17.2.3",
     "hono": "^4.10.6",
