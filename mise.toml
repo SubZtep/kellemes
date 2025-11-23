@@ -1,6 +1,6 @@
 [env]
-PORT = "3000"
 NODE_ENV = "development"
+
 OLLAMA_BASE_URL = "http://localhost:11434"
 OLLAMA_MODEL = "kellemes"
 EMBEDDING_MODEL = "nomic-embed-text"
@@ -8,10 +8,21 @@ EMBEDDING_DIMENSION = "768"
 TOP_K_RESULTS = "3"
 SIMILARITY_THRESHOLD = "0.7"
 DATA_DIR = "{{cwd}}/data"
+
+API_PORT = "3000"
+
+POSTGRES_DATA_DIR = "./data/postgres"
+POSTGRES_HOST = "localhost"
+POSTGRES_PORT = "5432"
+POSTGRES_DB = "kellemes"
+POSTGRES_USER = "kellemes"
+POSTGRES_PASSWORD = { value = "kellemes_password", redact = true }
+
 _.file = ".env"
 
 [tools]
 node = "24.11.1"
+pnpm = "10.23.0"
 
 [hooks]
 enter = "echo 'keLLeMes is waiting for 🫵 you!'"

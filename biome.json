@@ -26,7 +26,8 @@
         "noUnusedVariables": "warn"
       },
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useTemplate": "warn"
       },
       "suspicious": {
         "noExplicitAny": "off"

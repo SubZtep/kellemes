@@ -25,7 +25,7 @@ export async function up(db: Kysely<any>): Promise<void> {
   await db.schema.createIndex("pet_owner_id_index").on("pet").column("owner_id").execute()
 }
 
-export async function down(db: Kysely<any>): Promise<void> {
-  await db.schema.dropTable("pet").execute()
-  await db.schema.dropTable("person").execute()
-}
+// export async function down(db: Kysely<any>): Promise<void> {
+//   await db.schema.dropTable("pet").execute()
+//   await db.schema.dropTable("person").execute()
+// }

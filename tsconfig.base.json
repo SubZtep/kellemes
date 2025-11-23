@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "Preserve",
+    "module": "ESNext",
     "lib": ["ES2022"],
     "strict": true,
     "allowJs": true,
@@ -10,8 +10,8 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
-    "moduleResolution": "node",
-    "verbatimModuleSyntax": true,
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": false,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

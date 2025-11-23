@@ -4,10 +4,11 @@ import type { Database } from "./types" // this is the Database interface we def
 
 const dialect = new PostgresDialect({
   pool: new Pool({
-    database: "test",
-    host: "localhost",
-    user: "admin",
-    port: 5434,
+    host: process.env.POSTGRES_HOST,
+    port: Number(process.env.POSTGRES_PORT),
+    database: process.env.POSTGRES_DB,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
     max: 10,
   }),
 })

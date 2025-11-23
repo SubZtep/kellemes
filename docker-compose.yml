@@ -1,0 +1,102 @@
+services:
+  postgres:
+    image: postgres:18.1-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - ${POSTGRES_DATA_DIR}:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    environment:
+      API_PORT: 3000
+
+      # PostgreSQL Configuration
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+
+      # Ollama Configuration
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL}
+      EMBEDDING_DIMENSION: ${EMBEDDING_DIMENSION}
+
+      # RAG Configuration
+      DATA_DIR: /app/data
+      TOP_K_RESULTS: ${TOP_K_RESULTS}
+      SIMILARITY_THRESHOLD: ${SIMILARITY_THRESHOLD}
+    ports:
+      - "${API_PORT}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    extra_hosts:
+      # Allow container to access host machine's Ollama
+      - "host.docker.internal:host-gateway"
+
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: kellemes-api
+  #   restart: unless-stopped
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   environment:
+  #     NODE_ENV: ${NODE_ENV:-production}
+  #     PORT: ${PORT:-3000}
+
+  #     # PostgreSQL Configuration
+  #     POSTGRES_HOST: postgres
+  #     POSTGRES_PORT: 5432
+  #     POSTGRES_DB: ${POSTGRES_DB:-kellemes}
+  #     POSTGRES_USER: ${POSTGRES_USER:-kellemes}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kellemes_password}
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-kellemes}:${POSTGRES_PASSWORD:-kellemes_password}@postgres:5432/${POSTGRES_DB:-kellemes}
+
+  #     # Ollama Configuration
+  #     OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+  #     EMBEDDING_MODEL: ${EMBEDDING_MODEL:-nomic-embed-text}
+  #     CHAT_MODEL: ${CHAT_MODEL:-kellemes}
+
+  #     # RAG Configuration
+  #     DATA_DIR: ${DATA_DIR:-./data}
+  #     TOP_K: ${TOP_K:-5}
+  #     SIMILARITY_THRESHOLD: ${SIMILARITY_THRESHOLD:-0.5}
+  #     TEMPERATURE: ${TEMPERATURE:-0.7}
+  #   ports:
+  #     - "${PORT:-3000}:3000"
+  #   volumes:
+  #     # Mount data directory for vector storage and training data
+  #     - ./data:/app/data
+  #   extra_hosts:
+  #     # Allow container to access host machine's Ollama
+  #     - "host.docker.internal:host-gateway"
+  #   networks:
+  #     - kellemes-network
+
+# volumes:
+#   pgdata:
+#     driver: local
+
+# networks:
+#   kellemes-network:
+#     driver: bridge

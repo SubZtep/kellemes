@@ -48,8 +48,8 @@ export default function ResponseBox({ isLoading, error }: { isLoading: boolean; 
         </Box>
       )} */}
 
-      {responses.map((response, i) => (
-        <Box key={i}>
+      {responses.map((response, _i) => (
+        <Box key={response.sender + response.createdAt.getTime().toString()}>
           <Text color="white">{response.response}</Text>
         </Box>
       ))}

@@ -1,7 +1,7 @@
-import { FileMigrationProvider, Migrator } from "kysely"
 import { promises as fs } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { FileMigrationProvider, Migrator } from "kysely"
 import { db } from "./database"
 
 const __filename = fileURLToPath(import.meta.url)

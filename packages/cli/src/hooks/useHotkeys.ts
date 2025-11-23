@@ -54,6 +54,6 @@ export default function useHotkeys() {
 
       setKeyPressed(null)
     },
-    { isActive: true }
+    { isActive: true },
   )
 }

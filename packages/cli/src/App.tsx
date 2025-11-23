@@ -1,6 +1,6 @@
+import { execSync } from "node:child_process"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Box, Text } from "ink"
-import { execSync } from "node:child_process"
 import { useEffect, useState } from "react"
 import ChatPanel from "./components/layout/ChatPanel"
 import InfoPanel from "./components/layout/InfoPanel"
@@ -24,12 +24,12 @@ export default function App() {
     try {
       const gitStatus = execSync("git status --short", { encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"] })
       if (gitStatus.trim()) {
-        let info = "📝 Code changes detected:\n\n" + gitStatus + "\n"
+        let info = `📝 Code changes detected:\n\n${gitStatus}\n`
 
         try {
           const diffStat = execSync("git diff HEAD --stat", { encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"] })
           if (diffStat.trim()) {
-            info += "\n📊 Change summary:\n\n" + diffStat
+            info += `\n📊 Change summary:\n\n${diffStat}`
           }
         } catch {
           // Diff failed, skip it
@@ -42,7 +42,7 @@ export default function App() {
           setShowGitInfo(false)
         }, 5000)
       }
-    } catch (error) {
+    } catch (_error) {
       // Not a git repo or git not available, skip the check
     }
   }, [])

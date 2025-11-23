@@ -63,6 +63,9 @@ importers:
       kysely:
         specifier: ^0.28.8
         version: 0.28.8
+      ollama:
+        specifier: ^0.6.3
+        version: 0.6.3
       pg:
         specifier: ^8.16.3
         version: 8.16.3

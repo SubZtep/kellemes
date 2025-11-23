@@ -1,7 +1,8 @@
 {
   "biome.lsp.bin": "./node_modules/@biomejs/biome/bin/biome",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "always"
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit"
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
@@ -10,5 +11,8 @@
   },
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   }
 }

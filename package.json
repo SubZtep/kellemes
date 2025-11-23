@@ -12,10 +12,14 @@
     "dev:cli": "pnpm --filter @kellemes/cli dev",
     "start": "pnpm --filter @kellemes/api start",
     "test": "pnpm -r test",
-    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r exec tsc --noEmit",
+    "lint": "biome check .",
     "ingest": "pnpm --filter @kellemes/api ingest",
     "cli": "pnpm --filter @kellemes/cli start",
     "prepare": "husky"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.7",
@@ -28,8 +32,5 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^4.0.12"
-  },
-  "dependencies": {
-    "pg": "^8.16.3"
   }
 }
