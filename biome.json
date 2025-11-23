@@ -30,7 +30,8 @@
         "useTemplate": "warn"
       },
       "suspicious": {
-        "noExplicitAny": "off"
+        "noExplicitAny": "off",
+        "noTsIgnore": "off"
       }
     }
   },

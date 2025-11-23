@@ -1,6 +1,7 @@
 import { Box, Text, useFocusManager } from "ink"
 
 export default function KeyBindings() {
+  // @ts-ignore https://github.com/vadimdemedes/ink/pull/831
   const { activeId } = useFocusManager()
 
   return (
