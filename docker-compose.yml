@@ -41,7 +41,7 @@ services:
       # TOP_K_RESULTS: ${TOP_K_RESULTS}
       # SIMILARITY_THRESHOLD: ${SIMILARITY_THRESHOLD}
     ports:
-      - "${API_PORT}:3000"
+      - "${API_PORT}:${API_PORT}"
     depends_on:
       postgres:
         condition: service_healthy

@@ -20,6 +20,10 @@ A TypeScript-based Retrieval-Augmented Generation (RAG) system for a keLLeMes ch
 
 > The [rest of](https://subztep.github.io/kellemes) the ~~docs~~ are a work in progress.
 
+### Configuration
+
+All required environment variable defaults are in [`mise.toml`](mise.toml#L1). If you want to override any of them, create a `.env` file with the updated values.
+
 ## 📚 Full Documentation
 
 ## Features
