@@ -4,7 +4,7 @@ import { cors } from "hono/cors"
 import { logger } from "hono/logger"
 import "dotenv/config"
 import { migrateToLatest } from "../db/migrator"
-// import chatRoutes from "./routes/chat.routes"
+import chatRoutes from "./routes/chat.routes"
 import infoRoutes from "./routes/info.routes"
 
 const app = new Hono()
@@ -14,7 +14,7 @@ app.use("*", cors())
 app.use("*", logger())
 
 // Routes
-// app.route("/api", chatRoutes)
+app.route("/", chatRoutes)
 app.route("/", infoRoutes)
 
 // 404 handler

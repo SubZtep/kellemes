@@ -68,11 +68,15 @@ app.openapi(healthRoute, async c => {
   )
 })
 
-app.get("/", c => c.json({ timestamp: new Date().toISOString() }))
+app.get("/", c => {
+  const url = new URL(c.req.url, `http://${c.req.header("host") || "localhost"}`)
+  const docs = `${url.origin}${url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`}docs`
+  return c.json({ timestamp: new Date().toISOString(), docs })
+})
 app.get("/robots.txt", c => c.text("User-agent: *\nDisallow: /"))
 app.get("/favicon.ico", c => c.body(null, 204))
 
-app.doc("/openapi", {
+app.doc("/openapi.json", c => ({
   openapi: "3.0.0",
   externalDocs: {
     url: "https://github.com/SubZtep/kellemes",
@@ -80,20 +84,20 @@ app.doc("/openapi", {
   },
   servers: [
     {
-      url: "http://localhost:8080",
-      description: "Local development",
+      url: new URL(c.req.url).origin,
+      description: "Current environment",
     },
   ],
   info: {
     title: "keLLeMes API",
     version: "1.0.0",
   },
-})
+}))
 
 app.get(
   "/docs",
   Scalar({
-    url: "/openapi",
+    url: "/openapi.json",
     theme: "elysiajs",
     showDeveloperTools: "never",
     pageTitle: "keLLeMes API Documentation",
