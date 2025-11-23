@@ -1,5 +1,4 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi"
-import { Scalar } from "@scalar/hono-api-reference"
+import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
 import { Ollama } from "ollama"
 
 const HealthSchema = z.object({
@@ -44,72 +43,34 @@ const healthRoute = createRoute({
   },
 })
 
-const app = new OpenAPIHono()
-
 // Initialize Ollama client with custom host from environment
 const ollama = new Ollama({ host: process.env.OLLAMA_BASE_URL! })
 
-app.openapi(healthRoute, async c => {
-  const ollamaVersion = await ollama.version()
-  const ollamaHealthy = !!ollamaVersion?.version
-  const ragReady = true //ragService.isReady()
+export function registerInfoRoutes(app: OpenAPIHono) {
+  app.openapi(healthRoute, async c => {
+    const ollamaVersion = await ollama.version()
+    const ollamaHealthy = !!ollamaVersion?.version
+    const ragReady = true //ragService.isReady()
 
-  const status = ollamaHealthy && ragReady ? "ok" : ollamaHealthy ? "alright" : "degraded"
-  const statusCode = ollamaHealthy ? 200 : 503
+    const status = ollamaHealthy && ragReady ? "ok" : ollamaHealthy ? "alright" : "degraded"
+    const statusCode = ollamaHealthy ? 200 : 503
 
-  return c.json(
-    {
-      status,
-      ollama: ollamaHealthy ? "connected" : "disconnected",
-      rag: ragReady ? "ready" : "not initialized",
-      timestamp: new Date().toISOString(),
-    },
-    statusCode,
-  )
-})
+    return c.json(
+      {
+        status,
+        ollama: ollamaHealthy ? "connected" : "disconnected",
+        rag: ragReady ? "ready" : "not initialized",
+        timestamp: new Date().toISOString(),
+      },
+      statusCode,
+    )
+  })
 
-app.get("/", c => {
-  const url = new URL(c.req.url, `http://${c.req.header("host") || "localhost"}`)
-  const docs = `${url.origin}${url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`}docs`
-  return c.json({ timestamp: new Date().toISOString(), docs })
-})
-app.get("/robots.txt", c => c.text("User-agent: *\nDisallow: /"))
-app.get("/favicon.ico", c => c.body(null, 204))
-
-app.doc("/openapi.json", c => ({
-  openapi: "3.0.0",
-  externalDocs: {
-    url: "https://github.com/SubZtep/kellemes",
-    description: "GitHub repository ",
-  },
-  servers: [
-    {
-      url: new URL(c.req.url).origin,
-      description: "Current environment",
-    },
-  ],
-  info: {
-    title: "keLLeMes API",
-    version: "1.0.0",
-  },
-}))
-
-app.get(
-  "/docs",
-  Scalar({
-    url: "/openapi.json",
-    theme: "elysiajs",
-    showDeveloperTools: "never",
-    pageTitle: "keLLeMes API Documentation",
-    darkMode: true,
-    defaultHttpClient: {
-      targetKey: "node",
-      clientKey: "fetch",
-    },
-    forceDarkModeState: "dark",
-    hideDarkModeToggle: true,
-    telemetry: false,
-  }),
-)
-
-export default app
+  app.get("/", c => {
+    const url = new URL(c.req.url, `http://${c.req.header("host") || "localhost"}`)
+    const docs = `${url.origin}${url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`}docs`
+    return c.json({ timestamp: new Date().toISOString(), docs })
+  })
+  app.get("/robots.txt", c => c.text("User-agent: *\nDisallow: /"))
+  app.get("/favicon.ico", c => c.body(null, 204))
+}
