@@ -10,9 +10,7 @@
 
 An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation (RAG) system for a keLLeMes chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base.
 
-## ⚡ Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - [Mise](https://mise.jdx.dev/), tool version manager
 - [Biome](https://biomejs.dev/), code formatter and linter
@@ -20,14 +18,38 @@ An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation 
 
 > The [rest of](https://subztep.github.io/kellemes) the ~~docs~~ are a work in progress.
 
-### Configuration
+## Configuration
 
 All required environment variable defaults are in [`mise.toml`](mise.toml#L1).
 
 If you want to override any of them, create a `.env` file with the updated values.
 
+## Terminal Commands
+
+Run these commands from the project root:
+
+| Command                 | Description                           |
+| ----------------------- | ------------------------------------- |
+| `pnpm i`                | Install dependencies for all packages |
+| `pnpm build`            | Build all packages                    |
+| `pnpm lint`             | Code lint all packages                |
+| `pnpm typecheck`        | Type calidity check all packages      |
+| `pnpm test`             | Run tests (where available)           |
+| `pnpm --filter api dev` | Start the API in development mode     |
+| `pnpm --filter cli dev` | Start the CLI app in development mode |
+
+> ### Bonus command:
+> 
+> `docker compose up -d`\
+> Start all required services (+more) in the background.\
+> For the first run it setup the database in a permanent Docker volume.
+
 ---
 ---
+---
+-
+---
+-
 ---
 
 ```
@@ -48,6 +70,8 @@ If you want to override any of them, create a `.env` file with the updated value
 ⠀⠀⠀⠀⠀⠀⠈⠉⠂⠒⠤⠠⠄⠄⠤⠄⠤⠤⠠⠔⠈⠀⠀⠀⠀⠀⠀⠀
 ```
 
+---
+-
 ---
 
 _(TBC)_

@@ -8,8 +8,6 @@
   "type": "module",
   "scripts": {
     "build": "pnpm -r build",
-    "dev:api": "pnpm --filter @kellemes/api dev",
-    "dev:cli": "pnpm --filter @kellemes/cli dev",
     "start": "pnpm --filter @kellemes/api start",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r exec tsc --noEmit",

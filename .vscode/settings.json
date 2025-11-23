@@ -20,5 +20,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  }
+  },
+  "explorer.excludeGitIgnore": false
 }

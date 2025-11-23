@@ -1,6 +1,7 @@
 .claude/
 dist/
 node_modules/
+/.pnpm-store/
 /data/
 *.tsbuildinfo
 .env

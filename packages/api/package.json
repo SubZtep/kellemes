@@ -18,7 +18,7 @@
     "@hono/node-server": "^1.19.6",
     "@hono/zod-openapi": "^1.1.5",
     "@kellemes/ollama-service": "workspace:*",
-    "@kellemes/rag-service": "workspace:*",
+    "@kellemes/rag": "workspace:*",
     "@kellemes/common": "workspace:*",
     "@scalar/hono-api-reference": "^0.9.25",
     "@types/pg": "^8.15.6",

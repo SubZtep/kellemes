@@ -1,7 +1,7 @@
 {
-  "name": "@kellemes/rag-service",
+  "name": "@kellemes/rag",
   "version": "1.0.0",
-  "description": "RAG orchestration service for keLLeMes",
+  "description": "RAG orchestration package for keLLeMes",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

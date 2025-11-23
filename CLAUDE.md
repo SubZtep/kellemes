@@ -39,7 +39,7 @@ kellemes/
 │   ├── common/             # @kellemes/common - Shared types/schemas/constants
 │   ├── ollama-service/     # @kellemes/ollama-service - Ollama API client
 │   ├── vector-service/     # @kellemes/vector-service - Vector DB & similarity search
-│   ├── rag-service/        # @kellemes/rag-service - RAG orchestration
+│   ├── rag/                # @kellemes/rag - RAG orchestration
 │   ├── api/                # @kellemes/api - Hono HTTP API server
 │   └── cli/                # @kellemes/cli - Ink-based parameter tweaking UI
 ├── data/                   # Local data (vectors, training data)
@@ -50,13 +50,13 @@ kellemes/
 - `@kellemes/common` → Shared primitives (types/schemas/constants), no deps
 - `@kellemes/ollama-service` → Depends on types
 - `@kellemes/vector-service` → Depends on types
-- `@kellemes/rag-service` → Depends on types, ollama-service, vector-service
-- `@kellemes/api` → Depends on rag-service, ollama-service, types
-- `@kellemes/cli` → Depends on rag-service, types
+- `@kellemes/rag` → Depends on common, ollama-service, vector-service
+- `@kellemes/api` → Depends on rag, ollama-service, common
+- `@kellemes/cli` → Depends on rag, common
 
 ### Core Services
 
-1. **RAGService** (`packages/rag-service/src/index.ts`)
+1. **RAGService** (`packages/rag/src/index.ts`)
    - Coordinates data ingestion, retrieval, and response generation
    - Implements companion query detection to redirect non-companion questions
    - Handles casual conversational queries without RAG context

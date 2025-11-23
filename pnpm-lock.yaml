@@ -57,9 +57,9 @@ importers:
       '@kellemes/ollama-service':
         specifier: workspace:*
         version: link:../ollama-service
-      '@kellemes/rag-service':
+      '@kellemes/rag':
         specifier: workspace:*
-        version: link:../rag-service
+        version: link:../rag
       '@scalar/hono-api-reference':
         specifier: ^0.9.25
         version: 0.9.25(hono@4.10.6)
@@ -100,9 +100,9 @@ importers:
       '@kellemes/common':
         specifier: workspace:*
         version: link:../common
-      '@kellemes/rag-service':
+      '@kellemes/rag':
         specifier: workspace:*
-        version: link:../rag-service
+        version: link:../rag
       '@mishieck/ink-titled-box':
         specifier: ^0.3.0
         version: 0.3.0(ink@6.5.1(@types/react@19.2.6)(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
@@ -193,7 +193,7 @@ importers:
         specifier: ^4.0.13
         version: 4.0.13(@types/node@24.10.1)(jiti@2.6.1)(tsx@4.20.6)(yaml@2.8.1)
 
-  packages/rag-service:
+  packages/rag:
     dependencies:
       '@kellemes/common':
         specifier: workspace:*
