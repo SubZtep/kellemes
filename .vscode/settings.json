@@ -6,17 +6,20 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "biomejs.biome",
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "biomejs.biome"
+  "[dockercompose]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
   },
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
-  "[dockercompose]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"

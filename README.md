@@ -12,9 +12,7 @@ An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation 
 
 ## Prerequisites
 
-- [Mise](https://mise.jdx.dev/), tool version manager
-- [Biome](https://biomejs.dev/), code formatter and linter
-- ~~Just~~ the usual JS bits.
+**Install [MISE-EN-PLACE](https://mise.jdx.dev/) properly** on your system. It's a tool/version manager that handles core utilities (like pnpm). Get familiar with it now to make future configuration easier. :shipit:
 
 > The [rest of](https://subztep.github.io/kellemes) the ~~docs~~ are a work in progress.
 
@@ -49,7 +47,7 @@ Run these commands from the project root:
 ---
 -
 ---
--
+- :thought_balloon:
 ---
 
 ```
