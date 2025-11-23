@@ -1,10 +1,11 @@
 import { ragService } from "@kellemes/core"
+import { TitledBox } from "@mishieck/ink-titled-box"
 import { Box, type BoxProps, Text } from "ink"
 import { useEffect, useState } from "react"
 
 type RAGStatus = "ready" | "not ready" | "initializing"
 
-export default function RagBox(props: BoxProps) {
+export default function RagBox(props: Pick<BoxProps, "flexGrow">) {
   const [ragStatus, setRAGStatus] = useState<RAGStatus>("initializing")
   const [documentsCount, setDocumentsCount] = useState(0)
 
@@ -21,7 +22,7 @@ export default function RagBox(props: BoxProps) {
   }, [])
 
   return (
-    <Box flexDirection="column" paddingX={1} {...props}>
+    <TitledBox titles={["RAG", "Stats"]} borderStyle={"round"} flexDirection="column" borderDimColor {...props}>
       <Box justifyContent="space-between">
         <Text>RAG:</Text>
         <Text color={ragColor}>{ragStatus}</Text>
@@ -30,6 +31,6 @@ export default function RagBox(props: BoxProps) {
         <Text>Documents:</Text>
         <Text color="cyan">{documentsCount}</Text>
       </Box>
-    </Box>
+    </TitledBox>
   )
 }

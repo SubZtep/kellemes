@@ -48,20 +48,21 @@ export default function SelectModel() {
         )}
       </Box>
 
-      {!!models && models.length > 0 ? (
-        <>
-          <SelectInput
-            initialIndex={models.findIndex(model => model.name === highlightedModel)}
-            items={models?.map(model => ({ label: model.name, value: model.name })) ?? []}
-            onHighlight={item => setHightlightedModel(item?.value ?? null)}
-            onSelect={item => setActiveModel(item.value)}
-            isFocused={true}
-          />
-          {highlightedModel && <ModelInfo model={highlightedModel} expiresAt={getExpiresAt(highlightedModel)!} />}
-        </>
-      ) : (
-        <Text dimColor>No models found</Text>
-      )}
+      {models &&
+        (models.length > 0 ? (
+          <>
+            <SelectInput
+              initialIndex={models.findIndex(model => model.name === highlightedModel)}
+              items={models?.map(model => ({ label: model.name, value: model.name })) ?? []}
+              onHighlight={item => setHightlightedModel(item?.value ?? null)}
+              onSelect={item => setActiveModel(item.value)}
+              isFocused={true}
+            />
+            {highlightedModel && <ModelInfo model={highlightedModel} expiresAt={getExpiresAt(highlightedModel)!} />}
+          </>
+        ) : (
+          <Text dimColor>No models found</Text>
+        ))}
     </>
   )
 }

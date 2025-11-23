@@ -1,12 +1,12 @@
 > ##
 >
-> ## :rainbow: Work In Progress :construction:
+> ## Work In Progress :construction:
 >
 > ---
 >
 > ##
 
-# :love_letter: keLLeMes, :feelsgood: the untouchable
+# :rainbow::sparkler: keLLeMes, the untouchable :love_letter:
 
 A TypeScript-based Retrieval-Augmented Generation (RAG) system for a keLLeMes chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base.
 

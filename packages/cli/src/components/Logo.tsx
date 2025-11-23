@@ -12,7 +12,7 @@ const GlitchBox = ({ children }: { children: (glitched: boolean) => ReactNode })
     }, 100)
     const timer2 = setTimeout(() => {
       clearInterval(timer)
-    }, 10000)
+    }, 3000)
     return () => {
       clearInterval(timer)
       clearTimeout(timer2)

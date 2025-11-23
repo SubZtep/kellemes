@@ -1,3 +1,13 @@
+## API Endpoints
+
+```json
+{
+  chat: "POST /api/chat",
+  retrieve: "POST /api/retrieve",
+  stats: "GET /api/stats",
+  health: "GET /health",
+}
+```
 
 ## API Reference
 

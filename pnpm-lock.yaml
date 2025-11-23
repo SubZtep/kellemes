@@ -88,6 +88,9 @@ importers:
       '@kellemes/core':
         specifier: workspace:*
         version: link:../core
+      '@mishieck/ink-titled-box':
+        specifier: ^0.3.0
+        version: 0.3.0(ink@6.5.1(@types/react@19.2.6)(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
       '@tanstack/react-query':
         specifier: ^5.90.10
         version: 5.90.10(react@19.2.0)
@@ -591,6 +594,13 @@ packages:
   '@lukeed/ms@2.0.2':
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
+
+  '@mishieck/ink-titled-box@0.3.0':
+    resolution: {integrity: sha512-ugzVH9hixp3hwKfQ8On/qnsrdAxS3y9rTu/aGOFed4zVUvtZyGZNIR4rxAwXult8HKI4vJEh0OM8wib9NPrwUg==}
+    peerDependencies:
+      ink: ^6.0.0
+      react: ^19.1.0
+      typescript: ^5
 
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
@@ -2620,6 +2630,12 @@ snapshots:
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
   '@lukeed/ms@2.0.2': {}
+
+  '@mishieck/ink-titled-box@0.3.0(ink@6.5.1(@types/react@19.2.6)(react@19.2.0))(react@19.2.0)(typescript@5.9.3)':
+    dependencies:
+      ink: 6.5.1(@types/react@19.2.6)(react@19.2.0)
+      react: 19.2.0
+      typescript: 5.9.3
 
   '@pinojs/redact@0.4.0': {}
 
