@@ -1,54 +1,11 @@
+.claude/
 .git/
+.github/
+.husky/
+.vscode/
 data/
 dist/
 node_modules/
-
-# # Dependencies
-# node_modules/
-# .pnpm-store/
-
-# # Build outputs
-# dist/
-# packages/*/dist/
-# *.tsbuildinfo
-
-# # Data
-# data/vectors/*.json
-# data/training/*.json
-
-# # Environment
-# .env
-# .env.local
-# .env.*.local
-
-# # Development
-# .claude/
-# .vscode/
-# .husky/
-
-# # Git
-# .git/
-# .github/
-# .gitignore
-
-# # Logs
-# *.log
-# npm-debug.log*
-# pnpm-debug.log*
-
-# # Testing
-# coverage/
-# .nyc_output/
-
-# # OS
-# .DS_Store
-# Thumbs.db
-
-# # Documentation
-# *.md
-# !README.md
-
-# # Docker
-# Dockerfile
-# docker-compose.yml
-# .dockerignore
+*.md
+.dockerignore
+.gitignore
