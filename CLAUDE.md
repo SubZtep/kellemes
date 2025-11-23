@@ -13,16 +13,18 @@ This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the k
 ### Running the Application
 ```bash
 # API Server
-pnpm dev:api         # Start API server with auto-reload
-pnpm start           # Run production API server
+pnpm --filter @kellemes/api dev    # Start API server with auto-reload (tsx watch)
+pnpm start                          # Run production API server
 
 # CLI
-pnpm dev:cli         # Start interactive parameter tweaking UI
-pnpm cli             # Run CLI
+pnpm --filter @kellemes/cli dev    # Start CLI in dev mode (tsx watch)
+pnpm cli                            # Run CLI
 
 # Build & Quality
 pnpm build           # Build all packages
 pnpm lint            # Lint all packages
+pnpm typecheck       # Type check all packages
+pnpm test            # Run tests across all packages
 ```
 
 ### Data Management
@@ -37,12 +39,17 @@ pnpm ingest          # Ingest Q&A data and generate embeddings (10-15 min)
 kellemes/
 ├── packages/
 │   ├── common/             # @kellemes/common - Shared types/schemas/constants
-│   ├── ollama-service/     # @kellemes/ollama-service - Ollama API client
+│   ├── ollama-service/     # @kellemes/ollama-service - Ollama API client (deprecated)
 │   ├── vector-service/     # @kellemes/vector-service - Vector DB & similarity search
 │   ├── rag/                # @kellemes/rag - RAG orchestration
-│   ├── api/                # @kellemes/api - Hono HTTP API server
-│   └── cli/                # @kellemes/cli - Ink-based parameter tweaking UI
+│   ├── api/                # @kellemes/api - Hono HTTP API server with PostgreSQL
+│   │   └── db/             # Database migrations, schemas, and Kysely setup
+│   ├── cli/                # @kellemes/cli - Interactive Ink-based chat UI
+│   ├── core/               # (legacy - build artifacts only)
+│   ├── types/              # (legacy - build artifacts only)
+│   └── rag-service/        # (legacy - build artifacts only)
 ├── data/                   # Local data (vectors, training data)
+├── .env                    # Environment configuration
 └── package.json            # Root workspace config
 ```
 
@@ -67,24 +74,35 @@ kellemes/
    - Persists vectors to JSON file at `./data/vectors/qa_vectors.json`
    - Key methods: `search()`, `save()`, `load()`, `cosineSimilarity()`
 
-3. @deprecated **OllamaService** (`packages/ollama-service/src/index.ts`)
-   - Ollama API client for embeddings and chat completions
-   - Uses `nomic-embed-text` for embeddings, `kellemes` for chat
-   - Key methods: `generateEmbedding()`, `chat()`, `checkHealth()`
+3. **Database Layer** (`packages/api/db/`)
+   - PostgreSQL database with Kysely query builder
+   - Migration system for schema versioning
+   - Connection pooling via `pg` (PostgresSQL client)
+   - Environment-based configuration (host, port, database, user, password)
+   - Key files: `database.ts`, `migrator.ts`, `types.ts`, `migrations/`
 
 ### Applications
 
 1. **API Server** (`packages/api/src/index.ts`)
-   - Hono-based HTTP server exposing RAG endpoints
-   - Routes: `/api/chat`, `/api/retrieve`, `/api/stats`, `/health`
-   - Runs on port specified in `.env` (default: 3000)
+   - Hono-based HTTP server with OpenAPI/Zod validation
+   - Automatic database migrations on startup
+   - Interactive API documentation via Scalar at `/docs`
+   - Routes:
+     - `POST /chat` - Main chat endpoint with optional RAG support
+     - `POST /retrieve` - Retrieve similar Q&A pairs
+     - `GET /stats` - Service statistics
+     - `GET /health` - Health check (Ollama + RAG status)
+     - `GET /docs` - Interactive API documentation
+     - `GET /openapi.json` - OpenAPI specification
+   - Runs on port specified in `.env` as `API_PORT` (e.g., 3001)
 
 2. **CLI** (`packages/cli/src/index.tsx`)
-   - Interactive Ink-based UI for parameter tuning
-   - Real-time parameter adjustment (topK, similarity threshold, temperature)
-   - Live query testing with source visualization
-   - Keyboard controls: ↑/↓ navigate, ←/→ adjust, Enter for input, Esc to quit
-   - Tab and Shift Tab is for moving the focus one step away
+   - Interactive Ink-based chat interface
+   - Built with React, Ink, TanStack Query, and Zustand for state management
+   - Real-time chat with Ollama integration
+   - Model selection and configuration
+   - Rich UI components (titled boxes, gradients, spinners, big text)
+   - Keyboard navigation and text input controls
 
 ### Data Flow
 1. **Ingestion**: Load Q&A pairs → Generate embeddings → Store in vector DB
@@ -92,9 +110,14 @@ kellemes/
 
 ### Configuration
 Configuration loads from `.env` at the repository root:
-- Ollama base URL and model names
-- Vector database path
-- RAG parameters (topK, similarity threshold)
+- `API_PORT` - HTTP server port (e.g., 3001)
+- `OLLAMA_BASE_URL` - Ollama API endpoint
+- `POSTGRES_HOST` - PostgreSQL host
+- `POSTGRES_PORT` - PostgreSQL port
+- `POSTGRES_DB` - Database name
+- `POSTGRES_USER` - Database user
+- `POSTGRES_PASSWORD` - Database password
+- Vector database path and RAG parameters
 
 ## TypeScript Configuration
 
@@ -137,32 +160,46 @@ This creates richer semantic representations than embedding questions alone.
 ## Dependencies
 
 ### Core Services
-- `axios` - HTTP client for Ollama API
 - `dotenv` - Environment configuration
+- `ollama` - Official Ollama JavaScript SDK
 
 ### API Server
-- `hono` - Web framework for HTTP routes
+- `hono` - Fast, lightweight web framework
 - `@hono/node-server` - Node.js adapter for Hono
+- `@hono/zod-openapi` - OpenAPI integration with Zod validation
+- `@scalar/hono-api-reference` - Interactive API documentation UI
+- `kysely` - Type-safe SQL query builder
+- `pg` - PostgreSQL client
+- `@types/pg` - TypeScript types for PostgreSQL
 
-### Chat CLI
-- Node.js `readline` - Built-in terminal input/output
-
-### Tweak CLI (Interactive UI)
+### CLI
 - `ink` - React-based CLI rendering framework
-- `ink-spinner` - Loading spinner component
-- `ink-text-input` - Text input component
-- `react` - UI component library
+- `ink-spinner`, `ink-text-input`, `ink-select-input` - UI components
+- `ink-big-text`, `ink-gradient` - Visual enhancements
+- `@mishieck/ink-titled-box` - Titled box component
+- `fullscreen-ink` - Fullscreen terminal UI
+- `react` - UI component library (v19)
+- `@tanstack/react-query` - Async state management
+- `zustand` - Lightweight state management
+- `date-fns` - Date utilities
 
-### Development
+### Development & Testing
 - `tsx` - TypeScript execution and watch mode
 - `@biomejs/biome` - Fast linter and formatter
 - `typescript` - Type checking and compilation
+- `vitest` - Fast unit test framework
+- `evalite` - LLM evaluation framework
+- `autoevals` - Automated evaluation utilities
 - `pnpm` - Fast, disk-efficient package manager
+- `husky` - Git hooks
+- `@commitlint/cli` + `@commitlint/config-conventional` - Commit message linting
 
 ## External Requirements
 
-- **Ollama** must be running at `http://localhost:11434` (configurable)
+- **Ollama** must be running (configurable via `OLLAMA_BASE_URL`)
+- **PostgreSQL** database must be available and configured via environment variables
 - **Models required**:
   - `nomic-embed-text` - For generating embeddings
   - `kellemes` - Custom model (create from Modelfile)
-- **Mise** dev env https://mise.jdx.dev
+- **Mise** - Development environment manager (https://mise.jdx.dev)
+- **Docker** (optional) - For containerized PostgreSQL and Ollama
