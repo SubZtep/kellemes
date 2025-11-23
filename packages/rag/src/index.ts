@@ -13,25 +13,27 @@ export class RAGService {
   private vectorService: VectorService
 
   constructor() {
-    this.vectorService = new VectorService(join(process.env.DATA_DIR!, "vectors/qa_vectors.json"))
+    // this.vectorService = new VectorService(join(process.env.DATA_DIR!, "vectors/qa_vectors.json"))
+    this.vectorService = new VectorService("")
   }
 
   /**
    * Initialize the RAG service by loading or creating the vector database
    */
   async initialize(): Promise<void> {
-    try {
-      await this.vectorService.load()
+    throw new Error("Not implemented")
+    // try {
+    //   await this.vectorService.load()
 
-      if (!this.vectorService.isInitialized()) {
-        console.log("Vector database empty. Run ingestion to populate it.")
-      } else {
-        console.log(`RAG service initialized with ${this.vectorService.getCount()} documents`)
-      }
-    } catch (error) {
-      console.error("Error initializing RAG service:", error)
-      throw error
-    }
+    //   if (!this.vectorService.isInitialized()) {
+    //     console.log("Vector database empty. Run ingestion to populate it.")
+    //   } else {
+    //     console.log(`RAG service initialized with ${this.vectorService.getCount()} documents`)
+    //   }
+    // } catch (error) {
+    //   console.error("Error initializing RAG service:", error)
+    //   throw error
+    // }
   }
 
   /**

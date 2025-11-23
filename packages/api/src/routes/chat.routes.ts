@@ -1,43 +1,6 @@
 import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
-// import type { ChatRequest, ChatResponse } from "@kellemes/common"
+import { ChatRequestSchema, ChatResponseSchema } from "@kellemes/common"
 import { ragService } from "@kellemes/rag"
-
-const ChatRequestSchema = z.object({
-  query: z
-    .string()
-    .trim()
-    .min(1, "Query is required")
-    .openapi({ description: "The query to send to the chat endpoint", example: "What is the capital of France?" }),
-  topK: z.number().optional().openapi({ description: "The number of top results to return", example: 3 }),
-  useRAG: z.boolean().optional().openapi({ description: "Whether to use RAG or not", example: true }),
-})
-
-const ChatResponseSchema = z.object({
-  response: z
-    .string()
-    .openapi({ description: "The response from the chat endpoint", example: "The capital of France is Paris." }),
-  sources: z
-    .array(
-      z.object({
-        question: z
-          .string()
-          .openapi({ description: "The question that was asked", example: "What is the capital of France?" }),
-        answer: z
-          .string()
-          .openapi({ description: "The answer to the question", example: "The capital of France is Paris." }),
-        score: z.number().openapi({ description: "The score of the answer", example: 0.95 }),
-      }),
-    )
-    .optional()
-    .openapi({
-      description: "The sources that were used to answer the question",
-      example: [{ question: "What is the capital of France?", answer: "The capital of France is Paris.", score: 0.95 }],
-    }),
-  model: z
-    .string()
-    .optional()
-    .openapi({ description: "The model that was used to answer the question", example: "kellemes-rag" }),
-})
 
 const chatRoute = createRoute({
   method: "post",
@@ -95,27 +58,17 @@ export function registerChatRoutes(app: OpenAPIHono) {
       // const { query, topK, useRAG = true }: ChatRequest = await c.req.valid("json")
       const { query, topK, useRAG = false } = await c.req.valid("json")
 
-      // if (!query || typeof query !== "string") {
-      //   return c.json(
-      //     {
-      //       error: "Invalid request: query is required and must be a string",
-      //     },
-      //     400,
-      //   )
-      // }
-
-      if (!ragService.isReady()) {
-        return c.json(
-          {
-            error: "RAG service is not ready. Please run data ingestion first.",
-          },
-          503,
-        )
-      }
-
       let response: z.infer<typeof ChatResponseSchema>
 
       if (useRAG) {
+        if (!ragService.isReady()) {
+          return c.json(
+            {
+              error: "RAG service is not ready. Please run data ingestion first.",
+            },
+            503,
+          )
+        }
         const result = await ragService.generateResponse(query, topK)
         response = {
           response: result.response,

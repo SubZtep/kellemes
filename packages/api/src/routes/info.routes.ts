@@ -1,12 +1,6 @@
-import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
+import { createRoute, type OpenAPIHono } from "@hono/zod-openapi"
+import { HealthSchema } from "@kellemes/common"
 import { Ollama } from "ollama"
-
-const HealthSchema = z.object({
-  status: z.enum(["ok", "alright", "degraded"]),
-  ollama: z.enum(["connected", "disconnected"]),
-  rag: z.enum(["ready", "not initialized"]),
-  timestamp: z.string().openapi({ description: "Server timestamp", example: "2025-11-23T16:07:53.669Z" }),
-})
 
 const healthRoute = createRoute({
   method: "get",

@@ -45,8 +45,6 @@ kellemes/
 │   ├── api/                # @kellemes/api - Hono HTTP API server with PostgreSQL
 │   │   └── db/             # Database migrations, schemas, and Kysely setup
 │   ├── cli/                # @kellemes/cli - Interactive Ink-based chat UI
-│   ├── core/               # (legacy - build artifacts only)
-│   ├── types/              # (legacy - build artifacts only)
 │   └── rag-service/        # (legacy - build artifacts only)
 ├── data/                   # Local data (vectors, training data)
 ├── .env                    # Environment configuration
@@ -125,6 +123,25 @@ Configuration loads from `.env` at the repository root:
 - ES2022 target with ESM modules
 - Source maps and declarations generated
 - Unused locals/parameters flagged as errors
+
+### ESM Import Requirements
+
+**CRITICAL**: All packages use `"type": "module"` and Node.js ESM, which requires explicit `.js` extensions on ALL relative imports.
+
+**Rules**:
+1. All relative imports MUST include `.js` extension (even in `.ts` files)
+   - ✓ `import { foo } from "./bar.js"`
+   - ✗ `import { foo } from "./bar"`
+2. Directory index imports must be explicit
+   - ✓ `import { foo } from "./utils/index.js"`
+   - ✗ `import { foo } from "./utils"`
+3. Package imports (from `node_modules`) do NOT need extensions
+   - ✓ `import { Hono } from "hono"`
+
+**Build Structure**:
+- Packages with multiple source directories (e.g., `api` with `src/`, `db/`, `scripts/`) use `rootDir: "."` in `tsconfig.json`
+- This preserves directory structure in output: `dist/src/`, `dist/db/`, `dist/scripts/`
+- All `package.json` entry points must reflect this structure (e.g., `"main": "./dist/src/index.js"`)
 
 ## Code Style (Biome)
 

@@ -3,6 +3,7 @@ packages:
 
 ignoredBuiltDependencies:
   - esbuild
+  - vue-demi
 
 onlyBuiltDependencies:
   - better-sqlite3

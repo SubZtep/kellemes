@@ -1,10 +1,10 @@
 import { serve } from "@hono/node-server"
 import "dotenv/config"
-import { migrateToLatest } from "../db/migrator"
-import { app } from "./app"
-import { registerDocs } from "./config/docs"
-import { registerMiddleware } from "./middleware"
-import { registerRoutes } from "./routes"
+import { migrateToLatest } from "../db/migrator.js"
+import { app } from "./app.js"
+import { registerDocs } from "./docs.js"
+import { registerMiddleware } from "./middlewares.js"
+import { registerRoutes } from "./routes/index.js"
 
 // Setup middleware
 registerMiddleware(app)
@@ -13,7 +13,7 @@ registerMiddleware(app)
 registerRoutes(app)
 
 // Register documentation
-registerDocs(app)
+await registerDocs(app)
 
 // Initialize and start server
 async function startServer() {

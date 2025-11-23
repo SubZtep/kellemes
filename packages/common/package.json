@@ -17,5 +17,9 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@hono/zod-openapi": "^1.1.5",
+    "zod": "^4.1.12"
   }
 }
