@@ -36,11 +36,10 @@ pnpm ingest          # Ingest Q&A data and generate embeddings (10-15 min)
 ```
 kellemes/
 ├── packages/
-│   ├── types/              # @kellemes/types - Shared TypeScript interfaces
+│   ├── common/             # @kellemes/common - Shared types/schemas/constants
 │   ├── ollama-service/     # @kellemes/ollama-service - Ollama API client
 │   ├── vector-service/     # @kellemes/vector-service - Vector DB & similarity search
 │   ├── rag-service/        # @kellemes/rag-service - RAG orchestration
-│   ├── core/               # @kellemes/core - Convenience re-export of all services
 │   ├── api/                # @kellemes/api - Hono HTTP API server
 │   └── cli/                # @kellemes/cli - Ink-based parameter tweaking UI
 ├── data/                   # Local data (vectors, training data)
@@ -48,13 +47,12 @@ kellemes/
 ```
 
 ### Package Dependency Graph
-- `@kellemes/types` → Base types, no dependencies
+- `@kellemes/common` → Shared primitives (types/schemas/constants), no deps
 - `@kellemes/ollama-service` → Depends on types
 - `@kellemes/vector-service` → Depends on types
 - `@kellemes/rag-service` → Depends on types, ollama-service, vector-service
-- `@kellemes/core` → Re-exports all services (convenience package)
-- `@kellemes/api` → Depends on core (HTTP layer)
-- `@kellemes/cli` → Depends on core (Text UI with Ink)
+- `@kellemes/api` → Depends on rag-service, ollama-service, types
+- `@kellemes/cli` → Depends on rag-service, types
 
 ### Core Services
 

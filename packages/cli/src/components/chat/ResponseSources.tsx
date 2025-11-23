@@ -1,4 +1,4 @@
-import type { SearchResult } from "@kellemes/core"
+import type { SearchResult } from "@kellemes/common"
 import { Box, Text } from "ink"
 
 export default function ResponseSources({ sources }: { sources: SearchResult[] }) {

@@ -1,4 +1,4 @@
-import { ragService } from "@kellemes/core"
+import { ragService } from "@kellemes/rag-service"
 import { TitledBox } from "@mishieck/ink-titled-box"
 import { Box, type BoxProps, Text } from "ink"
 import { useEffect, useState } from "react"

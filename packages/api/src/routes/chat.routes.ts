@@ -1,4 +1,5 @@
-import { type ChatRequest, type ChatResponse, ragService } from "@kellemes/core"
+import type { ChatRequest, ChatResponse } from "@kellemes/common"
+import { ragService } from "@kellemes/rag-service"
 import { Hono } from "hono"
 
 const app = new Hono()

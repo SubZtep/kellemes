@@ -1,5 +1,6 @@
 .claude/
-data/
 dist/
 node_modules/
+/data/
+*.tsbuildinfo
 .env

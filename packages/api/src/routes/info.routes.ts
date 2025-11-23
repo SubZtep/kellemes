@@ -1,4 +1,3 @@
-// import { ragService } from "@kellemes/core"
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi"
 import { Scalar } from "@scalar/hono-api-reference"
 import { Ollama } from "ollama"

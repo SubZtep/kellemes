@@ -1,5 +1,5 @@
+import type { EmbeddedQAPair, QAPair, SearchResult } from "@kellemes/common"
 import { ollamaService } from "@kellemes/ollama-service"
-import type { EmbeddedQAPair, QAPair, SearchResult } from "@kellemes/types"
 import { VectorService } from "@kellemes/vector-service"
 import "dotenv/config"
 import * as fs from "node:fs/promises"

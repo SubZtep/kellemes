@@ -16,7 +16,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@kellemes/types": "workspace:*"
+    "@kellemes/common": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",

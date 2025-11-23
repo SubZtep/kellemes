@@ -1,4 +1,4 @@
-import type { OllamaChatRequest, OllamaChatResponse, OllamaEmbedRequest, OllamaEmbedResponse } from "@kellemes/types"
+import type { OllamaChatRequest, OllamaChatResponse, OllamaEmbedRequest, OllamaEmbedResponse } from "@kellemes/common"
 import axios from "axios"
 import "dotenv/config"
 

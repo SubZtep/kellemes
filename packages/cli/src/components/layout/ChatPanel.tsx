@@ -1,4 +1,3 @@
-// import { ragService } from "@kellemes/core"
 import { useMutation } from "@tanstack/react-query"
 import { Box, type BoxProps } from "ink"
 import ollama from "ollama/browser"

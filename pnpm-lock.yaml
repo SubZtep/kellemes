@@ -51,9 +51,15 @@ importers:
       '@hono/zod-openapi':
         specifier: ^1.1.5
         version: 1.1.5(hono@4.10.6)(zod@4.1.11)
-      '@kellemes/core':
+      '@kellemes/common':
         specifier: workspace:*
-        version: link:../core
+        version: link:../common
+      '@kellemes/ollama-service':
+        specifier: workspace:*
+        version: link:../ollama-service
+      '@kellemes/rag-service':
+        specifier: workspace:*
+        version: link:../rag-service
       '@scalar/hono-api-reference':
         specifier: ^0.9.25
         version: 0.9.25(hono@4.10.6)
@@ -91,9 +97,12 @@ importers:
 
   packages/cli:
     dependencies:
-      '@kellemes/core':
+      '@kellemes/common':
         specifier: workspace:*
-        version: link:../core
+        version: link:../common
+      '@kellemes/rag-service':
+        specifier: workspace:*
+        version: link:../rag-service
       '@mishieck/ink-titled-box':
         specifier: ^0.3.0
         version: 0.3.0(ink@6.5.1(@types/react@19.2.6)(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
@@ -150,20 +159,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/core:
-    dependencies:
-      '@kellemes/ollama-service':
-        specifier: workspace:*
-        version: link:../ollama-service
-      '@kellemes/rag-service':
-        specifier: workspace:*
-        version: link:../rag-service
-      '@kellemes/types':
-        specifier: workspace:*
-        version: link:../types
-      '@kellemes/vector-service':
-        specifier: workspace:*
-        version: link:../vector-service
+  packages/common:
     devDependencies:
       typescript:
         specifier: ^5.9.3
@@ -171,9 +167,9 @@ importers:
 
   packages/ollama-service:
     dependencies:
-      '@kellemes/types':
+      '@kellemes/common':
         specifier: workspace:*
-        version: link:../types
+        version: link:../common
       axios:
         specifier: ^1.13.2
         version: 1.13.2
@@ -199,12 +195,12 @@ importers:
 
   packages/rag-service:
     dependencies:
+      '@kellemes/common':
+        specifier: workspace:*
+        version: link:../common
       '@kellemes/ollama-service':
         specifier: workspace:*
         version: link:../ollama-service
-      '@kellemes/types':
-        specifier: workspace:*
-        version: link:../types
       '@kellemes/vector-service':
         specifier: workspace:*
         version: link:../vector-service
@@ -228,17 +224,11 @@ importers:
         specifier: ^4.0.13
         version: 4.0.13(@types/node@24.10.1)(jiti@2.6.1)(tsx@4.20.6)(yaml@2.8.1)
 
-  packages/types:
-    devDependencies:
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
   packages/vector-service:
     dependencies:
-      '@kellemes/types':
+      '@kellemes/common':
         specifier: workspace:*
-        version: link:../types
+        version: link:../common
     devDependencies:
       '@types/node':
         specifier: ^24.10.1

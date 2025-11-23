@@ -5,7 +5,8 @@
  * Run this to populate the vector database with Q&A embeddings
  */
 
-import { ollamaService, ragService } from "@kellemes/core"
+import { ollamaService } from "@kellemes/ollama-service"
+import { ragService } from "@kellemes/rag-service"
 
 async function main() {
   console.log("=== keLLeMes RAG Data Ingestion ===\n")

@@ -1,4 +1,4 @@
-import type { ChatResponse } from "@kellemes/core"
+import type { ChatResponse } from "@kellemes/common"
 import { create } from "zustand"
 
 export type ChatMessage = ChatResponse & { sender: "user" | "assistant"; createdAt: Date }

@@ -3,7 +3,7 @@ import Spinner from "ink-spinner"
 import ollama from "ollama/browser"
 import { useEffect } from "react"
 
-const DEFAULT_MODEL = "smollm:1.7b"
+const DEFAULT_MODEL = "smollm2:1.7b"
 
 export default function PullModel() {
   const { focus } = useFocusManager()
