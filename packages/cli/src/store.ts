@@ -11,7 +11,7 @@ export interface State {
   inputActive: boolean
 
   /** Displayed key bindings on the footer. */
-  keyBindings: (string | string[])[]
+  //keyBindings: (string | string[])[]
 
   /** Active Ollama model in the chat panel. */
   activeModel: string | null
