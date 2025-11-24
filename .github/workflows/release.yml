@@ -7,10 +7,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  semantic-release:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      pnpm-store-path: ${{ steps.pnpm-cache.outputs.store-path }}
+      pnpm-cache-key: ${{ steps.pnpm-cache.outputs.cache-key }}
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,83 +31,160 @@ jobs:
           node-version: 24.11.1
           cache: pnpm
 
+      - name: Determine pnpm store
+        id: pnpm-cache
+        env:
+          CACHE_KEY: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+        run: |
+          STORE_PATH=$(pnpm store path --silent)
+          echo "store-path=$STORE_PATH" >> "$GITHUB_OUTPUT"
+          echo "cache-key=${CACHE_KEY}" >> "$GITHUB_OUTPUT"
+
+      - name: Warm pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.store-path }}
+          key: ${{ steps.pnpm-cache.outputs.cache-key }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: Release root
-        uses: cycjimmy/semantic-release-action@v6
+  release:
+    name: Release (${{ matrix.releaseName }})
+    runs-on: ubuntu-latest
+    needs: prepare
+    permissions:
+      contents: write
+    env:
+      SEMREL_EXTRA_PLUGINS: |
+        @semantic-release/changelog@6.0.3
+        @semantic-release/git@10.0.1
+        @semantic-release/github@12.0.2
+        semantic-release-monorepo@8.0.2
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - releaseName: root
+            workdir: .
+            dependsOn: []
+          - releaseName: @kellemes/common
+            workdir: packages/common
+            dependsOn: [root]
+          - releaseName: @kellemes/vector-service
+            workdir: packages/vector-service
+            dependsOn: [root, @kellemes/common]
+          - releaseName: @kellemes/ollama-service
+            workdir: packages/ollama-service
+            dependsOn: [root, @kellemes/common]
+          - releaseName: @kellemes/rag
+            workdir: packages/rag
+            dependsOn:
+              - root
+              - @kellemes/common
+              - @kellemes/vector-service
+              - @kellemes/ollama-service
+          - releaseName: @kellemes/api
+            workdir: packages/api
+            dependsOn:
+              - root
+              - @kellemes/common
+              - @kellemes/rag
+              - @kellemes/ollama-service
+          - releaseName: @kellemes/cli
+            workdir: packages/cli
+            dependsOn:
+              - root
+              - @kellemes/common
+              - @kellemes/rag
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          working_directory: .
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-      - name: Release @kellemes/common
-        uses: cycjimmy/semantic-release-action@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          working_directory: packages/common
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          version: 10.23.0
 
-      - name: Release @kellemes/vector-service
-        uses: cycjimmy/semantic-release-action@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          working_directory: packages/vector-service
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 24.11.1
+          cache: pnpm
 
-      - name: Release @kellemes/ollama-service
-        uses: cycjimmy/semantic-release-action@v6
+      - name: Restore pnpm cache
+        id: release-cache
+        uses: actions/cache@v4
         with:
-          working_directory: packages/ollama-service
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: ${{ needs.prepare.outputs.pnpm-store-path }}
+          key: ${{ needs.prepare.outputs.pnpm-cache-key }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
 
-      - name: Release @kellemes/rag
-        uses: cycjimmy/semantic-release-action@v6
-        with:
-          working_directory: packages/rag
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: Release @kellemes/api
-        uses: cycjimmy/semantic-release-action@v6
+      - name: Wait for dependent releases
+        if: ${{ join(matrix.dependsOn, '') != '' }}
+        uses: actions/github-script@v7
         with:
-          working_directory: packages/api
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const deps = ${{ toJson(matrix.dependsOn) }};
+            if (!deps.length) {
+              core.info("No dependencies to wait for.");
+              return;
+            }
 
-      - name: Release @kellemes/cli
+            const pending = new Set(deps);
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+            while (pending.size > 0) {
+              const { data } = await github.rest.actions.listJobsForWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.runId,
+                per_page: 100,
+              });
+
+              for (const dep of Array.from(pending)) {
+                const job = data.jobs.find(j => j.name === `Release (${dep})`);
+                if (!job || job.status !== "completed") {
+                  continue;
+                }
+
+                if (job.conclusion !== "success") {
+                  core.setFailed(`Dependency ${dep} concluded with ${job.conclusion}`);
+                  return;
+                }
+
+                pending.delete(dep);
+              }
+
+              if (pending.size > 0) {
+                core.info(`Waiting on: ${Array.from(pending).join(", ")}`);
+                await sleep(10000);
+              }
+            }
+
+      - name: Semantic release
         uses: cycjimmy/semantic-release-action@v6
         with:
-          working_directory: packages/cli
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
-            semantic-release-monorepo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          working_directory: ${{ matrix.workdir }}
+          extra_plugins: ${{ env.SEMREL_EXTRA_PLUGINS }}
+
+      - name: Upload release artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.releaseName }}-artifacts
+          path: |
+            CHANGELOG.md
+            pnpm-lock.yaml
+          if-no-files-found: ignore
 
