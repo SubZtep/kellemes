@@ -48,16 +48,9 @@ const chatRoute = createRoute({
 })
 
 export function registerChatRoutes(app: OpenAPIHono) {
-  /**
-   * POST /api/chat
-   * Main chat endpoint with RAG support
-   */
   app.openapi(chatRoute, async c => {
     try {
-      // const { query, topK, useRAG = true }: ChatRequest = await c.req.json()
-      // const { query, topK, useRAG = true }: ChatRequest = await c.req.valid("json")
       const { query, topK, useRAG = false } = await c.req.valid("json")
-
       let response: z.infer<typeof ChatResponseSchema>
 
       if (useRAG) {
@@ -84,21 +77,18 @@ export function registerChatRoutes(app: OpenAPIHono) {
       }
 
       return c.json(response, 200)
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error in chat endpoint:", error)
       return c.json(
         {
           error: "An error occurred while processing your request",
+          message: error.message,
         },
         500,
       )
     }
   })
 
-  /**
-   * POST /api/retrieve
-   * Retrieve relevant documents without generating a response
-   */
   app.post("/retrieve", async c => {
     try {
       const { query, topK } = await c.req.json()
@@ -139,10 +129,6 @@ export function registerChatRoutes(app: OpenAPIHono) {
     }
   })
 
-  /**
-   * GET /api/stats
-   * Get RAG system statistics
-   */
   app.get("/stats", c => {
     try {
       const stats = ragService.getStats()

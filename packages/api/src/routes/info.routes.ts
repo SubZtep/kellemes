@@ -62,8 +62,11 @@ export function registerInfoRoutes(app: OpenAPIHono) {
 
   app.get("/", c => {
     const url = new URL(c.req.url, `http://${c.req.header("host") || "localhost"}`)
-    const docs = `${url.origin}${url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`}docs`
-    return c.json({ timestamp: new Date().toISOString(), docs })
+    const base = `${url.origin}${url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`}`
+    return c.json({
+      timestamp: new Date().toISOString(),
+      docs: [`${base}docs`, `${base}openapi.json`, `${base}llms.txt`],
+    })
   })
   app.get("/robots.txt", c => c.text("User-agent: *\nDisallow: /"))
   app.get("/favicon.ico", c => c.body(null, 204))

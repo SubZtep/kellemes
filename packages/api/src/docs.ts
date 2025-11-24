@@ -4,7 +4,7 @@ import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown"
 
 export async function registerDocs(app: OpenAPIHono) {
   const content = app.getOpenAPI31Document({
-    openapi: "3.0.0",
+    openapi: "3.1.1",
     externalDocs: {
       url: "https://github.com/SubZtep/kellemes",
       description: "GitHub repository ",
