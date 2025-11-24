@@ -8,7 +8,6 @@ import SelectModel from "./SelectModel"
 export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   const activeModel = useStore(state => state.activeModel)
   const { isFocused } = useFocus({ autoFocus: !activeModel, id: "ollamabox" })
-
   const [ollamaVersion, setOllamaVersion] = useState<string | null>(null)
 
   useEffect(() => {
@@ -24,24 +23,21 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
 
   return (
     <TitledBox
-      titles={["Ollama", "Active model"]}
+      titles={["Ollama", ollamaVersion ?? "t(-.-t)"]}
       borderStyle={"round"}
       padding={1}
       flexDirection="column"
       borderDimColor={!isFocused}
       {...props}
     >
-      <Box justifyContent="space-between">
-        <Text>Ollama:</Text>
-        <Text color="green">v{ollamaVersion}</Text>
-      </Box>
-
-      <Box justifyContent="space-between" gap={1}>
-        <Text>Active model:</Text>
-        <Text color="green" dimColor={!activeModel} bold={!!activeModel}>
-          {activeModel ?? "t(-.-t)"}
-        </Text>
-      </Box>
+      {!isFocused && (
+        <Box justifyContent="space-between" gap={1}>
+          <Text>LLM:</Text>
+          <Text color="green" dimColor={!activeModel} bold={!!activeModel}>
+            {activeModel ?? "t(-.-t)"}
+          </Text>
+        </Box>
+      )}
 
       {isFocused && <SelectModel />}
     </TitledBox>

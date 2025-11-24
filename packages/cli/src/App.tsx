@@ -3,7 +3,7 @@ import { Box } from "ink"
 import KeyBindings from "./components/KeyBindings"
 import ChatPanel from "./components/layout/ChatPanel"
 import InfoPanel from "./components/layout/InfoPanel"
-import SettingsPanel from "./components/layout/SettingsPanel"
+// import SettingsPanel from "./components/layout/SettingsPanel"
 import useHotkeys from "./hooks/useHotkeys"
 
 // import { useStore } from "./store"
@@ -93,9 +93,8 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Box flexDirection="column" width="100%">
+      <Box flexDirection="column" width="100%" height={process.stdout.rows - 5}>
         <Box flexDirection="row" gap={1} flexGrow={1}>
-          <SettingsPanel minWidth={36} />
           <ChatPanel flexGrow={1} />
           <InfoPanel minWidth={36} />
         </Box>

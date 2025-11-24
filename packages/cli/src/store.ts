@@ -10,6 +10,9 @@ export interface State {
   keyPressed: Hotkey | null
   inputActive: boolean
 
+  /** Displayed key bindings on the footer. */
+  keyBindings: (string | string[])[]
+
   /** Active Ollama model in the chat panel. */
   activeModel: string | null
 
