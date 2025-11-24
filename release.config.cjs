@@ -13,7 +13,6 @@ const uniqueAssets = assets => [...new Set(assets.filter(Boolean))]
 module.exports = {
   branches: ["main"],
   extends: "semantic-release-monorepo",
-  tagFormat: "${name}-v${version}",
   plugins: [
     [
       "@semantic-release/commit-analyzer",
