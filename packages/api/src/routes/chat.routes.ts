@@ -54,7 +54,7 @@ export function registerChatRoutes(app: OpenAPIHono) {
       let response: z.infer<typeof ChatResponseSchema>
 
       if (useRAG) {
-        if (!ragService.isReady()) {
+        if (!(await ragService.isReady())) {
           return c.json(
             {
               error: "RAG service is not ready. Please run data ingestion first.",
@@ -102,7 +102,7 @@ export function registerChatRoutes(app: OpenAPIHono) {
         )
       }
 
-      if (!ragService.isReady()) {
+      if (!(await ragService.isReady())) {
         return c.json(
           {
             error: "RAG service is not ready. Please run data ingestion first.",
@@ -129,9 +129,9 @@ export function registerChatRoutes(app: OpenAPIHono) {
     }
   })
 
-  app.get("/stats", c => {
+  app.get("/stats", async c => {
     try {
-      const stats = ragService.getStats()
+      const stats = await ragService.getStats()
       return c.json(stats)
     } catch (error) {
       console.error("Error in stats endpoint:", error)

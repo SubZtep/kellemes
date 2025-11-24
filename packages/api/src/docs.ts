@@ -3,6 +3,7 @@ import { Scalar } from "@scalar/hono-api-reference"
 import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown"
 
 export async function registerDocs(app: OpenAPIHono) {
+  const packageJson = (await import("../../../package.json", { assert: { type: "json" } })).default
   const content = app.getOpenAPI31Document({
     openapi: "3.1.1",
     externalDocs: {
@@ -11,7 +12,7 @@ export async function registerDocs(app: OpenAPIHono) {
     },
     info: {
       title: "keLLeMes API",
-      version: "1.0.0",
+      version: packageJson.version,
     },
   })
 
@@ -34,9 +35,11 @@ export async function registerDocs(app: OpenAPIHono) {
         clientKey: "fetch",
       },
       darkMode: true,
+      hideDownloadButton: true,
       forceDarkModeState: "dark",
       hideDarkModeToggle: true,
       telemetry: false,
+      hideSearch: true,
       hideClientButton: true,
     }),
   )

@@ -39,7 +39,6 @@ pnpm ingest          # Ingest Q&A data and generate embeddings (10-15 min)
 kellemes/
 ├── packages/
 │   ├── common/             # @kellemes/common - Shared types/schemas/constants
-│   ├── ollama-service/     # @kellemes/ollama-service - Ollama API client (deprecated)
 │   ├── vector-service/     # @kellemes/vector-service - Vector DB & similarity search
 │   ├── rag/                # @kellemes/rag - RAG orchestration
 │   ├── api/                # @kellemes/api - Hono HTTP API server with PostgreSQL
@@ -53,10 +52,9 @@ kellemes/
 
 ### Package Dependency Graph
 - `@kellemes/common` → Shared primitives (types/schemas/constants), no deps
-- `@kellemes/ollama-service` → Depends on types
 - `@kellemes/vector-service` → Depends on types
-- `@kellemes/rag` → Depends on common, ollama-service, vector-service
-- `@kellemes/api` → Depends on rag, ollama-service, common
+- `@kellemes/rag` → Depends on common, vector-service
+- `@kellemes/api` → Depends on rag, common
 - `@kellemes/cli` → Depends on rag, common
 
 ### Core Services
@@ -224,7 +222,7 @@ This creates richer semantic representations than embedding questions alone.
 ## Release Automation
 
 - Semantic release runs via `.github/workflows/release.yml` on every push to `main` (or a manual `workflow_dispatch`).  
-- The workflow installs dependencies once, then invokes `cycjimmy/semantic-release-action` sequentially for the root package and each workspace (`common`, `vector-service`, `ollama-service`, `rag`, `api`, `cli`) using the shared `release.config.cjs`.  
+- The workflow installs dependencies once, then invokes `cycjimmy/semantic-release-action` sequentially for the root package and each workspace (`common`, `vector-service`, `rag`, `api`, `cli`) using the shared `release.config.cjs`.  
 - `semantic-release-monorepo` scopes commits per package, so only work that touches a package will trigger its release. Git tags follow `<package-name>-v<version>` and each run updates `package.json`, `pnpm-lock.yaml`, `CHANGELOG.md`, and publishes a GitHub release via `@semantic-release/github`.  
 - Packages are marked `private`, so `@semantic-release/npm` is configured with `npmPublish: false` to bump versions without hitting npm.  
 - Follow conventional commits (`feat`, `fix`, `chore`, etc.) so `@semantic-release/commit-analyzer` can infer the proper bump. You can dry-run locally from a package with `pnpm --filter <pkg> exec -- semantic-release --dry-run -e ../../release.config.cjs`.

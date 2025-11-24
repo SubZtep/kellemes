@@ -1,4 +1,4 @@
-import { ragService } from "@kellemes/rag"
+// import { ragService } from "@kellemes/rag"
 import { TitledBox } from "@mishieck/ink-titled-box"
 import { Box, type BoxProps, Text } from "ink"
 import { useEffect, useState } from "react"
@@ -14,10 +14,12 @@ export default function RagBox(props: Pick<BoxProps, "flexGrow">) {
   useEffect(() => {
     ;(async () => {
       // Initialize RAG
-      await ragService.initialize()
-      const stats = ragService.getStats()
-      setRAGStatus(stats.isReady ? "ready" : "not ready")
-      setDocumentsCount(stats.totalDocuments)
+      // await ragService.initialize()
+      // const stats = ragService.getStats()
+      // setRAGStatus(stats.isReady ? "ready" : "not ready")
+      // setDocumentsCount(stats.totalDocuments)
+      setRAGStatus("not ready")
+      setDocumentsCount(0)
     })()
   }, [])
 

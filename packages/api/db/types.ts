@@ -3,6 +3,7 @@ import type { ColumnType, Generated, Insertable, JSONColumnType, Selectable, Upd
 export interface Database {
   person: PersonTable
   pet: PetTable
+  qa_vectors: QAVectorsTable
 }
 
 // This interface describes the `person` table to Kysely. Table
@@ -63,3 +64,14 @@ export interface PetTable {
 export type Pet = Selectable<PetTable>
 export type NewPet = Insertable<PetTable>
 export type PetUpdate = Updateable<PetTable>
+
+export interface QAVectorsTable {
+  id: string
+  question: string
+  answer: string
+  embedding: string // pgvector stored as string, converted to number[] in queries
+}
+
+export type QAVector = Selectable<QAVectorsTable>
+export type NewQAVector = Insertable<QAVectorsTable>
+export type QAVectorUpdate = Updateable<QAVectorsTable>

@@ -1,39 +1,60 @@
-import type { EmbeddedQAPair, QAPair, SearchResult } from "@kellemes/common"
-import { ollamaService } from "@kellemes/ollama-service"
-import { VectorService } from "@kellemes/vector-service"
+import type { QAPair, SearchResult } from "@kellemes/common"
+import { Kysely, PostgresDialect, sql } from "kysely"
+import { Pool } from "pg"
+
+// Database interface for pgvector - minimal type to avoid circular dependency
+interface Database {
+  qa_vectors: {
+    id: string
+    question: string
+    answer: string
+    embedding: string
+  }
+}
 import "dotenv/config"
 import * as fs from "node:fs/promises"
 import { join } from "node:path"
+import ollama from "ollama/browser"
+
+// Create database connection to avoid circular dependency
+const dialect = new PostgresDialect({
+  pool: new Pool({
+    host: process.env.POSTGRES_HOST,
+    port: Number(process.env.POSTGRES_PORT),
+    database: process.env.POSTGRES_DB,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    max: 10,
+  }),
+})
+
+const db = new Kysely<Database>({
+  dialect,
+})
 
 /**
  * RAG (Retrieval-Augmented Generation) Service
  * Handles ingestion, retrieval, and augmented generation
  */
 export class RAGService {
-  private vectorService: VectorService
-
-  constructor() {
-    // this.vectorService = new VectorService(join(process.env.DATA_DIR!, "vectors/qa_vectors.json"))
-    this.vectorService = new VectorService("")
-  }
+  // constructor() {}
 
   /**
-   * Initialize the RAG service by loading or creating the vector database
+   * Initialize the RAG service by checking the vector database
    */
   async initialize(): Promise<void> {
-    throw new Error("Not implemented")
-    // try {
-    //   await this.vectorService.load()
+    try {
+      const count = await this.getCount()
 
-    //   if (!this.vectorService.isInitialized()) {
-    //     console.log("Vector database empty. Run ingestion to populate it.")
-    //   } else {
-    //     console.log(`RAG service initialized with ${this.vectorService.getCount()} documents`)
-    //   }
-    // } catch (error) {
-    //   console.error("Error initializing RAG service:", error)
-    //   throw error
-    // }
+      if (count === 0) {
+        console.log("Vector database empty. Run ingestion to populate it.")
+      } else {
+        console.log(`RAG service initialized with ${count} documents`)
+      }
+    } catch (error) {
+      console.error("Error initializing RAG service:", error)
+      throw error
+    }
   }
 
   /**
@@ -50,11 +71,11 @@ export class RAGService {
       console.log(`Loaded ${qaPairs.length} Q&A pairs`)
 
       // Clear existing vectors
-      this.vectorService.clear()
+      await sql`TRUNCATE TABLE qa_vectors`.execute(db)
 
       // Generate embeddings for each Q&A pair
       console.log("Generating embeddings...")
-      const embeddedPairs: EmbeddedQAPair[] = []
+      let processedCount = 0
 
       for (let i = 0; i < qaPairs.length; i++) {
         if (i % 50 === 0) {
@@ -70,23 +91,29 @@ export class RAGService {
 
         // Combine question and answer for richer embeddings
         const text = `Question: ${qa.question}\nAnswer: ${qa.answer}`
-        const embedding = await ollamaService.generateEmbedding(text)
-
-        embeddedPairs.push({
-          id: `qa_${i}`,
-          question: qa.question,
-          answer: qa.answer,
-          embedding,
+        const embeddingResult = await ollama.embed({
+          model: process.env.EMBEDDING_MODEL!,
+          input: text,
         })
+
+        const embedding = embeddingResult.embeddings.at(0)
+        if (!embedding) {
+          console.warn(`Skipping Q&A pair ${i} because embedding generation failed.`)
+          continue
+        }
+
+        // Insert into pgvector database
+        // pgvector expects array format: '[1,2,3]'::vector
+        const vectorStr = `[${embedding.join(",")}]`
+        await sql`
+          INSERT INTO qa_vectors (id, question, answer, embedding)
+          VALUES (${`qa_${i}`}, ${qa.question}, ${qa.answer}, ${sql.raw(`'${vectorStr}'::vector`)})
+        `.execute(db)
+
+        processedCount++
       }
 
-      // Add all vectors to the database
-      this.vectorService.addVectors(embeddedPairs)
-
-      // Save to disk
-      await this.vectorService.save()
-
-      console.log(`✓ Successfully ingested ${embeddedPairs.length} documents`)
+      console.log(`✓ Successfully ingested ${processedCount} documents`)
     } catch (error) {
       console.error("Error during data ingestion:", error)
       throw error
@@ -98,14 +125,43 @@ export class RAGService {
    */
   async retrieve(query: string, topK?: number): Promise<SearchResult[]> {
     const k = topK || Number(process.env.TOP_K_RESULTS)
+    const threshold = Number(process.env.SIMILARITY_THRESHOLD)
 
-    // Generate embedding for the query
-    const queryEmbedding = await ollamaService.generateEmbedding(query)
+    // Generate embedding for the query using Ollama
+    const queryEmbeddingResult = await ollama.embed({
+      model: process.env.EMBEDDING_MODEL!,
+      input: query,
+    })
 
-    // Search for similar documents
-    const results = this.vectorService.search(queryEmbedding, k, Number(process.env.SIMILARITY_THRESHOLD))
+    const queryEmbedding = queryEmbeddingResult.embeddings.at(0)
+    if (!queryEmbedding) {
+      return []
+    }
 
-    return results
+    // Search for similar documents using pgvector cosine similarity
+    // 1 - cosine_distance = cosine_similarity
+    // pgvector expects array format: '[1,2,3]'::vector
+    const queryVectorStr = `[${queryEmbedding.join(",")}]`
+    const results = await sql<{
+      question: string
+      answer: string
+      score: number
+    }>`
+      SELECT 
+        question,
+        answer,
+        1 - (embedding <=> ${sql.raw(`'${queryVectorStr}'::vector`)}) as score
+      FROM qa_vectors
+      WHERE 1 - (embedding <=> ${sql.raw(`'${queryVectorStr}'::vector`)}) >= ${threshold}
+      ORDER BY embedding <=> ${sql.raw(`'${queryVectorStr}'::vector`)}
+      LIMIT ${k}
+    `.execute(db)
+
+    return results.rows.map((row: { question: string; answer: string; score: number | string }) => ({
+      question: row.question,
+      answer: row.answer,
+      score: Number(row.score),
+    }))
   }
 
   /**
@@ -144,8 +200,11 @@ export class RAGService {
 
     if (isCasual) {
       // For casual queries, use base model without RAG context
-      const response = await ollamaService.chat(query)
-      return { response, sources: [] }
+      const response = await ollama.chat({
+        model: process.env.OLLAMA_MODEL!,
+        messages: [{ role: "user", content: query }],
+      })
+      return { response: response.message.content, sources: [] }
     }
 
     // Retrieve relevant context
@@ -163,14 +222,20 @@ Be friendly and encouraging, and invite them to ask any intimacy questions they 
 
 Response:`
 
-      const response = await ollamaService.chat(redirectPrompt)
-      return { response, sources: [] }
+      const response = await ollama.chat({
+        model: process.env.OLLAMA_MODEL!,
+        messages: [{ role: "user", content: redirectPrompt }],
+      })
+      return { response: response.message.content, sources: [] }
     }
 
     if (sources.length === 0) {
       // No relevant context found, use base model
-      const response = await ollamaService.chat(query)
-      return { response, sources: [] }
+      const response = await ollama.chat({
+        model: process.env.OLLAMA_MODEL!,
+        messages: [{ role: "user", content: query }],
+      })
+      return { response: response.message.content, sources: [] }
     }
 
     // Build augmented prompt with retrieved context
@@ -193,32 +258,49 @@ User's Question: ${query}
 Response:`
 
     // Generate response with augmented context
-    const response = await ollamaService.chat(augmentedPrompt)
+    const response = await ollama.chat({
+      model: process.env.OLLAMA_MODEL!,
+      messages: [{ role: "user", content: augmentedPrompt }],
+    })
 
-    return { response, sources }
+    return { response: response.message.content, sources }
   }
 
   /**
    * Generate a response without RAG (direct model call)
    */
   async generateDirectResponse(query: string): Promise<string> {
-    return await ollamaService.chat(query)
+    const response = await ollama.chat({
+      model: process.env.OLLAMA_MODEL!,
+      messages: [{ role: "user", content: query }],
+    })
+    return response.message.content
+  }
+
+  /**
+   * Get the count of vectors in the database
+   */
+  private async getCount(): Promise<number> {
+    const result = await sql<{ count: string }>`SELECT COUNT(*) as count FROM qa_vectors`.execute(db)
+    return Number(result.rows[0]?.count ?? 0)
   }
 
   /**
    * Check if the RAG service is ready
    */
-  isReady(): boolean {
-    return this.vectorService.isInitialized()
+  async isReady(): Promise<boolean> {
+    const count = await this.getCount()
+    return count > 0
   }
 
   /**
    * Get statistics about the RAG system
    */
-  getStats() {
+  async getStats() {
+    const count = await this.getCount()
     return {
-      totalDocuments: this.vectorService.getCount(),
-      isReady: this.isReady(),
+      totalDocuments: count,
+      isReady: count > 0,
       topK: Number(process.env.TOP_K_RESULTS),
       similarityThreshold: Number(process.env.SIMILARITY_THRESHOLD),
     }

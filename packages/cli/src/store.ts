@@ -57,7 +57,7 @@ const initialState: State = {
   topK: 3,
   similarityThreshold: 0.5,
   temperature: 0.7,
-  useRAG: true,
+  useRAG: false,
 }
 
 export const useStore = create<Store>()((set, get) => ({

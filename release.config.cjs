@@ -42,6 +42,7 @@ module.exports = {
       "@semantic-release/git",
       {
         assets: uniqueAssets(["package.json", toRepoFile("pnpm-lock.yaml"), toRepoFile("CHANGELOG.md")]),
+        // biome-ignore lint/suspicious/noTemplateCurlyInString: <>
         message: "chore(release): ${nextRelease.gitTag} [skip ci]\n\n${nextRelease.notes}",
       },
     ],

@@ -9,13 +9,13 @@ async function waitForRagReady() {
     throw error
   }
 
-  if (ragService.isReady()) {
+  if (await ragService.isReady()) {
     return
   }
 
   await vi.waitFor(
-    () => {
-      if (!ragService.isReady()) {
+    async () => {
+      if (!(await ragService.isReady())) {
         console.log("RAG is not ready yet")
       }
       console.log("RAG is ready now")

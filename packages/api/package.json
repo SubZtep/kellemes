@@ -7,6 +7,20 @@
   "private": true,
   "type": "module",
   "main": "./dist/src/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./db": {
+      "types": "./dist/db/index.d.ts",
+      "default": "./dist/db/index.js"
+    },
+    "./db/*": {
+      "types": "./dist/db/*.d.ts",
+      "default": "./dist/db/*.js"
+    }
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "NODE_OPTIONS='--max-old-space-size=4096' tsc",
@@ -21,7 +35,6 @@
     "@hono/node-server": "^1.19.6",
     "@hono/zod-openapi": "^1.1.5",
     "@kellemes/common": "workspace:*",
-    "@kellemes/ollama-service": "workspace:*",
     "@kellemes/rag": "workspace:*",
     "@scalar/hono-api-reference": "^0.9.25",
     "@scalar/openapi-to-markdown": "^0.3.4",

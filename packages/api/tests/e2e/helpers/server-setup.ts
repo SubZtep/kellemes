@@ -1,12 +1,11 @@
 import type { Server } from "node:http"
-import type { AddressInfo } from "node:net"
-import { serve } from "@hono/node-server"
-import { ollamaService } from "@kellemes/ollama-service"
 import { ragService } from "@kellemes/rag"
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
-import chatRoutes from "../../../src/routes/chat.routes"
+import ollama from "ollama/browser"
+
+// import { registerChatRoutes } from "../../../src/routes/chat.routes"
 
 let server: Server | null = null
 
@@ -18,12 +17,12 @@ export async function startTestServer(): Promise<string> {
   app.use("*", logger())
 
   // Routes
-  app.route("/api", chatRoutes)
+  // app.route("/api", registerChatRoutes(app))
 
   // Health check
   app.get("/health", async c => {
-    const ollamaHealthy = await ollamaService.checkHealth()
-    const ragReady = ragService.isReady()
+    const ollamaHealthy = !!(await ollama.version())
+    const ragReady = await ragService.isReady()
 
     const status = ollamaHealthy && ragReady ? "healthy" : "degraded"
     const statusCode = status === "healthy" ? 200 : 503
@@ -78,13 +77,13 @@ export async function startTestServer(): Promise<string> {
   await ragService.initialize()
 
   // Start server on a random available port
-  server = serve({
-    fetch: app.fetch,
-    port: 0, // Use random available port
-  })
+  // server = serve({
+  //   fetch: app.fetch,
+  //   port: 0, // Use random available port
+  // })
 
-  const address = server.address() as AddressInfo
-  const baseUrl = `http://localhost:${address.port}`
+  // const address = server.address() as AddressInfo
+  // const baseUrl = `http://localhost:${address.port}`
 
   return baseUrl
 }

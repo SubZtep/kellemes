@@ -20,13 +20,16 @@
     "test": "evalite"
   },
   "dependencies": {
+    "@kellemes/api": "workspace:*",
     "@kellemes/common": "workspace:*",
-    "@kellemes/ollama-service": "workspace:*",
-    "@kellemes/vector-service": "workspace:*",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "kysely": "^0.28.8",
+    "ollama": "^0.6.3",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
     "autoevals": "^0.0.131",
     "evalite": "^0.19.0",
     "typescript": "^5.9.3",
