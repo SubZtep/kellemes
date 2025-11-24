@@ -1,7 +1,7 @@
 import { SQL } from "bun"
 import { Kysely } from "kysely"
 import { PostgresJSDialect } from "kysely-postgres-js"
-import type { Database } from "./types.js" // this is the Database interface we defined earlier
+import type { Database } from "./types" // this is the Database interface we defined earlier
 
 const dialect = new PostgresJSDialect({
   postgres: new SQL({

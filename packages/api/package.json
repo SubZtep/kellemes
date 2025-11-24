@@ -6,25 +6,25 @@
   "license": "BSD-3-Clause",
   "private": true,
   "type": "module",
-  "main": "./dist/src/index.js",
+  "main": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
-      "default": "./dist/src/index.js"
+      "types": "./src/index.d.ts",
+      "default": "./src/index.ts"
     },
     "./db": {
       "types": "./dist/db/index.d.ts",
-      "default": "./dist/db/index.js"
+      "default": "./dist/db/index.ts"
     },
     "./db/*": {
       "types": "./dist/db/*.d.ts",
-      "default": "./dist/db/*.js"
+      "default": "./dist/db/*.ts"
     }
   },
   "scripts": {
-    "dev": "bun --hot src/index.ts",
-    "build": "NODE_OPTIONS='--max-old-space-size=4096' tsc",
-    "start": "bun src/index.ts",
+    "dev": "bun --hot src/index.ts --console",
+    "build": "echo 'No build bun runs TS directly'; exit 0",
+    "start": "bun src/index.ts --console",
     "migrate": "bun scripts/migrate.ts",
     "test": "vitest run",
     "test:e2e": "vitest run tests/e2e",

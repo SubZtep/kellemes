@@ -1,12 +1,10 @@
-import { promises as fs } from "node:fs"
-import path from "node:path"
-import { fileURLToPath } from "node:url"
+/** biome-ignore-all lint/style/useNodejsImportProtocol: FileMigrationProvider expects Node.js-compatible fs.promises and path objects */
+import { promises as fs } from "fs"
 import { FileMigrationProvider, Migrator } from "kysely"
+import path from "path"
 import { db } from "./database.js"
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const migrationFolder = path.resolve(__dirname, "migrations")
+const migrationFolder = path.join(import.meta.dir, "migrations")
 
 export const migrator = new Migrator({
   db,
