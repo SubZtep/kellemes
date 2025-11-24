@@ -58,7 +58,7 @@ export default function ChatPanel(props: BoxProps) {
   return (
     <Box flexDirection="column" {...props}>
       <ResponseBox isLoading={isLoading} error={error} />
-      <PromptBox submitPrompt={submitPrompt} isLoading={isLoading} />
+      {activeModel && <PromptBox submitPrompt={submitPrompt} isLoading={isLoading} />}
     </Box>
   )
 }

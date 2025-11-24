@@ -1,3 +1,6 @@
+// Export common utilities
+export * from "./lib/format.js"
+
 // Export Zod schemas for API validation
 export * from "./schemas/chat.js"
 export * from "./schemas/health.js"

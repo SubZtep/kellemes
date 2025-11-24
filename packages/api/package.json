@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "bun --hot src/index.ts --console",
-    "build": "echo 'No build bun runs TS directly'; exit 0",
+    "build": "echo 'No, the API no. Build not for here, bun runs TS from the source.'; exit 0",
     "start": "bun src/index.ts --console",
     "migrate": "bun scripts/migrate.ts",
     "test": "vitest run",
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "bun-types": "^1.3.0",
+    "bun-types": "^1.3.3",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^4.0.13"

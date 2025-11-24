@@ -23,7 +23,8 @@
       "recommended": true,
       "correctness": {
         "useExhaustiveDependencies": "off",
-        "noUnusedVariables": "warn"
+        "noUnusedVariables": "warn",
+        "noUnusedImports": "warn"
       },
       "style": {
         "noNonNullAssertion": "off",

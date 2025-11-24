@@ -1,4 +1,5 @@
 import type { ChatResponse } from "@kellemes/common"
+import type { ModelResponse } from "ollama"
 import { create } from "zustand"
 
 export type ChatMessage = ChatResponse & { sender: "user" | "assistant"; createdAt: Date }
@@ -7,11 +8,14 @@ export type RAGStatus = "ready" | "not ready" | "initializing"
 export type Hotkey = "escape" | "return" | "space" | "leftArrow" | "rightArrow" | "upArrow" | "downArrow"
 
 export interface State {
-  keyPressed: Hotkey | null
-  inputActive: boolean
-
   /** Displayed key bindings on the footer. */
-  //keyBindings: (string | string[])[]
+  keyBindings: { keys: string | string[]; description: string }[]
+
+  /** Ollama version or null if the service is not available. */
+  ollamaVersion: string | null
+
+  /** Available Ollama models. */
+  ollamaModels: ModelResponse[]
 
   /** Active Ollama model in the chat panel. */
   activeModel: string | null
@@ -32,8 +36,9 @@ export interface State {
 }
 
 export interface Actions {
-  setKeyPressed: (keyPressed: Hotkey | null) => void
-  setInputActive: (inputActive: boolean) => void
+  setKeyBindings: (keyBindings: { keys: string | string[]; description: string }[]) => void
+  setOllamaVersion: (ollamaVersion: string | null) => void
+  setOllamaModels: (ollamaModels: ModelResponse[]) => void
   setActiveModel: (activeModel: string | null) => void
   addResponse: (response: ChatMessage) => void
   setPrompt: (prompt: string) => void
@@ -49,8 +54,9 @@ export interface Actions {
 type Store = State & Actions
 
 const initialState: State = {
-  keyPressed: null,
-  inputActive: false,
+  keyBindings: [],
+  ollamaVersion: null,
+  ollamaModels: [],
   activeModel: null,
   prompt: "",
   responses: [],
@@ -65,8 +71,20 @@ const initialState: State = {
 
 export const useStore = create<Store>()((set, get) => ({
   ...initialState,
-  setKeyPressed: keyPressed => set({ keyPressed }),
-  setInputActive: inputActive => set({ inputActive }),
+  setKeyBindings: keyBindings => set({ keyBindings }),
+  setOllamaVersion: ollamaVersion => {
+    if (get().ollamaVersion !== ollamaVersion) {
+      set({ ollamaVersion })
+    }
+  },
+  setOllamaModels: ollamaModels =>
+    set(state => {
+      const prev = state.ollamaModels // Only update if models actually changed (by count or name)
+      if (prev.length !== ollamaModels.length || prev.some((m, i) => m.name !== ollamaModels[i]?.name)) {
+        return { ollamaModels }
+      }
+      return {}
+    }),
   setActiveModel: activeModel => set({ activeModel }),
   setPrompt: prompt => set({ prompt }),
   addResponse: response => set({ responses: [...get().responses, response] }),

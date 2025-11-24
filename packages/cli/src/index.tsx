@@ -1,6 +1,5 @@
-// import { withFullScreen } from "fullscreen-ink"
+// @ts-nocheck
 import { render } from "ink"
-// import ollama from "ollama"
 import "dotenv/config"
 import App from "./App"
 
@@ -11,20 +10,11 @@ if (!process.stdin.isTTY) {
   process.exit(1)
 }
 
-console.log({
-  isTTY: process.stdin.isTTY,
+console.table({
+  node: globalThis.process?.versions?.node,
+  window: !!globalThis.window,
   width: process.stdout.columns,
   height: process.stdout.rows,
 })
 
-// // Check if Ollama is installed
-// try {
-//   await ollama.version()
-// } catch (error: any) {
-//   console.error("Error: Ollama required for this application.", error.message)
-//   console.log("Please install Ollama and try again. https://ollama.com/")
-//   process.exit(1)
-// }
-
-// withFullScreen(<App />, { exitOnCtrlC: false }).start()
-render(<App />, { exitOnCtrlC: false })
+render(<App />, { incrementalRendering: true, exitOnCtrlC: true })

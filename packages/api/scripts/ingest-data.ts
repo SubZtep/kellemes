@@ -6,7 +6,7 @@
  */
 
 import { ragService } from "@kellemes/rag"
-import ollama from "ollama/browser"
+import ollama from "ollama"
 
 async function main() {
   console.log("=== keLLeMes RAG Data Ingestion ===\n")

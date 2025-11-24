@@ -9,14 +9,6 @@ export default function InfoPanel(props: BoxProps) {
       {/* <Logo /> */}
       <OllamaBox flexGrow={1} />
       {/* <RagBox /> */}
-
-      {/* {isFocused && (
-        <Text dimColor>
-          ↑/↓/j/k: Change highlighted
-          <Newline />
-          Enter: Select active model
-        </Text>
-      )} */}
     </Box>
   )
 }

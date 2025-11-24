@@ -1,79 +1,83 @@
-import { Box, Text, useFocusManager } from "ink"
+import { useQuery } from "@tanstack/react-query"
+import { Box, Text } from "ink"
 import SelectInput from "ink-select-input"
 import Spinner from "ink-spinner"
-import ollama from "ollama/browser"
+import ollama from "ollama"
 import { useEffect, useState } from "react"
 import { useStore } from "../../store"
 import ModelInfo from "./ModelInfo"
-import PullModel from "./PullModel"
+
+// import PullModel from "./PullModel"
+
+interface Model {
+  name: string
+  expires_at?: Date
+}
 
 export default function SelectModel() {
-  const { disableFocus, enableFocus, focus } = useFocusManager()
-  const activeModel = useStore(state => state.activeModel)
-  const setActiveModel = useStore(state => state.setActiveModel)
-  const [highlightedModel, setHightlightedModel] = useState<string | null>(null)
-  const [models, setModels] = useState<
-    | {
-        name: string
-        /** null indicates the model is currently not loaded into memory */
-        expires_at: Date | null
-      }[]
-    | null
-  >(null)
+  // const activeModel = useStore(state => state.activeModel)
+  // const setActiveModel = useStore(state => state.setActiveModel)
+  const setKeyBindings = useStore(state => state.setKeyBindings)
+  // const [highlightedModel, setHightlightedModel] = useState<string | null>(null)
+  // const [models, setModels] = useState<Model[] | null>(null)
+
+  // const { isLoading: isLoadingModels } = useQuery({
+  //   queryKey: ["models"],
+  //   queryFn: () => Promise.all([ollama.list(), ollama.ps()]),
+  //   select: async ([list, ps]) => {
+  //     console.log("Models found1!!!", list.models.length)
+  //     const models = list.models.map(model => ({
+  //       name: model.name,
+  //       expires_at: ps.models.find(p => p.model === model.name)?.expires_at,
+  //     }))
+  //     setModels(models)
+  //     return models
+  //   },
+  //   staleTime: 1000,
+  // })
 
   useEffect(() => {
-    if (activeModel) {
-      enableFocus()
-      focus("promptbox")
-    } else {
-      disableFocus()
-    }
-  }, [activeModel])
-
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const [list, ps] = await Promise.all([ollama.list(), ollama.ps()])
-
-      if (list.models.length === 1) {
-        setActiveModel(list.models.at(0)!.name)
-        return
-      }
-
-      const currentModels = list.models.map(model => {
-        const expires_at = ps.models.find(p => p.model === model.name)?.expires_at
-        return { name: model.name, expires_at: expires_at ? new Date(expires_at) : null }
-      })
-      setModels(currentModels)
-    }, 1000)
-
+    setKeyBindings([
+      { keys: ["↑", "↓", "j", "k"], description: "Change selection" },
+      { keys: ["Enter"], description: "Use model" },
+    ])
     return () => {
-      clearInterval(interval)
-      enableFocus()
+      setKeyBindings([])
     }
   }, [])
 
-  const getExpiresAt = (modelName: string) => {
-    return models?.find(model => model.name === modelName)?.expires_at
-  }
+  // const getExpiresAt = (modelName: string) => {
+  //   return models?.find(model => model.name === modelName)?.expires_at
+  // }
 
   return (
     <>
-      <Box marginTop={1}>
-        {!models ? (
-          <Text color="yellow" dimColor={true}>
-            Loading models
-            <Spinner type="simpleDots" />
-          </Text>
-        ) : (
-          <Text color="yellow">Please, select a model:</Text>
-        )}
+      <Text>Models</Text>
+      {/* <Text>Models: {JSON.stringify(models, null, 2)}</Text> */}
+      {/* <Box marginTop={1}>
+        <Text color="yellow" dimColor={isLoadingModels}>
+          {isLoadingModels ? (
+            <>
+              Loading models
+              <Spinner type="simpleDots" />
+            </>
+          ) : (
+            "Please, select a model:"
+          )}
+        </Text>
       </Box>
 
-      {models &&
+      {!isLoadingModels &&
+        models &&
         (models.length > 0 ? (
           <>
             <SelectInput
               items={models.map(model => ({ label: model.name, value: model.name }))}
+              itemComponent={({ label, isSelected }) => (
+                <Text color={isSelected ? "green" : "white"} bold={activeModel === label}>
+                  {label}
+                </Text>
+              )}
               onHighlight={item => setHightlightedModel(item?.value ?? null)}
               onSelect={item => setActiveModel(item.value)}
               isFocused={true}
@@ -81,8 +85,9 @@ export default function SelectModel() {
             {highlightedModel && <ModelInfo model={highlightedModel} expiresAt={getExpiresAt(highlightedModel)!} />}
           </>
         ) : (
-          <PullModel />
-        ))}
+          // <PullModel />
+          <Text>No models found</Text>
+        ))} */}
     </>
   )
 }

@@ -1,7 +1,6 @@
 import { TitledBox } from "@mishieck/ink-titled-box"
-import { Box, Text, useFocus, useFocusManager } from "ink"
+import { Box, Text, useFocus } from "ink"
 import TextInput from "ink-text-input"
-import { useEffect } from "react"
 import { useStore } from "../../store.js"
 
 export default function PromptBox({
@@ -14,22 +13,16 @@ export default function PromptBox({
   const activeModel = useStore(state => state.activeModel)
   const prompt = useStore(state => state.prompt)
   const setPrompt = useStore(state => state.setPrompt)
-  const setInputActive = useStore(state => state.setInputActive)
   const { isFocused } = useFocus({ autoFocus: !!activeModel, id: "promptbox" })
-  const { enableFocus, disableFocus } = useFocusManager()
+  // const { enableFocus, disableFocus } = useFocusManager()
 
-  useEffect(() => {
-    if (activeModel) {
-      enableFocus()
-    } else {
-      disableFocus()
-    }
-  }, [isFocused, enableFocus, disableFocus])
-
-  // Update inputActive state based on focus
-  useEffect(() => {
-    setInputActive(isFocused && !isLoading)
-  }, [isFocused, isLoading, setInputActive])
+  // useEffect(() => {
+  //   if (activeModel) {
+  //     enableFocus()
+  //   } else {
+  //     disableFocus()
+  //   }
+  // }, [isFocused, enableFocus, disableFocus])
 
   return (
     <TitledBox
