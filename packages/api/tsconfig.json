@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "types": ["bun-types"]
   },
   "include": ["db/**/*.ts", "scripts/**/*.ts", "src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

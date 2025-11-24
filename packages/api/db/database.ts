@@ -1,13 +1,14 @@
-import { Kysely, PostgresDialect } from "kysely"
-import { Pool } from "pg"
+import { SQL } from "bun"
+import { Kysely } from "kysely"
+import { PostgresJSDialect } from "kysely-postgres-js"
 import type { Database } from "./types.js" // this is the Database interface we defined earlier
 
-const dialect = new PostgresDialect({
-  pool: new Pool({
-    host: process.env.POSTGRES_HOST,
+const dialect = new PostgresJSDialect({
+  postgres: new SQL({
+    hostname: process.env.POSTGRES_HOST,
     port: Number(process.env.POSTGRES_PORT),
     database: process.env.POSTGRES_DB,
-    user: process.env.POSTGRES_USER,
+    username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     max: 10,
   }),

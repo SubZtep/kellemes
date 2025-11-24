@@ -13,8 +13,8 @@ This is a TypeScript-based RAG (Retrieval-Augmented Generation) system for the k
 ### Running the Application
 ```bash
 # API Server
-pnpm --filter @kellemes/api dev    # Start API server with auto-reload (tsx watch)
-pnpm start                          # Run production API server
+pnpm --filter @kellemes/api dev    # Start API server with auto-reload (bun --hot)
+pnpm start                          # Run production API server (bun)
 
 # CLI
 pnpm --filter @kellemes/cli dev    # Start CLI in dev mode (tsx watch)
@@ -72,8 +72,9 @@ kellemes/
 
 3. **Database Layer** (`packages/api/db/`)
    - PostgreSQL database with Kysely query builder
+   - Uses Bun's native SQL with kysely-postgres-js dialect
    - Migration system for schema versioning
-   - Connection pooling via `pg` (PostgresSQL client)
+   - Connection pooling via Bun's built-in PostgreSQL support
    - Environment-based configuration (host, port, database, user, password)
    - Key files: `database.ts`, `migrator.ts`, `types.ts`, `migrations/`
 
@@ -179,13 +180,11 @@ This creates richer semantic representations than embedding questions alone.
 - `ollama` - Official Ollama JavaScript SDK
 
 ### API Server
-- `hono` - Fast, lightweight web framework
-- `@hono/node-server` - Node.js adapter for Hono
+- `hono` - Fast, lightweight web framework (runs natively on Bun)
 - `@hono/zod-openapi` - OpenAPI integration with Zod validation
 - `@scalar/hono-api-reference` - Interactive API documentation UI
 - `kysely` - Type-safe SQL query builder
-- `pg` - PostgreSQL client
-- `@types/pg` - TypeScript types for PostgreSQL
+- `kysely-postgres-js` - Kysely dialect for Bun's native SQL support
 
 ### CLI
 - `ink` - React-based CLI rendering framework
@@ -199,7 +198,8 @@ This creates richer semantic representations than embedding questions alone.
 - `date-fns` - Date utilities
 
 ### Development & Testing
-- `tsx` - TypeScript execution and watch mode
+- `bun` - Fast all-in-one JavaScript runtime (used for API server)
+- `tsx` - TypeScript execution and watch mode (used for CLI)
 - `@biomejs/biome` - Fast linter and formatter
 - `typescript` - Type checking and compilation
 - `vitest` - Fast unit test framework
@@ -211,6 +211,7 @@ This creates richer semantic representations than embedding questions alone.
 
 ## External Requirements
 
+- **Bun** runtime must be installed (https://bun.sh) - Required for API server
 - **Ollama** must be running (configurable via `OLLAMA_BASE_URL`)
 - **PostgreSQL** database must be available and configured via environment variables
 - **Models required**:
