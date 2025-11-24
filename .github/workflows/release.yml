@@ -72,35 +72,35 @@ jobs:
           - releaseName: root
             workdir: .
             dependsOn: []
-          - releaseName: @kellemes/common
+          - releaseName: "@kellemes/common"
             workdir: packages/common
-            dependsOn: [root]
-          - releaseName: @kellemes/vector-service
+            dependsOn: ["root"]
+          - releaseName: "@kellemes/vector-service"
             workdir: packages/vector-service
-            dependsOn: [root, @kellemes/common]
-          - releaseName: @kellemes/ollama-service
+            dependsOn: ["root", "@kellemes/common"]
+          - releaseName: "@kellemes/ollama-service"
             workdir: packages/ollama-service
-            dependsOn: [root, @kellemes/common]
-          - releaseName: @kellemes/rag
+            dependsOn: ["root", "@kellemes/common"]
+          - releaseName: "@kellemes/rag"
             workdir: packages/rag
             dependsOn:
-              - root
-              - @kellemes/common
-              - @kellemes/vector-service
-              - @kellemes/ollama-service
-          - releaseName: @kellemes/api
+              - "root"
+              - "@kellemes/common"
+              - "@kellemes/vector-service"
+              - "@kellemes/ollama-service"
+          - releaseName: "@kellemes/api"
             workdir: packages/api
             dependsOn:
-              - root
-              - @kellemes/common
-              - @kellemes/rag
-              - @kellemes/ollama-service
-          - releaseName: @kellemes/cli
+              - "root"
+              - "@kellemes/common"
+              - "@kellemes/rag"
+              - "@kellemes/ollama-service"
+          - releaseName: "@kellemes/cli"
             workdir: packages/cli
             dependsOn:
-              - root
-              - @kellemes/common
-              - @kellemes/rag
+              - "root"
+              - "@kellemes/common"
+              - "@kellemes/rag"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
