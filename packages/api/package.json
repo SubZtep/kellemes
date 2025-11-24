@@ -1,7 +1,10 @@
 {
   "name": "@kellemes/api",
   "version": "1.0.0",
+  "author": "Andras Serfozo <subztep@gmail.com>",
   "description": "Hono HTTP API server for keLLeMes",
+  "license": "BSD-3-Clause",
+  "private": true,
   "type": "module",
   "main": "./dist/src/index.js",
   "scripts": {

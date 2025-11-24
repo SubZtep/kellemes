@@ -22,6 +22,9 @@ export async function registerDocs(app: OpenAPIHono) {
   app.get(
     "/docs",
     Scalar({
+      content: {
+        openapi: "3.1.1",
+      },
       url: "/openapi.json",
       pageTitle: "keLLeMes API Documentation",
       theme: "elysiajs",
@@ -34,6 +37,7 @@ export async function registerDocs(app: OpenAPIHono) {
       forceDarkModeState: "dark",
       hideDarkModeToggle: true,
       telemetry: false,
+      hideClientButton: true,
     }),
   )
 

@@ -1,7 +1,10 @@
 {
   "name": "@kellemes/vector-service",
   "version": "1.0.0",
+  "author": "Andras Serfozo <subztep@gmail.com>",
   "description": "In-memory vector database with cosine similarity search",
+  "license": "BSD-3-Clause",
+  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

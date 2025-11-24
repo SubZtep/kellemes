@@ -220,3 +220,11 @@ This creates richer semantic representations than embedding questions alone.
   - `kellemes` - Custom model (create from Modelfile)
 - **Mise** - Development environment manager (https://mise.jdx.dev)
 - **Docker** (optional) - For containerized PostgreSQL and Ollama
+
+## Release Automation
+
+- Semantic release runs via `.github/workflows/release.yml` on every push to `main` (or a manual `workflow_dispatch`).  
+- The workflow installs dependencies once, then invokes `cycjimmy/semantic-release-action` sequentially for the root package and each workspace (`common`, `vector-service`, `ollama-service`, `rag`, `api`, `cli`) using the shared `release.config.cjs`.  
+- `semantic-release-monorepo` scopes commits per package, so only work that touches a package will trigger its release. Git tags follow `<package-name>-v<version>` and each run updates `package.json`, `pnpm-lock.yaml`, `CHANGELOG.md`, and publishes a GitHub release via `@semantic-release/github`.  
+- Packages are marked `private`, so `@semantic-release/npm` is configured with `npmPublish: false` to bump versions without hitting npm.  
+- Follow conventional commits (`feat`, `fix`, `chore`, etc.) so `@semantic-release/commit-analyzer` can infer the proper bump. You can dry-run locally from a package with `pnpm --filter <pkg> exec -- semantic-release --dry-run -e ../../release.config.cjs`.

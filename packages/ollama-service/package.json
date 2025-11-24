@@ -1,7 +1,10 @@
 {
   "name": "@kellemes/ollama-service",
   "version": "1.0.0",
+  "author": "Andras Serfozo <subztep@gmail.com>",
   "description": "Ollama API client service",
+  "license": "BSD-3-Clause",
+  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

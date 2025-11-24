@@ -1,0 +1,110 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  semantic-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.23.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Release root
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: .
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release @kellemes/common
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: packages/common
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release @kellemes/vector-service
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: packages/vector-service
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release @kellemes/ollama-service
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: packages/ollama-service
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release @kellemes/rag
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: packages/rag
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release @kellemes/api
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: packages/api
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release @kellemes/cli
+        uses: cycjimmy/semantic-release-action@v6
+        with:
+          working_directory: packages/cli
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            semantic-release-monorepo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

@@ -1,7 +1,10 @@
 {
   "name": "@kellemes/rag",
   "version": "1.0.0",
+  "author": "Andras Serfozo <subztep@gmail.com>",
   "description": "RAG orchestration package for keLLeMes",
+  "license": "BSD-3-Clause",
+  "private": true,
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

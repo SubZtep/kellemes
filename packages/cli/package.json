@@ -1,7 +1,10 @@
 {
   "name": "@kellemes/cli",
   "version": "1.0.0",
+  "author": "Andras Serfozo <subztep@gmail.com>",
   "description": "Interactive CLI for keLLeMes",
+  "license": "BSD-3-Clause",
+  "private": true,
   "type": "module",
   "bin": {
     "kellemes-cli": "./dist/index.js"
