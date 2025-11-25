@@ -37,9 +37,6 @@ module.exports = {
       "@semantic-release/npm",
       {
         npmPublish: false, // Library only used in monorepo
-        // Let pnpm bump version instead of npm
-        // Prevent npm from running at all
-        tarballDir: false,
       },
     ],
     [
