@@ -1,3 +1,4 @@
+// biome-ignore-all lint/suspicious/noTemplateCurlyInString: unstable config
 const path = require("node:path")
 
 const repoRoot = __dirname
@@ -35,14 +36,23 @@ module.exports = {
     [
       "@semantic-release/npm",
       {
-        npmPublish: false,
+        npmPublish: false, // Library only used in monorepo
+        // Let pnpm bump version instead of npm
+        // Prevent npm from running at all
+        tarballDir: false,
+      },
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        prepareCmd: "pnpm version ${nextRelease.version} --no-git-tag-version --silent",
       },
     ],
     [
       "@semantic-release/git",
       {
         assets: uniqueAssets(["package.json", toRepoFile("pnpm-lock.yaml"), toRepoFile("CHANGELOG.md")]),
-        // biome-ignore lint/suspicious/noTemplateCurlyInString: <>
+
         message: "chore(release): ${nextRelease.gitTag} [skip ci]\n\n${nextRelease.notes}",
       },
     ],
