@@ -17,4 +17,4 @@ console.table({
   height: process.stdout.rows,
 })
 
-render(<App />, { incrementalRendering: true, exitOnCtrlC: true })
+render(<App />, { incrementalRendering: true, exitOnCtrlC: true, maxFps: 15 })
