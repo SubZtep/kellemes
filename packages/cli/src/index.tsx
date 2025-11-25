@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { render } from "ink"
 import "dotenv/config"
 import App from "./App"
@@ -10,11 +9,15 @@ if (!process.stdin.isTTY) {
   process.exit(1)
 }
 
-console.table({
-  node: globalThis.process?.versions?.node,
-  window: !!globalThis.window,
-  width: process.stdout.columns,
-  height: process.stdout.rows,
-})
+// console.table({
+//   node: globalThis.process?.versions?.node,
+//   window: !!globalThis.window,
+//   width: process.stdout.columns,
+//   height: process.stdout.rows,
+// })
 
-render(<App />, { incrementalRendering: true, exitOnCtrlC: true, maxFps: 15 })
+render(<App />, {
+  incrementalRendering: true,
+  exitOnCtrlC: false,
+  maxFps: 15,
+})

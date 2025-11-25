@@ -1,4 +1,5 @@
 import { Box, Text } from "ink"
+import Gradient from "ink-gradient"
 import Spinner from "ink-spinner"
 import ollama from "ollama"
 import { useEffect } from "react"
@@ -17,9 +18,7 @@ export default function FindingOllama({ children }: { children: React.ReactNode 
   const models = useOllamaModels({ enabled: !!version })
 
   useEffect(() => {
-    console.log("\nc[_]\n")
     return () => {
-      console.log("🛸\n")
       ollama.abort()
     }
   }, [])
@@ -41,9 +40,13 @@ export default function FindingOllama({ children }: { children: React.ReactNode 
 
   return (
     <Box gap={1} flexDirection="column">
-      <Spinner type="shark" />
+      <Gradient name="mind">
+        <Spinner type="shark" />
+        <Text bold>AI</Text>
+        <Spinner type="binary" />
+      </Gradient>
       <Text>
-        Searching for Ollama
+        Waiting for oLLaMa service
         <Spinner type="simpleDots" />
       </Text>
     </Box>
