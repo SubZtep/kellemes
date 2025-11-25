@@ -1,14 +1,12 @@
-import { useQuery } from "@tanstack/react-query"
-import { Box, Text } from "ink"
-import SelectInput from "ink-select-input"
-import Spinner from "ink-spinner"
-import ollama from "ollama"
-import { useEffect, useState } from "react"
+import { Text } from "ink"
+import { useEffect } from "react"
 import { useStore } from "../../store"
+// biome-ignore lint/correctness/noUnusedImports: dunno
 import ModelInfo from "./ModelInfo"
 
 // import PullModel from "./PullModel"
 
+// biome-ignore lint/correctness/noUnusedVariables: dunno
 interface Model {
   name: string
   expires_at?: Date
