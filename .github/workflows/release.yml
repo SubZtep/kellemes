@@ -10,18 +10,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.23.0
-          run_install: true
+
       - uses: actions/setup-node@v4
         with:
           node-version: 24.11.1
           cache: "pnpm"
-      - run: pnpm version-packages
-      - name: Push version bumps and changelog
-        uses: actions/github-script@v7
+
+      - uses: pnpm/action-setup@v4
         with:
-          script: |
-            const exec = require('child_process').execSync;
-            exec('git push origin main --follow-tags', { stdio: 'inherit' });
+          version: 10.23.0
+          run_install: true
+
+      - name: Version packages and update changelog
+        run: pnpm version-packages
+
+      - name: Push version bumps and changelog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git push origin main --follow-tags
+
+      # - name: Publish packages
+      #   run: pnpm publish-packages
+      #   env:
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
