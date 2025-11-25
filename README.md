@@ -10,16 +10,17 @@
 
 An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation (RAG) system for a keLLeMes chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base.
 
+> The [rest of](https://subztep.github.io/kellemes) the ~~docs~~ are a work in progress.
+
 ## Prerequisites
 
-**Install [MISE-EN-PLACE](https://mise.jdx.dev/) properly** on your system. It's a tool/version manager that handles core utilities (like pnpm). Get familiar with it now to make future configuration easier. :shipit:
-
-> The [rest of](https://subztep.github.io/kellemes) the ~~docs~~ are a work in progress.
+**Setup [MISE-EN-PLACE](https://mise.jdx.dev/)** in the dev environment to handle tool version management.
 
 ## Configuration
 
-All required environment variable defaults are in [`mise.toml`](mise.toml#L1).
+All required environment variable defaults are in [`mise.toml`](mise.toml#L1), without change any of them the rig should work with empty data.
 
+****
 If you want to override any of them, create a `.env` file with the updated values.
 
 ## Terminal Commands

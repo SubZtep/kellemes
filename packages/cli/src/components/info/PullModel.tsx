@@ -5,7 +5,6 @@ import type { AbortableAsyncIterator, ProgressResponse } from "ollama"
 import ollama from "ollama"
 import { useEffect, useState } from "react"
 
-const DEFAULT_MODEL = "smollm2:1.7b"
 const STALL_TIMEOUT_MS = 15_000
 
 type ProgressState = {
@@ -39,7 +38,11 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
 
     const pullModel = async () => {
       try {
-        stream = await ollama.pull({ insecure: true, stream: true, model: DEFAULT_MODEL })
+        stream = await ollama.pull({
+          insecure: true,
+          stream: true,
+          model: process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!,
+        })
         scheduleStallTimeout()
         for await (const chunk of stream) {
           if (cancelled) break
@@ -75,11 +78,11 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
 
   useEffect(() => {
     if (done) {
-      onPulled?.(DEFAULT_MODEL)
+      onPulled?.(process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!)
     }
   }, [done])
 
-  const manualCommand = `ollama pull ${DEFAULT_MODEL}`
+  const manualCommand = `ollama pull ${process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!}`
   const percent =
     progress.totalBytes && progress.completedBytes !== null
       ? Math.round((progress.completedBytes / progress.totalBytes) * 100)
@@ -88,7 +91,7 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
   if (done) {
     return (
       <Box flexDirection="column">
-        <Text color="green">Model {DEFAULT_MODEL} is ready.</Text>
+        <Text color="green">Model {process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!} is ready.</Text>
       </Box>
     )
   }
@@ -96,7 +99,7 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
   if (error) {
     return (
       <Box flexDirection="column">
-        <Text color="red">Unable to finish pulling {DEFAULT_MODEL}.</Text>
+        <Text color="red">Unable to finish pulling {process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!}.</Text>
         <Text>{error}</Text>
         <Text dimColor>Try running the command below in another terminal:</Text>
         <Text>{manualCommand}</Text>
@@ -108,7 +111,7 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
   return (
     <Box flexDirection="column">
       <Text>
-        Pulling {DEFAULT_MODEL} <Spinner type="line" />
+        Pulling {process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!} <Spinner type="line" />
       </Text>
       <Text color="cyan">
         {progress.status}
