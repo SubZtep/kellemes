@@ -1,22 +1,24 @@
 import ollama, { type ModelResponse } from "ollama"
 import { useEffect, useState } from "react"
-import { useStore } from "../store"
 
 const REFRESH_INTERVAL_MS = 1000
 
-/** Keeps track of the Ollama modelsß. */
+/**
+ * Keeps track of the Ollama models
+ *
+ * @param enabled - Whether to fetch the models.
+ */
 export default function useOllamaModels({ enabled }: { enabled: boolean }) {
-  const [models, setModels] = useState<ModelResponse[]>([])
-  const setActiveModel = useStore(state => state.setActiveModel)
+  const [models, setModels] = useState<ModelResponse[] | null>(null)
 
   useEffect(() => {
     const fetchModels = async () => {
       if (!enabled) return
-      const result = await ollama.ps()
-      setModels(result?.models ?? [])
-      // If no models then no activly selected
-      if (result?.models && result.models.length === 0) {
-        setActiveModel(null)
+      const result = await ollama.list()
+      if (result.models && Array.isArray(result.models)) {
+        setModels(result.models)
+      } else {
+        throw new Error("Listing models failed")
       }
     }
 

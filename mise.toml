@@ -2,7 +2,8 @@
 NODE_ENV = "development"
 
 OLLAMA_BASE_URL = "http://localhost:11434"
-OLLAMA_MODEL_DOWNLOAD_DEFAULT = "smollm2:1.7b"
+# OLLAMA_DEFAULT_MODEL = "smollm2:1.7b"
+OLLAMA_DEFAULT_MODEL = "smollm2:135m"
 
 OLLAMA_MODEL = "kellemes"
 EMBEDDING_MODEL = "nomic-embed-text"

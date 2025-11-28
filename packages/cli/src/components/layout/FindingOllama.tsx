@@ -19,6 +19,8 @@ export default function FindingOllama({ children }: { children: React.ReactNode 
 
   useEffect(() => {
     return () => {
+      // Gracefully abort the Ollama connection on exit
+      // FIXME: test this
       ollama.abort()
     }
   }, [])
@@ -28,13 +30,16 @@ export default function FindingOllama({ children }: { children: React.ReactNode 
   }, [version])
 
   useEffect(() => {
+    if (models === null) return
     setOllamaModels(models)
-    if (!activeModel && models.length === 1) {
-      setActiveModel(models?.[0]?.model ?? null)
+    if (models.length === 0) {
+      setActiveModel(null)
+    } else if (!activeModel && models.length === 1) {
+      setActiveModel(models[0]!.model)
     }
   }, [models])
 
-  if (ollamaVersion) {
+  if (ollamaVersion && models) {
     return <>{children}</>
   }
 

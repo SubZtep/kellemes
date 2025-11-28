@@ -23,5 +23,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": ["global.d.ts", "packages/**/*.ts", "packages/**/*.tsx"],
+  "exclude": ["node_modules", "dist", "tests"]
 }

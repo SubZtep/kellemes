@@ -5,12 +5,12 @@ export default function KeyBindings() {
   return (
     <Box flexDirection="row" justifyContent="space-between" gap={1}>
       {/* <Text>Key Bindings x</Text> */}
-      <HotKey keys={["Tab", "Shift+Tab"]}>Change focus</HotKey>
+      {/* <HotKey keys={["Tab", "Shift+Tab"]}>Change focus</HotKey> */}
       {/* <Box>
         {activeId === "promptbox" && ", Enter: Submit prompt"}
         {activeId === "ollamabox" && ", ↑/↓/j/k: Change selection, Enter: Submit selection"}
       </Box> */}
-      <HotKey keys="Esc">Quit</HotKey>
+      <HotKey keys="Ctrl+c">Quit</HotKey>
     </Box>
   )
 }

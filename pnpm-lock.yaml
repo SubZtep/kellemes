@@ -112,6 +112,9 @@ importers:
       '@mishieck/ink-titled-box':
         specifier: ^0.3.0
         version: 0.3.0(ink@6.5.1(@types/react@19.2.7)(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
+      '@pppp606/ink-chart':
+        specifier: ^0.2.0
+        version: 0.2.0(ink@6.5.1(@types/react@19.2.7)(react@19.2.0))(react@19.2.0)
       '@tanstack/react-query':
         specifier: ^5.90.11
         version: 5.90.11(react@19.2.0)
@@ -755,6 +758,14 @@ packages:
 
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
+
+  '@pppp606/ink-chart@0.2.0':
+    resolution: {integrity: sha512-/yD+isBvcZWuBMUYyvXftcvrKxU/xO76L8ptId9QhNLS6R2iX9qWZLcqiYzLJf6oH7zqDk56oAs6sf5j3mRx1g==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    peerDependencies:
+      ink: '>=4'
+      react: '>=18'
 
   '@rollup/rollup-android-arm-eabi@4.53.3':
     resolution: {integrity: sha512-mRSi+4cBjrRLoaal2PnqH82Wqyb+d3HsPUN/W+WslCXsZsyHa9ZeQQX/pQsZaVIWDkPcpV6jJ+3KLbTbgnwv8w==}
@@ -4204,6 +4215,11 @@ snapshots:
   '@phosphor-icons/core@2.1.1': {}
 
   '@pinojs/redact@0.4.0': {}
+
+  '@pppp606/ink-chart@0.2.0(ink@6.5.1(@types/react@19.2.7)(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      ink: 6.5.1(@types/react@19.2.7)(react@19.2.0)
+      react: 19.2.0
 
   '@rollup/rollup-android-arm-eabi@4.53.3':
     optional: true

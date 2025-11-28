@@ -1,9 +1,11 @@
 import { formatBytes } from "@kellemes/common"
+import { BarChart } from "@pppp606/ink-chart"
 import { Box, Text } from "ink"
 import Spinner from "ink-spinner"
-import type { AbortableAsyncIterator, ProgressResponse } from "ollama"
-import ollama from "ollama"
+import ollama, { type AbortableAsyncIterator, type ProgressResponse } from "ollama"
 import { useEffect, useState } from "react"
+
+// import { useStore } from "../../../store"
 
 const STALL_TIMEOUT_MS = 15_000
 
@@ -13,9 +15,10 @@ type ProgressState = {
   totalBytes: number | null
 }
 
-export default function PullModel({ onPulled }: { onPulled?: (modelName: string) => void }) {
+export default function PullModel({ model, onPulled }: { model: string; onPulled?: (modelName: string) => void }) {
   const [error, setError] = useState<string | null>(null)
   const [done, setDone] = useState(false)
+  // const addOllamaModel = useStore(state => state.addOllamaModel)
   const [progress, setProgress] = useState<ProgressState>({
     status: "Contacting Ollama",
     completedBytes: null,
@@ -37,11 +40,12 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
     }
 
     const pullModel = async () => {
+      // TODO: check disk space
       try {
         stream = await ollama.pull({
           insecure: true,
           stream: true,
-          model: process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!,
+          model: model,
         })
         scheduleStallTimeout()
         for await (const chunk of stream) {
@@ -78,11 +82,11 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
 
   useEffect(() => {
     if (done) {
-      onPulled?.(process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!)
+      onPulled?.(model)
     }
   }, [done])
 
-  const manualCommand = `ollama pull ${process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!}`
+  const manualCommand = `ollama pull ${model}`
   const percent =
     progress.totalBytes && progress.completedBytes !== null
       ? Math.round((progress.completedBytes / progress.totalBytes) * 100)
@@ -91,7 +95,7 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
   if (done) {
     return (
       <Box flexDirection="column">
-        <Text color="green">Model {process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!} is ready.</Text>
+        <Text color="green">Model {model} is ready.</Text>
       </Box>
     )
   }
@@ -99,7 +103,7 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
   if (error) {
     return (
       <Box flexDirection="column">
-        <Text color="red">Unable to finish pulling {process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!}.</Text>
+        <Text color="red">Unable to finish pulling {model}.</Text>
         <Text>{error}</Text>
         <Text dimColor>Try running the command below in another terminal:</Text>
         <Text>{manualCommand}</Text>
@@ -111,14 +115,27 @@ export default function PullModel({ onPulled }: { onPulled?: (modelName: string)
   return (
     <Box flexDirection="column">
       <Text>
-        Pulling {process.env.OLLAMA_MODEL_DOWNLOAD_DEFAULT!} <Spinner type="line" />
+        Pulling {model} {progress.totalBytes && `(${formatBytes(progress.totalBytes)}) `}
+        <Spinner type="line" />
       </Text>
-      <Text color="cyan">
+      {/* <Text color="cyan">
         {progress.status}
         {percent !== null && progress.totalBytes
-          ? `: ${formatBytes(progress.completedBytes ?? 0)} / ${formatBytes(progress.totalBytes)} (${percent}%)`
+          ? `: ${formatBytes(progress.completedBytes ?? 0)} / ${formatBytes(progress.totalBytes)}`
           : ""}
-      </Text>
+      </Text> */}
+
+      {percent !== null && (
+        <BarChart
+          data={[{ label: "Progress", value: percent }]}
+          max={100}
+          showValue="right"
+          format={v => `${v}%`}
+          width={30}
+          color="cyan"
+        />
+      )}
+
       {percent === null && (
         <Text dimColor>If this hangs, cancel and run '{manualCommand}' manually, then reopen the CLI.</Text>
       )}
