@@ -6,6 +6,12 @@
       "type": "shell",
       "command": "pnpm -r exec npx npm-check-updates",
       "problemMatcher": []
+    },
+    {
+      "label": "Clean up build artifacts",
+      "type": "shell",
+      "command": "pnpm -r exec rm -rf node_modules dist pnpm-lock.yaml tsconfig.tsbuildinfo",
+      "problemMatcher": []
     }
   ]
 }
