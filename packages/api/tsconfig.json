@@ -6,5 +6,6 @@
     "types": ["bun-types"],
     "noUnusedLocals": true,
     "noUnusedParameters": true
-  }
+  },
+  "include": ["../../global.d.ts", "src/**/*.ts", "db/**/*.ts", "scripts/**/*.ts"]
 }
