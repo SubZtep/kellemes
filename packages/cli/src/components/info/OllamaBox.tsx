@@ -6,7 +6,7 @@ import SelectInput from "ink-select-input"
 // import ollama from "ollama/browser"
 import { useEffect } from "react"
 import { useStore } from "../../store"
-import PullModel from "./PullModel.js"
+import PullModel from "./PullModel"
 // import SelectModel from "./SelectModel"
 
 export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {

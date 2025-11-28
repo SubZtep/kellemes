@@ -39,16 +39,24 @@ export default function FindingOllama({ children }: { children: React.ReactNode 
   }
 
   return (
-    <Box gap={1} flexDirection="column">
+    <Box flexDirection="column" gap={1}>
       <Gradient name="mind">
         <Spinner type="shark" />
         <Text bold>AI</Text>
         <Spinner type="binary" />
       </Gradient>
-      <Text>
-        Waiting for oLLaMa service
+      <Box>
+        <Text>Waiting for o</Text>
+        <Text color="whiteBright" bold>
+          LL
+        </Text>
+        <Text>a</Text>
+        <Text color="whiteBright" bold>
+          M
+        </Text>
+        <Text>a</Text>
         <Spinner type="simpleDots" />
-      </Text>
+      </Box>
     </Box>
   )
 }

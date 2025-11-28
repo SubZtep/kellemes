@@ -1,7 +1,7 @@
 import { TitledBox } from "@mishieck/ink-titled-box"
 import { Box, Text, useFocus } from "ink"
 import TextInput from "ink-text-input"
-import { useStore } from "../../store.js"
+import { useStore } from "../../store"
 
 export default function PromptBox({
   isLoading,

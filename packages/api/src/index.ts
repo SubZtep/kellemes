@@ -1,9 +1,9 @@
 import "dotenv/config"
-import { migrateToLatest } from "../db/migrator.js"
-import { app } from "./app.js"
-import { registerDocs } from "./docs.js"
-import { registerMiddleware } from "./middlewares.js"
-import { registerRoutes } from "./routes/index.js"
+import { migrateToLatest } from "../db/migrator"
+import { app } from "./app"
+import { registerDocs } from "./docs"
+import { registerMiddleware } from "./middlewares"
+import { registerRoutes } from "./routes/index"
 
 registerMiddleware(app)
 registerRoutes(app)
@@ -13,6 +13,7 @@ try {
   console.log("=== keLLeMes API ===\n")
   console.log("Running database migrations...")
   await migrateToLatest()
+
   console.log("✓ Migrations complete\n")
   console.log(`✓ Server running on http://localhost:${process.env.API_PORT}`)
   console.log(`✓ Environment: ${process.env.NODE_ENV}\n`)
