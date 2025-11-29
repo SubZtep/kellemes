@@ -7,6 +7,20 @@
 
 ---
 
+## CLI
+
+### Install
+
+```sh
+curl -fsSL https://subztep.github.io/kellemes/install.sh | bash
+```
+
+### Uninstall
+
+```sh
+curl -fsSL https://subztep.github.io/kellemes/uninstall.sh | bash
+```
+
 -
 - -
 -
