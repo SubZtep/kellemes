@@ -1,8 +1,10 @@
+import { Box, Text } from "ink"
+import Spinner from "ink-spinner"
 import { useStore } from "../../store"
-import FocusBox from "../FocusBox"
+import FocusBox from "../ui/FocusBox"
 import Response from "./Response"
 
-export default function ResponseBox() {
+export default function ResponseBox({ isLoading, response }: { isLoading: boolean; response: string }) {
   const responses = useStore(state => state.responses)
   const activeModel = useStore(state => state.activeModel)
 
@@ -15,23 +17,21 @@ export default function ResponseBox() {
           <Response key={response.sender + response.createdAt.getTime().toString()} response={response} />
         ))}
 
-      {/* {isLoading && (
-        <Box>   
-          <Text color="green" inverse>
-            <Spinner type="binary" />
-            Generating response
-            <Spinner type="simpleDots" />
+      {isLoading && (
+        <Box>
+          <Text>
+            {!response ? <Spinner type="dots12" /> : `🤖 `}
+            {response}
+            {response ? <Spinner type="line" /> : null}
           </Text>
         </Box>
-      )} */}
+      )}
 
-      {/* {error && (
-        <Box>
-          <Text color="red">Error: {error}</Text>
-        </Box>
-      )} */}
-
-      {/* {!isLoading && !error && responses.length === 0 && <Text dimColor>Submit a prompt to see results...</Text>} */}
+      {!isLoading && responses.length === 0 && (
+        <Text dimColor={true}>
+          🤖<Spinner type="grenade" />
+        </Text>
+      )}
     </FocusBox>
   )
 }

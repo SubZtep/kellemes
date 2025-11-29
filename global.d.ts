@@ -7,8 +7,8 @@ declare global {
       // /** Ollama API base URL */
       // OLLAMA_BASE_URL: string
 
-      // /** Primary Ollama model for chat generation */
-      // OLLAMA_MODEL: string
+      /** Primary Ollama model for chat generation */
+      OLLAMA_MODEL: string
 
       // /** Model used for generating embeddings */
       // EMBEDDING_MODEL: string

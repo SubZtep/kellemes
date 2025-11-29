@@ -1,20 +1,15 @@
 import { type BoxProps, useFocus } from "ink"
-import useKeyBindings from "../../../hooks/useKeyBindings"
 import { useStore } from "../../../store"
-import FocusBox from "../../FocusBox"
-import SelectModel from "../../info/SelectModel"
+import FocusBox from "../../ui/FocusBox"
 import ActiveModelInfo from "./ActiveModelInfo"
 import PullModel from "./PullModel"
+import SelectModel from "./SelectModel"
 
 export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   const activeModel = useStore(state => state.activeModel)
   const { isFocused } = useFocus({ autoFocus: !activeModel, id: "ollamabox" })
   const ollamaVersion = useStore(state => state.ollamaVersion)
   const models = useStore(state => state.ollamaModels)
-  useKeyBindings([
-    { keys: ["↑", "↓", "j", "k"], description: "Change selection" },
-    { keys: ["Enter"], description: "Use model" },
-  ])
 
   return (
     <FocusBox title={`Ollama ${ollamaVersion}`} isFocused={isFocused} {...props}>

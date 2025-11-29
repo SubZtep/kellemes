@@ -6,7 +6,7 @@ export default function ActiveModelInfo() {
 
   return (
     <Box justifyContent="space-between" gap={1}>
-      <Text>LLM:</Text>
+      <Text>Base LLM:</Text>
       <Text color="green">{activeModel ?? "💀"}</Text>
     </Box>
   )

@@ -1,7 +1,7 @@
 // import { ragService } from "@kellemes/rag"
 import { Box, type BoxProps, Text } from "ink"
 import { useEffect, useState } from "react"
-import FocusBox from "../FocusBox"
+import FocusBox from "../ui/FocusBox"
 
 type RAGStatus = "ready" | "not ready" | "initializing"
 
