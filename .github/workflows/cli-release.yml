@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cli-bin
-          path: ./dist/kellemes-cli*
+          path: ./dist/**/*
 
   release:
     needs: build
