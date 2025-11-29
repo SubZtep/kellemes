@@ -19,8 +19,6 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies and build
-        env:
-          OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL }}
         working-directory: ./ # root of repo
         run: |
           pnpm i --frozen-lockfile --ignore-scripts
