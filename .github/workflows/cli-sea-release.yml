@@ -36,16 +36,18 @@ jobs:
         working-directory: packages/cli
         run: node --experimental-sea-config build/sea.config.json
 
-      - name: Inject Node binary (SEA)
-        working-directory: packages/cli
+      - name: Inject Node binary (Linux/macOS)
+        if: matrix.os != 'windows'
         run: |
-          if [ "${{ matrix.os }}" == "windows" ]; then
-            copy "%ProgramFiles%\\nodejs\\node.exe" dist\\app.exe
-            npx postject dist\\app.exe NODE_SEA_BLOB dist\\app.blob --sentinel-fuse node:sea
-          else
-            cp $(which node) dist/app
-            npx postject dist/app NODE_SEA_BLOB dist/app.blob --sentinel-fuse node:sea
-          fi
+          cp $(which node) dist/app
+          npx postject dist/app NODE_SEA_BLOB dist/app.blob --sentinel-fuse node:sea
+
+      - name: Inject Node binary (Windows)
+        if: matrix.os == 'windows'
+        shell: pwsh
+        run: |
+          cp "$Env:ProgramFiles\\nodejs\\node.exe" dist/app.exe
+          npx postject dist/app.exe NODE_SEA_BLOB dist/app.blob --sentinel-fuse node:sea
 
       - name: Make executable (Linux/macOS)
         if: matrix.os != 'windows'
