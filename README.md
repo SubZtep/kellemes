@@ -39,9 +39,25 @@ Run these commands from the project root:
 
 > ### Bonus command:
 > 
-> `docker compose up -d`\
-> Start all required services (+more) in the background.\
 > For the first run it setup the database in a permanent Docker volume.
+
+## Dependencies
+
+| Logo                                                                                        | Name                                                   | Description                                                |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
+| <img src="https://raw.githubusercontent.com/jdx/mise/main/docs/public/logo.svg" width="64"> | [mise-en-place](https://mise.jdx.dev/)                 | Install versioned developer tools.                         |
+| ![pnpm](https://github.com/pnpm.png?size=64)                                                | [pnpm](https://pnpm.io/)                               | Install dependencies and run scripts accross the monorepo. |
+| ![Biome](https://github.com/biomejs.png?size=64)                                            | [Biome](https://biomejs.dev/)                          | Code linter and formatter.                                 |
+| ![Nodejs](https://github.com/nodejs.png?size=64)                                            | [Node.js](https://nodejs.org/en)                       | JS runtime.                                                |
+| ![Bun](https://github.com/oven-sh.png?size=64)                                              | [Bun](https://bun.sh/)                                 | JS runtime for API and CLI executable build.               |
+| ![Changesets](https://github.com/changesets.png?size=64)                                    | [Changesets](https://github.com/changesets/changesets) |                                                            |
+| ![image](https://github.com/commitlint.png?size=64)                                         |                                                        |                                                            |
+| ![image](https://github.com/husky.png?size=64)                                              |                                                        |                                                            |
+| ![image](https://github.com/hono.png?size=64)                                               |                                                        |                                                            |
+| ![Kysely](https://github.com/kysely-org.png?size=64)                                        | [Kysely](https://kysely.dev/)                          | Type-safe PostgreSQL query build and migration manager.    |
+| ![image](https://github.com/ollama.png?size=64)                                             |                                                        |                                                            |
+| ![image](https://github.com/tanstack.png?size=64)                                           |                                                        |                                                            |
+| ![datefns](https://github.com/date-fns.png?size=64)                                         | [date-fns](https://date-fns.org/)                      |                                                            |
 
 ---
 ---

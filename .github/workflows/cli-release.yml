@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
@@ -21,10 +20,12 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies
+      - name: Install dependencies and build
+        working-directory: ./ # root of repo
         run: |
           pnpm i --frozen-lockfile --ignore-scripts
           pnpm build
+          pnpm --filter @kellemes/cli compile:all
 
   release:
     needs: build
