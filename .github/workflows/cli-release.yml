@@ -6,8 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      OLLAMA_BASE_URL: ${{ env.OLLAMA_BASE_URL }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,6 +19,8 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies and build
+        env:
+          OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL }}
         working-directory: ./ # root of repo
         run: |
           pnpm i --frozen-lockfile --ignore-scripts
