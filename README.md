@@ -45,7 +45,7 @@ Run these commands from the project root:
 
 | Logo                                                                                        | Name                                                   | Description                                                |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- |
-| <img src="https://raw.githubusercontent.com/jdx/mise/main/docs/public/logo.svg" width="64"> | [mise-en-place](https://mise.jdx.dev/)                 | Install versioned developer tools.                         |
+| <img src="https://raw.githubusercontent.com/jdx/mise/main/docs/public/logo.svg" width="64"> | [mise-en-place](https://mise.jdx.dev/)                 | Developer tools version manager.                           |
 | ![pnpm](https://github.com/pnpm.png?size=64)                                                | [pnpm](https://pnpm.io/)                               | Install dependencies and run scripts accross the monorepo. |
 | ![Biome](https://github.com/biomejs.png?size=64)                                            | [Biome](https://biomejs.dev/)                          | Code linter and formatter.                                 |
 | ![Nodejs](https://github.com/nodejs.png?size=64)                                            | [Node.js](https://nodejs.org/en)                       | JS runtime.                                                |

@@ -37,12 +37,12 @@ export default function Logo() {
               glitched ? (
                 <Text color={smallerColor}>
                   {/* @ts-ignore */}
-                  <BigText text="ke" font="tiny" spaceless={true} />
+                  <BigText text="ke" spaceless={true} />
                 </Text>
               ) : (
                 <Gradient name={smallColor}>
                   {/* @ts-ignore */}
-                  <BigText text="ke" font="tiny" spaceless={true} />
+                  <BigText text="ke" spaceless={true} />
                 </Gradient>
               )
             }
@@ -51,7 +51,7 @@ export default function Logo() {
         <Box>
           <Gradient name={bigColor}>
             {/* @ts-ignore */}
-            <BigText text="LL" font="tiny" spaceless={true} />
+            <BigText text="LL" spaceless={true} />
           </Gradient>
         </Box>
         <Box>
@@ -60,12 +60,12 @@ export default function Logo() {
               glitched ? (
                 <Text color="black">
                   {/* @ts-ignore */}
-                  <BigText text="e" font="tiny" spaceless={true} dimColor />
+                  <BigText text="e" spaceless={true} dimColor />
                 </Text>
               ) : (
                 <Gradient name={smallColor}>
                   {/* @ts-ignore */}
-                  <BigText text="e" font="tiny" spaceless={true} dimColor />
+                  <BigText text="e" spaceless={true} dimColor />
                 </Gradient>
               )
             }
@@ -74,7 +74,7 @@ export default function Logo() {
         <Box>
           <Gradient name={bigColor}>
             {/* @ts-ignore */}
-            <BigText text="M" font="tiny" spaceless={true} />
+            <BigText text="M" spaceless={true} />
           </Gradient>
         </Box>
         <Box>
@@ -83,12 +83,12 @@ export default function Logo() {
               glitched ? (
                 <Text color="black">
                   {/* @ts-ignore */}
-                  <BigText text="es" font="tiny" spaceless={true} dimColor />
+                  <BigText text="es" spaceless={true} dimColor />
                 </Text>
               ) : (
                 <Gradient name={smallColor}>
                   {/* @ts-ignore */}
-                  <BigText text="es" font="tiny" spaceless={true} dimColor />
+                  <BigText text="es" spaceless={true} dimColor />
                 </Gradient>
               )
             }
