@@ -7,7 +7,7 @@ export default function KeyBindings() {
   const keyBindings = useStore(state => state.keyBindings)
 
   return (
-    <Box flexDirection="row" columnGap={1} flexWrap="wrap">
+    <Box flexDirection="row" columnGap={2} flexWrap="wrap">
       {keyBindings.map(({ keys, description }) => (
         <HotKey key={keys.toString()} keys={keys}>
           {description}
@@ -34,7 +34,9 @@ function HotKey({ keys, children }: { keys: string | string[]; children: React.R
       </Text>
       {keysArr.map((k, i) => (
         <Fragment key={k + i.toString()}>
-          <Text dimColor>{k}</Text>
+          <Text dimColor color="whiteBright">
+            {k}
+          </Text>
           {i < len && (
             <Text dimColor color="cyan">
               |

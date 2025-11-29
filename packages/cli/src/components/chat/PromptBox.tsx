@@ -1,28 +1,20 @@
-import { Box, type BoxProps, Text, useFocus } from "ink"
+import { Box, type BoxProps, Text } from "ink"
+import Spinner from "ink-spinner"
 import TextInput from "ink-text-input"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useStore } from "../../store"
 import FocusBox from "../ui/FocusBox"
 
 export default function PromptBox({
   isLoading,
+  isFocused,
   ...props
 }: {
   isLoading: boolean
+  isFocused: boolean
 } & BoxProps) {
   const setPrompt = useStore(state => state.setPrompt)
   const [input, setInput] = useState("")
-  const { isFocused } = useFocus({ autoFocus: true, id: "promptbox" })
-  const setKeyBindings = useStore(state => state.setKeyBindings)
-
-  useEffect(() => {
-    if (isFocused) {
-      setKeyBindings([
-        { keys: "Enter", description: "Submit prompt" },
-        { keys: "Escape", description: "Stop generating response" },
-      ])
-    }
-  }, [isFocused])
 
   return (
     <FocusBox title="Enter your prompt" isFocused={isFocused} {...props}>
@@ -30,7 +22,9 @@ export default function PromptBox({
         {isLoading ? (
           <Text dimColor>(Waiting for response)</Text>
         ) : !isFocused && !input ? (
-          <Text dimColor>👤</Text>
+          <Text dimColor>
+            👤 <Spinner type="growHorizontal" />
+          </Text>
         ) : (
           <TextInput
             value={input}

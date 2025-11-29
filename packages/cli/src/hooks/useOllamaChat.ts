@@ -34,7 +34,6 @@ export default function useOllamaChat() {
       options: parameters,
     })
 
-    // setAbort(stream.abort)
     // @ts-ignore
     chatStream.current = stream
 

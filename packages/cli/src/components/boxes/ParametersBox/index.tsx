@@ -21,8 +21,8 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   useEffect(() => {
     if (isFocused) {
       setKeyBindings([
-        { keys: ["Meta+↑", "Meta+↓"], description: "Change active parameter" },
-        { keys: ["↑", "↓"], description: "Change value" },
+        { keys: ["Meta+Up", "Meta+Down"], description: "Change active parameter" },
+        { keys: ["Up", "Down"], description: "Change value" },
         { keys: "Enter", description: "Bake model" },
       ])
     }
@@ -57,7 +57,7 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   })
 
   return (
-    <FocusBox title="Parameters" isFocused={isFocused} {...props}>
+    <FocusBox title="Parameters" isFocused={isFocused} {...props} backgroundColor={isLoading ? "blue" : undefined}>
       {Object.entries(_parameters).map(([key, value]) => (
         <Box key={key} justifyContent="space-between" flexDirection={value.type === "string" ? "column" : "row"}>
           <Text underline={isFocused && activeParameter === key} dimColor={!isFocused || activeParameter !== key}>

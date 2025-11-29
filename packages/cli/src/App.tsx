@@ -1,19 +1,24 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { Box } from "ink"
+import { Box, useApp, useInput } from "ink"
 import OllamaBox from "./components/boxes/OllamaBox"
 import ParametersBox from "./components/boxes/ParametersBox"
 import ChatPanel from "./components/chat/ChatPanel"
 import FindingOllama from "./components/layout/FindingOllama"
 import KeyBindings from "./components/layout/KeyBindings"
 import Logo from "./components/layout/Logo"
-import useExit from "./hooks/useExit"
 import { useStore } from "./store"
 
 const queryClient = new QueryClient()
 
 export default function App() {
-  useExit()
   const activeModel = useStore(state => state.activeModel)
+  const { exit } = useApp()
+
+  useInput((input, key) => {
+    if (key.ctrl && input === "c") {
+      exit()
+    }
+  })
 
   return (
     <QueryClientProvider client={queryClient}>

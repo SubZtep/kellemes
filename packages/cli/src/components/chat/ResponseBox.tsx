@@ -9,7 +9,7 @@ export default function ResponseBox({ isLoading, response }: { isLoading: boolea
   const activeModel = useStore(state => state.activeModel)
 
   return (
-    <FocusBox title="Response" isFocused={false} flexDirection="column" flexGrow={1} gap={1}>
+    <FocusBox title="Chat" isFocused={false} flexDirection="column" flexGrow={1} gap={1}>
       {responses
         .filter(response => response.model === activeModel)
         .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
