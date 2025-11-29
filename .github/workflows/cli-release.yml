@@ -27,6 +27,13 @@ jobs:
           pnpm build
           pnpm --filter @kellemes/cli compile:all
 
+      # ADD THIS STEP: Upload artifact
+      - name: Upload CLI binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-bin
+          path: ./dist/kellemes-cli*
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -41,6 +48,6 @@ jobs:
         with:
           tag_name: cli-v${{ github.run_number }}
           name: "Kellemes CLI v${{ github.run_number }}"
-          files: dist-all/**/*
+          files: dist-all/**/* # all files fetched from artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
