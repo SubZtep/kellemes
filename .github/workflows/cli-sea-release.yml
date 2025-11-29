@@ -19,16 +19,18 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: 10.23.0
-          run_install: true
+          run_install: false
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24.11.1
           cache: "pnpm"
 
-      - name: Build CLI
-        working-directory: packages/cli
-        run: pnpm build
+      - name: Install dependencies and build
+        working-directory: ./ # root of repo
+        run: |
+          pnpm i --frozen-lockfile --ignore-scripts
+          pnpm build
 
       - name: Generate SEA blob
         working-directory: packages/cli
