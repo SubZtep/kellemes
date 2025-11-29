@@ -1,6 +1,23 @@
 import type { ChatResponse } from "@kellemes/common"
-import type { ModelResponse } from "ollama"
+import type { ModelResponse, Options } from "ollama"
 import { create } from "zustand"
+
+export const _parameters: Partial<
+  Record<keyof Options | "system_prompt", { default: number | string; type: "float" | "number" | "string" }>
+> = {
+  temperature: {
+    default: 0.7,
+    type: "float",
+  },
+  top_k: {
+    default: 40,
+    type: "number",
+  },
+  system_prompt: {
+    default: "ALWAYS reply in Pirate language.",
+    type: "string",
+  },
+}
 
 export type ChatMessage = ChatResponse & {
   /** `user` | `assistant` | `system` */
@@ -29,13 +46,12 @@ export interface State {
   /** Responses from the RAG service. */
   responses: ChatMessage[]
 
+  parameters: Record<string, number | string>
+
   ollamaStatus: OllamaStatus
   ragStatus: RAGStatus
   documentsCount: number
 
-  topK: number
-  similarityThreshold: number
-  temperature: number | null
   useRAG: boolean
 }
 
@@ -45,13 +61,12 @@ export interface Actions {
   setOllamaModels: (ollamaModels: ModelResponse[]) => void
   setActiveModel: (activeModel: string | null) => void
   addResponse: (response: ChatMessage) => void
+  setParameters: (parameters: Record<string, number | string>) => void
+  setParameter: (key: string, value: number | string) => void
   setPrompt: (prompt: string) => void
   setOllamaStatus: (ollamaStatus: OllamaStatus) => void
   setRAGStatus: (ragStatus: RAGStatus) => void
   setDocumentsCount: (documentsCount: number) => void
-  setTopK: (topK: number) => void
-  setSimilarityThreshold: (similarityThreshold: number) => void
-  setTemperature: (temperature: number) => void
   setUseRAG: (useRAG: boolean) => void
 }
 
@@ -64,12 +79,10 @@ const initialState: State = {
   activeModel: null,
   prompt: "",
   responses: [],
+  parameters: Object.fromEntries(Object.entries(_parameters).map(([key, value]) => [key, value.default])),
   ollamaStatus: "checking",
   ragStatus: "initializing",
   documentsCount: 0,
-  topK: 3,
-  similarityThreshold: 0.5,
-  temperature: 0.7,
   useRAG: false,
 }
 
@@ -92,11 +105,16 @@ export const useStore = create<Store>()((set, get) => ({
   setActiveModel: activeModel => set({ activeModel }),
   setPrompt: prompt => set({ prompt }),
   addResponse: response => set({ responses: [...get().responses, response] }),
+  setParameters: parameters => set({ parameters }),
+  setParameter: (key: string, value: number | string) =>
+    set(state => ({
+      parameters: {
+        ...state.parameters,
+        [key]: value,
+      },
+    })),
   setOllamaStatus: ollamaStatus => set({ ollamaStatus }),
   setRAGStatus: ragStatus => set({ ragStatus }),
   setDocumentsCount: documentsCount => set({ documentsCount }),
-  setTopK: topK => set({ topK }),
-  setSimilarityThreshold: similarityThreshold => set({ similarityThreshold }),
-  setTemperature: temperature => set({ temperature }),
   setUseRAG: useRAG => set({ useRAG }),
 }))

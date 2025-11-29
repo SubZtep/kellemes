@@ -9,6 +9,7 @@ export default function useOllamaChat() {
   const addResponse = useStore(state => state.addResponse)
   const [isLoading, setIsLoading] = useState(false)
   const [answer, setAnswer] = useState("")
+  const { system_prompt, ...parameters } = useStore(state => state.parameters)
 
   const generateResponse = async (prompt: string) => {
     addResponse({
@@ -20,10 +21,16 @@ export default function useOllamaChat() {
 
     setIsLoading(true)
 
+    // console.log(parameters)
+    // @ts-ignore
     const stream = await ollama.chat({
       model: activeModel!,
       stream: true,
-      messages: [{ role: "user", content: prompt }],
+      messages: [
+        ...(system_prompt ? [{ role: "system" as const, content: system_prompt }] : []),
+        { role: "user", content: prompt },
+      ],
+      options: parameters,
     })
 
     let answerChunk = ""

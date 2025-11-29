@@ -19,5 +19,5 @@ if (!process.stdin.isTTY) {
 render(<App />, {
   incrementalRendering: true,
   exitOnCtrlC: false,
-  maxFps: 25,
+  maxFps: 30,
 })

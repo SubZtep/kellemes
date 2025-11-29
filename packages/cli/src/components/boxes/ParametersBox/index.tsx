@@ -1,23 +1,11 @@
-import { produce } from "immer"
 import { Box, type BoxProps, Text, useFocus, useFocusManager, useInput } from "ink"
 import TextInput from "ink-text-input"
 import { useEffect, useState } from "react"
 import useOllamaCreate from "../../../hooks/useOllamaCreate"
-import { useStore } from "../../../store"
+import { _parameters, useStore } from "../../../store"
 import FloatInput from "../../ui/FloatInput"
 import FocusBox from "../../ui/FocusBox"
 import NumberInput from "../../ui/NumberInput"
-
-const _parameters = {
-  temperature: {
-    default: 0.7,
-    type: "float",
-  },
-  top_k: {
-    default: 40,
-    type: "number",
-  },
-}
 
 export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   const activeModel = useStore(state => state.activeModel)
@@ -25,11 +13,9 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   const { isFocused } = useFocus({ id: "parametersbox" })
   const setKeyBindings = useStore(state => state.setKeyBindings)
   const { disableFocus, enableFocus } = useFocusManager()
+  const parameters = useStore(state => state.parameters)
+  const setParameter = useStore(state => state.setParameter)
 
-  const [parameters, setParameters] = useState<Record<string, number | string>>(
-    // @ts-ignore
-    Object.fromEntries(Object.entries(_parameters).map(([key, value]) => [key, value.default])),
-  )
   const [activeParameter, setActiveParameter] = useState("temperature")
 
   useEffect(() => {
@@ -65,6 +51,7 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
       setActiveParameter(items[previousIndex]!)
     }
     if (key.return) {
+      if (isLoading) return
       create(parameters)
     }
   })
@@ -73,41 +60,16 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
     <FocusBox title="Parameters" isFocused={isFocused} {...props}>
       {Object.entries(_parameters).map(([key, value]) => (
         <Box key={key} justifyContent="space-between">
-          <Text underline={activeParameter === key}>{key}:</Text>
+          <Text underline={isFocused && activeParameter === key} dimColor={!isFocused || activeParameter !== key}>
+            {key}:
+          </Text>
           {isFocused && activeParameter === key ? (
             value.type === "float" ? (
-              <FloatInput
-                value={parameters[key] as number}
-                onChange={v =>
-                  setParameters(
-                    produce(draft => {
-                      draft[key] = v
-                    }),
-                  )
-                }
-              />
+              <FloatInput value={parameters[key] as number} onChange={v => setParameter(key, v)} />
             ) : value.type === "number" ? (
-              <NumberInput
-                value={parameters[key] as number}
-                onChange={v =>
-                  setParameters(
-                    produce(draft => {
-                      draft[key] = v
-                    }),
-                  )
-                }
-              />
+              <NumberInput value={parameters[key] as number} onChange={v => setParameter(key, v)} />
             ) : (
-              <TextInput
-                value={parameters[key] as string}
-                onChange={v =>
-                  setParameters(
-                    produce(draft => {
-                      draft[key] = v
-                    }),
-                  )
-                }
-              />
+              <TextInput value={parameters[key] as string} onChange={v => setParameter(key, v)} />
             )
           ) : (
             <Text>{parameters[key]}</Text>

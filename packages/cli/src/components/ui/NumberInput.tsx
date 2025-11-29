@@ -10,5 +10,16 @@ export default function NumberInput({ value, onChange }: { value: number; onChan
     }
   })
 
-  return <TextInput value={value.toString()} onChange={value => onChange(Number(value))} />
+  return (
+    <TextInput
+      value={value.toString()}
+      onChange={value => {
+        let newValue = Number(value)
+        if (Number.isNaN(newValue)) {
+          newValue = 0
+        }
+        onChange(newValue)
+      }}
+    />
+  )
 }
