@@ -1,5 +1,4 @@
 import { Box, Text } from "ink"
-import BigText from "ink-big-text"
 import Gradient from "ink-gradient"
 import { type ReactNode, useEffect, useState } from "react"
 
@@ -37,12 +36,12 @@ export default function Logo() {
               glitched ? (
                 <Text color={smallerColor}>
                   {/* @ts-ignore */}
-                  <BigText text="ke" spaceless={true} />
+                  <Text text="ke" spaceless={true} bold />
                 </Text>
               ) : (
                 <Gradient name={smallColor}>
                   {/* @ts-ignore */}
-                  <BigText text="ke" spaceless={true} />
+                  <Text text="ke" spaceless={true} bold />
                 </Gradient>
               )
             }
@@ -51,7 +50,7 @@ export default function Logo() {
         <Box>
           <Gradient name={bigColor}>
             {/* @ts-ignore */}
-            <BigText text="LL" spaceless={true} />
+            <Text text="LL" spaceless={true} bold />
           </Gradient>
         </Box>
         <Box>
@@ -60,12 +59,12 @@ export default function Logo() {
               glitched ? (
                 <Text color="black">
                   {/* @ts-ignore */}
-                  <BigText text="e" spaceless={true} dimColor />
+                  <Text text="e" spaceless={true} dimColor bold />
                 </Text>
               ) : (
                 <Gradient name={smallColor}>
                   {/* @ts-ignore */}
-                  <BigText text="e" spaceless={true} dimColor />
+                  <Text text="e" spaceless={true} dimColor bold />
                 </Gradient>
               )
             }
@@ -74,7 +73,7 @@ export default function Logo() {
         <Box>
           <Gradient name={bigColor}>
             {/* @ts-ignore */}
-            <BigText text="M" spaceless={true} />
+            <Text text="M" spaceless={true} bold />
           </Gradient>
         </Box>
         <Box>
@@ -83,12 +82,12 @@ export default function Logo() {
               glitched ? (
                 <Text color="black">
                   {/* @ts-ignore */}
-                  <BigText text="es" spaceless={true} dimColor />
+                  <Text text="es" spaceless={true} dimColor bold />
                 </Text>
               ) : (
                 <Gradient name={smallColor}>
                   {/* @ts-ignore */}
-                  <BigText text="es" spaceless={true} dimColor />
+                  <Text text="es" spaceless={true} dimColor bold />
                 </Gradient>
               )
             }
