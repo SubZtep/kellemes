@@ -189,7 +189,7 @@ This creates richer semantic representations than embedding questions alone.
 ### CLI
 - `ink` - React-based CLI rendering framework
 - `ink-spinner`, `ink-text-input`, `ink-select-input` - UI components
-- `ink-big-text`, `ink-gradient` - Visual enhancements
+- `ink-gradient` - Visual enhancements
 - `fullscreen-ink` - Fullscreen terminal UI
 - `react` - UI component library (v19)
 - `@tanstack/react-query` - Async state management
