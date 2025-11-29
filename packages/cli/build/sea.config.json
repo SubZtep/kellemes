@@ -1,0 +1,5 @@
+{
+  "main": "build/sea.js",
+  "output": "dist/app.blob",
+  "resources": ["dist/**/*"]
+}

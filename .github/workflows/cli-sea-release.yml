@@ -1,0 +1,76 @@
+name: Build & Release CLI (SEA)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [linux, macos, windows]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+          cache: "pnpm"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.23.0
+          run_install: true
+
+      - name: Build CLI
+        working-directory: packages/cli
+        run: pnpm build
+
+      - name: Generate SEA blob
+        working-directory: packages/cli
+        run: node --experimental-sea-config build/sea.config.json
+
+      - name: Inject Node binary (SEA)
+        working-directory: packages/cli
+        run: |
+          if [ "${{ matrix.os }}" == "windows" ]; then
+            copy "%ProgramFiles%\\nodejs\\node.exe" dist\\app.exe
+            npx postject dist\\app.exe NODE_SEA_BLOB dist\\app.blob --sentinel-fuse node:sea
+          else
+            cp $(which node) dist/app
+            npx postject dist/app NODE_SEA_BLOB dist/app.blob --sentinel-fuse node:sea
+          fi
+
+      - name: Make executable (Linux/macOS)
+        if: matrix.os != 'windows'
+        working-directory: packages/cli
+        run: chmod +x dist/app
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cli-${{ matrix.os }}
+          path: packages/cli/dist/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist-all
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: cli-v${{ github.run_number }}
+          name: "Kellemes CLI v${{ github.run_number }}"
+          files: dist-all/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
