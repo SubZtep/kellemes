@@ -26,13 +26,13 @@ esac
 # Determine file to download
 case "$OS" in
   linux)
-    FILE="cli-linux-$ARCH_TAG"
+    FILE="kellemes-cli-linux-$ARCH_TAG"
     ;;
   darwin)
-    FILE="cli-macos-$ARCH_TAG"
+    FILE="kellemes-cli-macos-$ARCH_TAG"
     ;;
   msys*|mingw*|cygwin*|windowsnt)
-    FILE="cli-windows-$ARCH_TAG.exe"
+    FILE="kellemes-cli-windows-$ARCH_TAG.exe"
     ;;
   *)
     echo "Unsupported OS: $OS"

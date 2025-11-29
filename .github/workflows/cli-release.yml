@@ -1,9 +1,7 @@
 name: Build & Release CLI (Bun)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
