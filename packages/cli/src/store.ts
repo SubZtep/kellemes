@@ -2,7 +2,11 @@ import type { ChatResponse } from "@kellemes/common"
 import type { ModelResponse } from "ollama"
 import { create } from "zustand"
 
-export type ChatMessage = ChatResponse & { sender: "user" | "assistant"; createdAt: Date }
+export type ChatMessage = ChatResponse & {
+  /** `user` | `assistant` | `system` */
+  sender: string
+  createdAt: Date
+}
 export type OllamaStatus = "connected" | "disconnected" | "checking"
 export type RAGStatus = "ready" | "not ready" | "initializing"
 export type Hotkey = "escape" | "return" | "space" | "leftArrow" | "rightArrow" | "upArrow" | "downArrow"
