@@ -32,7 +32,7 @@ export default function ChatPanel(props: BoxProps) {
 
   return (
     <Box flexDirection="column" {...props}>
-      {isFocused ? <ResponseBox isLoading={isLoading} response={response} /> : null}
+      <ResponseBox isLoading={isLoading} response={response} />
       <PromptBox isLoading={isLoading} isFocused={isFocused} />
     </Box>
   )
