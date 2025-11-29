@@ -2,8 +2,9 @@ import { formatBytes } from "@kellemes/common"
 import { BarChart } from "@pppp606/ink-chart"
 import { Box, Text } from "ink"
 import Spinner from "ink-spinner"
-import ollama, { type AbortableAsyncIterator, type ProgressResponse } from "ollama"
+import type { AbortableAsyncIterator, ProgressResponse } from "ollama"
 import { useEffect, useState } from "react"
+import { ollama } from "../../../ollama"
 
 const STALL_TIMEOUT_MS = 15_000
 

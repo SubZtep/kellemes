@@ -1,5 +1,6 @@
-import ollama, { type ModelResponse } from "ollama"
+import type { ModelResponse } from "ollama"
 import { useEffect, useState } from "react"
+import { ollama } from "../ollama"
 
 const REFRESH_INTERVAL_MS = 1000
 

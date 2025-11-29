@@ -1,5 +1,5 @@
-import ollama from "ollama"
 import { useEffect, useState } from "react"
+import { ollama } from "../ollama"
 
 const REFRESH_INTERVAL_MS = 500
 

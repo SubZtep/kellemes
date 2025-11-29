@@ -1,7 +1,6 @@
 import { Box, Text } from "ink"
 import Gradient from "ink-gradient"
 import Spinner from "ink-spinner"
-// import ollama from "ollama"
 import { useEffect } from "react"
 import useOllamaModels from "../../hooks/useOllamaModels"
 import useOllamaVersion from "../../hooks/useOllamaVersion"

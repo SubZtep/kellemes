@@ -1,5 +1,5 @@
-import ollama from "ollama"
 import { useState } from "react"
+import { ollama } from "../ollama"
 
 export default function useOllamaCreate(baseModel: string) {
   const [isLoading, setIsLoading] = useState(false)

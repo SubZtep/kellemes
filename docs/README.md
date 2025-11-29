@@ -22,17 +22,17 @@ curl -fsSL https://subztep.github.io/kellemes/install.sh | bash
 Install specific version:
 
 ```sh
-CLI_VERSION=cli-v7 curl -fsSL https://subztep.github.io/kellemes/scripts/install.sh | bash
+CLI_VERSION=cli-v7 curl -fsSL https://subztep.github.io/kellemes/install.sh | bash
 ```
 
-#### Windows (PowerShell)
+#### ~~Windows (PowerShell)~~
 
 ```sh
-iwr https://subztep.github.io/kellemes/scripts/install.sh -UseBasicParsing | iex
+iwr https://subztep.github.io/kellemes/install.sh -UseBasicParsing | iex
 ```
 
 ```sh
-$env:CLI_VERSION="cli-v7"; iwr https://subztep.github.io/kellemes/scripts/install.sh -UseBasicParsing | iex
+$env:CLI_VERSION="cli-v7"; iwr https://subztep.github.io/kellemes/install.sh -UseBasicParsing | iex
 ```
 
 
@@ -43,7 +43,7 @@ curl -fsSL https://subztep.github.io/kellemes/uninstall.sh | bash
 ```
 
 ```sh
-iwr https://subztep.github.io/kellemes/scripts/uninstall.sh -UseBasicParsing | iex
+iwr https://subztep.github.io/kellemes/uninstall.sh -UseBasicParsing | iex
 ```
 -
 - -

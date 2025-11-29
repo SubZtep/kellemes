@@ -1,5 +1,6 @@
-import ollama, { type AbortableAsyncIterator } from "ollama"
+import type { AbortableAsyncIterator } from "ollama"
 import { useEffect, useRef, useState } from "react"
+import { ollama } from "../ollama"
 import { type ChatMessage, useStore } from "../store"
 
 export default function useOllamaChat() {
