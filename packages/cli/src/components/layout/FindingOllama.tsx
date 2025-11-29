@@ -1,7 +1,7 @@
 import { Box, Text } from "ink"
 import Gradient from "ink-gradient"
 import Spinner from "ink-spinner"
-import ollama from "ollama"
+// import ollama from "ollama"
 import { useEffect } from "react"
 import useOllamaModels from "../../hooks/useOllamaModels"
 import useOllamaVersion from "../../hooks/useOllamaVersion"
@@ -17,13 +17,13 @@ export default function FindingOllama({ children }: { children: React.ReactNode 
   const version = useOllamaVersion()
   const models = useOllamaModels({ enabled: !!version })
 
-  useEffect(() => {
-    return () => {
-      // Gracefully abort the Ollama connection on exit
-      // FIXME: test this
-      ollama.abort()
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     // Gracefully abort the Ollama connection on exit
+  //     // FIXME: test this
+  //     ollama.abort()
+  //   }
+  // }, [])
 
   useEffect(() => {
     setOllamaVersion(version)

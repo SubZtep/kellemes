@@ -1,6 +1,6 @@
-import ollama from "ollama"
-import { useEffect, useState } from "react"
-import { useStore } from "../store"
+import ollama, { type AbortableAsyncIterator } from "ollama"
+import { useEffect, useRef, useState } from "react"
+import { type ChatMessage, useStore } from "../store"
 
 export default function useOllamaChat() {
   const activeModel = useStore(state => state.activeModel)
@@ -10,6 +10,7 @@ export default function useOllamaChat() {
   const [isLoading, setIsLoading] = useState(false)
   const [answer, setAnswer] = useState("")
   const { system_prompt, ...parameters } = useStore(state => state.parameters)
+  const chatStream = useRef<AbortableAsyncIterator<ChatMessage> | null>(null)
 
   const generateResponse = async (prompt: string) => {
     addResponse({
@@ -33,21 +34,39 @@ export default function useOllamaChat() {
       options: parameters,
     })
 
-    let answerChunk = ""
-    for await (const chunk of stream) {
-      answerChunk += chunk.message.content
-      setAnswer(answerChunk)
+    // setAbort(stream.abort)
+    // @ts-ignore
+    chatStream.current = stream
 
-      if (chunk.done) {
-        setIsLoading(false)
-        setAnswer("")
+    let answerChunk = ""
+    try {
+      for await (const chunk of stream) {
+        answerChunk += chunk.message.content
+        setAnswer(answerChunk)
+
+        if (chunk.done) {
+          addResponse({
+            model: activeModel!,
+            sender: chunk.message.role,
+            createdAt: new Date(),
+            response: answerChunk,
+          })
+        }
+      }
+    } catch (error: any) {
+      if (error.name === "AbortError") {
         addResponse({
           model: activeModel!,
-          sender: chunk.message.role,
+          sender: "assistant",
           createdAt: new Date(),
-          response: answerChunk,
+          response: `${answerChunk}☠`,
         })
+      } else {
+        console.log("Failed to generate response: ", error.message)
       }
+    } finally {
+      setIsLoading(false)
+      setAnswer("")
     }
   }
 
@@ -57,5 +76,5 @@ export default function useOllamaChat() {
     setPrompt("")
   }, [prompt])
 
-  return { isLoading, response: answer }
+  return { isLoading, response: answer, stream: chatStream.current }
 }

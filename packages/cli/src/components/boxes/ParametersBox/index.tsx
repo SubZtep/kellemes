@@ -59,7 +59,7 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
   return (
     <FocusBox title="Parameters" isFocused={isFocused} {...props}>
       {Object.entries(_parameters).map(([key, value]) => (
-        <Box key={key} justifyContent="space-between">
+        <Box key={key} justifyContent="space-between" flexDirection={value.type === "string" ? "column" : "row"}>
           <Text underline={isFocused && activeParameter === key} dimColor={!isFocused || activeParameter !== key}>
             {key}:
           </Text>

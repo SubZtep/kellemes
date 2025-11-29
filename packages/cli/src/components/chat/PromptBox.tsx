@@ -17,7 +17,10 @@ export default function PromptBox({
 
   useEffect(() => {
     if (isFocused) {
-      setKeyBindings([{ keys: "Enter", description: "Submit prompt" }])
+      setKeyBindings([
+        { keys: "Enter", description: "Submit prompt" },
+        { keys: "Escape", description: "Stop generating response" },
+      ])
     }
   }, [isFocused])
 
