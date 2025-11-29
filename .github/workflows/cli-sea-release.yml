@@ -36,6 +36,11 @@ jobs:
         working-directory: packages/cli
         run: node --experimental-sea-config build/sea.config.json
 
+      - name: Make executable (Linux/macOS)
+        if: matrix.os != 'windows'
+        working-directory: packages/cli
+        run: chmod +x dist/app
+
       - name: Inject Node binary (Linux/macOS)
         if: matrix.os != 'windows'
         run: |
@@ -48,11 +53,6 @@ jobs:
         run: |
           cp "$Env:ProgramFiles\\nodejs\\node.exe" dist/app.exe
           npx postject dist/app.exe NODE_SEA_BLOB dist/app.blob --sentinel-fuse node:sea
-
-      - name: Make executable (Linux/macOS)
-        if: matrix.os != 'windows'
-        working-directory: packages/cli
-        run: chmod +x dist/app
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
