@@ -1,7 +1,7 @@
 // import { ragService } from "@kellemes/rag"
-import { TitledBox } from "@mishieck/ink-titled-box"
 import { Box, type BoxProps, Text } from "ink"
 import { useEffect, useState } from "react"
+import FocusBox from "../FocusBox"
 
 type RAGStatus = "ready" | "not ready" | "initializing"
 
@@ -24,14 +24,7 @@ export default function RagBox(props: Pick<BoxProps, "flexGrow">) {
   }, [])
 
   return (
-    <TitledBox
-      titles={["RAG", "Stats"]}
-      borderStyle={"round"}
-      padding={1}
-      flexDirection="column"
-      borderDimColor={true}
-      {...props}
-    >
+    <FocusBox title="RAG" isFocused={false} flexDirection="column" gap={1} {...props}>
       <Box justifyContent="space-between">
         <Text>RAG:</Text>
         <Text color={ragColor}>{ragStatus}</Text>
@@ -40,6 +33,6 @@ export default function RagBox(props: Pick<BoxProps, "flexGrow">) {
         <Text>Documents:</Text>
         <Text color="cyan">{documentsCount}</Text>
       </Box>
-    </TitledBox>
+    </FocusBox>
   )
 }

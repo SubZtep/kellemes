@@ -1,7 +1,7 @@
-import { TitledBox } from "@mishieck/ink-titled-box"
 import { Box, Text } from "ink"
 import Spinner from "ink-spinner"
 import { useStore } from "../../store"
+import FocusBox from "../FocusBox"
 import Response from "./Response"
 
 export default function ResponseBox({ isLoading, error }: { isLoading: boolean; error: string | null }) {
@@ -9,15 +9,7 @@ export default function ResponseBox({ isLoading, error }: { isLoading: boolean; 
   const activeModel = useStore(state => state.activeModel)
 
   return (
-    <TitledBox
-      borderStyle="round"
-      titles={["Response"]}
-      borderDimColor={true}
-      padding={1}
-      flexDirection="column"
-      flexGrow={1}
-      gap={1}
-    >
+    <FocusBox title="Response" isFocused={false} flexDirection="column" flexGrow={1} gap={1}>
       {responses
         .filter(response => response.model === activeModel)
         .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
@@ -42,6 +34,6 @@ export default function ResponseBox({ isLoading, error }: { isLoading: boolean; 
       )}
 
       {!isLoading && !error && responses.length === 0 && <Text dimColor>Submit a prompt to see results...</Text>}
-    </TitledBox>
+    </FocusBox>
   )
 }

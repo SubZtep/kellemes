@@ -1,38 +1,23 @@
-import { TitledBox } from "@mishieck/ink-titled-box"
-import { Box, Text, useFocus } from "ink"
+import { Box, type BoxProps, Text, useFocus } from "ink"
 import TextInput from "ink-text-input"
 import { useStore } from "../../store"
+import FocusBox from "../FocusBox"
 
 export default function PromptBox({
   isLoading,
   submitPrompt,
+  ...props
 }: {
   isLoading: boolean
   submitPrompt: (prompt: string) => void
-}) {
+} & BoxProps) {
   const activeModel = useStore(state => state.activeModel)
   const prompt = useStore(state => state.prompt)
   const setPrompt = useStore(state => state.setPrompt)
   const { isFocused } = useFocus({ autoFocus: !!activeModel, id: "promptbox" })
-  // const { enableFocus, disableFocus } = useFocusManager()
-
-  // useEffect(() => {
-  //   if (activeModel) {
-  //     enableFocus()
-  //   } else {
-  //     disableFocus()
-  //   }
-  // }, [isFocused, enableFocus, disableFocus])
 
   return (
-    <TitledBox
-      titles={["Enter your prompt"]}
-      borderStyle={"round"}
-      paddingRight={1}
-      flexDirection="row"
-      borderDimColor={!isFocused}
-    >
-      <Box width={1} height={1}></Box>
+    <FocusBox title="Enter your prompt" isFocused={isFocused} {...props}>
       <Box>
         {isLoading ? (
           <Text color="gray">(Waiting for response)</Text>
@@ -51,6 +36,6 @@ export default function PromptBox({
           />
         )}
       </Box>
-    </TitledBox>
+    </FocusBox>
   )
 }

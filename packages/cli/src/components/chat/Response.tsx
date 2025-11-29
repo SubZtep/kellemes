@@ -5,8 +5,8 @@ import ResponseSources from "./ResponseSources"
 export default function Response({ response }: { response: ChatMessage }) {
   return (
     <Box flexDirection="column" alignSelf={response.sender === "user" ? "flex-end" : "flex-start"}>
-      <Text dimColor={response.sender === "user"}>
-        {`${response.sender !== "user" ? "🤖 " : ""} ${response.response} ${response.sender === "user" ? "👤" : ""}`}
+      <Text color={response.sender === "user" ? "cyan" : undefined}>
+        {`${response.sender !== "user" ? "🤖 " : ""}${response.response}${response.sender === "user" ? " 👤" : ""}`}
       </Text>
 
       {response.sources && <ResponseSources sources={response.sources} />}

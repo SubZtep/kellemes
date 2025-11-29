@@ -5,8 +5,6 @@ import Spinner from "ink-spinner"
 import ollama, { type AbortableAsyncIterator, type ProgressResponse } from "ollama"
 import { useEffect, useState } from "react"
 
-// import { useStore } from "../../../store"
-
 const STALL_TIMEOUT_MS = 15_000
 
 type ProgressState = {
@@ -18,7 +16,6 @@ type ProgressState = {
 export default function PullModel({ model, onPulled }: { model: string; onPulled?: (modelName: string) => void }) {
   const [error, setError] = useState<string | null>(null)
   const [done, setDone] = useState(false)
-  // const addOllamaModel = useStore(state => state.addOllamaModel)
   const [progress, setProgress] = useState<ProgressState>({
     status: "Contacting Ollama",
     completedBytes: null,

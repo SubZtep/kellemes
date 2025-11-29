@@ -11,7 +11,6 @@ export default function SelectActiveModel() {
       onSelect={item => {
         setActiveModel(item.value)
       }}
-      // isFocused={activeModel === null}
     />
   )
 }
