@@ -22,22 +22,9 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: pnpm i --frozen-lockfile
-
-      - name: Build all platform executables
-        working-directory: packages/cli
         run: |
-          bun build --compile --target=bun-linux-x64 ./src/index.tsx --outfile dist/kellemes-cli-linux-x64
-          bun build --compile --target=bun-linux-arm64 ./src/index.tsx --outfile dist/kellemes-cli-linux-arm64
-          bun build --compile --target=bun-darwin-x64 ./src/index.tsx --outfile dist/kellemes-cli-macos-x64
-          bun build --compile --target=bun-darwin-arm64 ./src/index.tsx --outfile dist/kellemes-cli-macos-arm64
-          bun build --compile --target=bun-windows-x64 ./src/index.tsx --outfile dist/kellemes-cli-windows-x64.exe
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: kellemes-cli-executables
-          path: packages/cli/dist/kellemes-cli-*
+          pnpm i --frozen-lockfile --ignore-scripts
+          pnpm build
 
   release:
     needs: build
