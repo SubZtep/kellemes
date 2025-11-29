@@ -12,10 +12,13 @@
   "scripts": {
     "dev": "tsx --tsconfig tsconfig.json src/index.tsx",
     "build": "tsc",
-    "sea:generate": "node --experimental-sea-config build/sea.config.json",
-    "xxsea:inject": "cp $(command -v node) dist/app && npx postject dist/app NODE_SEA_BLOB dist/app.blob --sentinel-fuse node:sea",
-    "sea:inject": "node build/inject.mjs",
-    "sea:build": "npm run build && npm run sea:generate && npm run sea:inject",
+    "compile": "bun build --compile ./src/index.tsx --outfile dist/kellemes-cli",
+    "compile:linux-x64": "bun build --compile --target=bun-linux-x64 ./src/index.tsx --outfile dist/kellemes-cli-linux-x64",
+    "compile:linux-arm64": "bun build --compile --target=bun-linux-arm64 ./src/index.tsx --outfile dist/kellemes-cli-linux-arm64",
+    "compile:macos-x64": "bun build --compile --target=bun-darwin-x64 ./src/index.tsx --outfile dist/kellemes-cli-macos-x64",
+    "compile:macos-arm64": "bun build --compile --target=bun-darwin-arm64 ./src/index.tsx --outfile dist/kellemes-cli-macos-arm64",
+    "compile:windows-x64": "bun build --compile --target=bun-windows-x64 ./src/index.tsx --outfile dist/kellemes-cli-windows-x64.exe",
+    "compile:all": "npm run compile:linux-x64 && npm run compile:linux-arm64 && npm run compile:macos-x64 && npm run compile:macos-arm64 && npm run compile:windows-x64",
     "start": "node dist/index.js",
     "lint": "tsc --noEmit"
   },
@@ -39,7 +42,7 @@
   "devDependencies": {
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
-    "postject": "1.0.0-alpha.6",
+    "react-devtools-core": "^7.0.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }
