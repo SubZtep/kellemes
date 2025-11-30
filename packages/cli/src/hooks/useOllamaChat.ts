@@ -8,6 +8,7 @@ export default function useOllamaChat() {
   const prompt = useStore(state => state.prompt)
   const setPrompt = useStore(state => state.setPrompt)
   const addResponse = useStore(state => state.addResponse)
+  const responses = useStore(state => state.responses)
   const [isLoading, setIsLoading] = useState(false)
   const [answer, setAnswer] = useState("")
   const { system_prompt, ...parameters } = useStore(state => state.parameters)
@@ -23,6 +24,12 @@ export default function useOllamaChat() {
 
     setIsLoading(true)
 
+    // Convert conversation history to Ollama message format
+    const historyMessages = responses.map(msg => ({
+      role: msg.sender === "user" ? ("user" as const) : ("assistant" as const),
+      content: msg.response,
+    }))
+
     // console.log(parameters)
     // @ts-ignore
     const stream = await ollama.chat({
@@ -30,6 +37,7 @@ export default function useOllamaChat() {
       stream: true,
       messages: [
         ...(system_prompt ? [{ role: "system" as const, content: system_prompt }] : []),
+        ...historyMessages,
         { role: "user", content: prompt },
       ],
       options: parameters,
