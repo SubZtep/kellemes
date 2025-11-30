@@ -20,6 +20,8 @@ jobs:
 
       - name: Install dependencies and build
         working-directory: ./ # root of repo
+        env:
+          OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL }}
         run: |
           pnpm i --frozen-lockfile --ignore-scripts
           pnpm build
