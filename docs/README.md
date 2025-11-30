@@ -9,15 +9,19 @@
 
 ## CLI
 
+![screenshot](./assets/screenshots/cli_v16.png)
+
 ### Install
 
-#### Linux / macOS
+#### Linux / macOS / WSL
 
-Install latest version:
+Install (update) latest version:
 
 ```sh
 curl -fsSL https://subztep.github.io/kellemes/install.sh | bash
 ```
+
+---
 
 Install specific version:
 
