@@ -1,0 +1,49 @@
+name: Release API (Bun)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  api-docker:
+    name: Build API Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Get backend version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./backend/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🍺 Build and Push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ vars.DOCKER_IMAGE }}:latest
+            ${{ vars.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
+
+  release:
+    needs: api-docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
