@@ -11,22 +11,22 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24.11.1"
 
       - uses: pnpm/action-setup@v4
         with:
           version: 10.23.0
           run_install: false
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24.11.1
-          cache: "pnpm"
-
       - name: Install dependencies and build
         run: |
-          pnpm i -r --frozen-lockfile --ignore-scripts
-          pnpm -r run build
+          pnpm i --frozen-lockfile --ignore-scripts
+          pnpm build
 
       - name: Version packages and update changelog
         run: pnpm version-packages
