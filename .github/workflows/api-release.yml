@@ -17,7 +17,7 @@ jobs:
       - name: Get backend version
         id: version
         run: |
-          VERSION=$(node -p "require('./backend/package.json').version")
+          VERSION=$(node -p "require('./packages/api/package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Set up Docker Buildx
