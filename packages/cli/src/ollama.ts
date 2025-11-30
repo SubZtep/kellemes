@@ -1,6 +1,6 @@
 import { Ollama } from "ollama"
 
-const host = process.env.OLLAMA_BASE_URL!
+const host = process.env.OLLAMA_BASE_URL || "https://ollama.kaja.io"
 
 export const ollama = new Ollama({ host })
 
