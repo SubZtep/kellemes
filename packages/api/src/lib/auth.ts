@@ -23,6 +23,7 @@ export const auth = betterAuth({
     db,
     type: "postgres",
   },
+  experimental: { joins: true },
   secret: process.env.BETTER_AUTH_SECRET || "change-me",
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:8080",
   emailAndPassword: {

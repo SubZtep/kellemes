@@ -2,8 +2,6 @@ import type { OpenAPIHono } from "@hono/zod-openapi"
 import { auth } from "../lib/auth"
 
 export function registerAuthRoutes(app: OpenAPIHono) {
-  // Better Auth routes
-  // app.on(["POST", "GET"], "/api/auth/*", c => auth.handler(c.req.raw))
   app.on(["POST", "GET"], "/api/auth/*", c => {
     return auth.handler(c.req.raw)
   })

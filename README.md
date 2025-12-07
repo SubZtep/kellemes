@@ -29,8 +29,9 @@ Setup **[MISE-EN-PLACE](https://mise.jdx.dev/)** in the dev environment to handl
 
 All required environment variable defaults are in [`mise.toml`](mise.toml#L1), without change any of them the rig should work with empty data.
 
-****
 If you want to override any of them, create a `.env` file with the updated values.
+
+Set **PostgreSQL** to **UTC**. For consistent timestamps, set `timezone = 'UTC'` in `postgresql.conf` or use the provided [Docker Compose](docker-compose.yml#13-14) setup.
 
 ## Run as a developer
 

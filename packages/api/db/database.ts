@@ -1,7 +1,7 @@
 import { SQL } from "bun"
-import { Kysely } from "kysely"
+import { CamelCasePlugin, Kysely } from "kysely"
 import { PostgresJSDialect } from "kysely-postgres-js"
-import type { Database } from "./types" // this is the Database interface we defined earlier
+import type { Database } from "./types.js"
 
 const dialect = new PostgresJSDialect({
   postgres: new SQL({
@@ -18,6 +18,8 @@ const dialect = new PostgresJSDialect({
 // knows your database structure.
 // Dialect is passed to Kysely's constructor, and from now on, Kysely knows how
 // to communicate with your database.
+// CamelCasePlugin converts snake_case DB columns to camelCase JS properties.
 export const db = new Kysely<Database>({
   dialect,
+  plugins: [new CamelCasePlugin()],
 })

@@ -73,6 +73,9 @@ kellemes/
 3. **Database Layer** (`packages/api/db/`)
    - PostgreSQL database with Kysely query builder
    - Uses Bun's native SQL with kysely-postgres-js dialect
+   - **CamelCasePlugin**: Converts snake_case DB columns to camelCase JS properties automatically
+   - **UUID primary keys**: All tables use `uuid` type with `gen_random_uuid()` default
+   - **UTC timezone**: All timestamps stored in UTC using `timestamptz` type
    - Migration system for schema versioning
    - Connection pooling via Bun's built-in PostgreSQL support
    - Environment-based configuration (host, port, database, user, password)
@@ -213,6 +216,7 @@ This creates richer semantic representations than embedding questions alone.
 - **Bun** runtime must be installed (https://bun.sh) - Required for API server
 - **Ollama** must be running (configurable via `OLLAMA_BASE_URL`)
 - **PostgreSQL** database must be available and configured via environment variables
+  - For non-Docker deployments, ensure UTC timezone: set `timezone = 'UTC'` in `postgresql.conf` or run `ALTER DATABASE dbname SET timezone TO 'UTC';`
 - **Models required**:
   - `nomic-embed-text` - For generating embeddings
   - `kellemes` - Custom model (create from Modelfile)

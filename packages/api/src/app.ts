@@ -1,6 +1,12 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
+import type { auth } from "./lib/auth"
 
-export const app = new OpenAPIHono({ strict: true })
+export const app = new OpenAPIHono<{
+  Variables: {
+    user: typeof auth.$Infer.Session.user | null
+    session: typeof auth.$Infer.Session.session | null
+  }
+}>({ strict: true })
 
 // 404 handler
 app.notFound(c => c.json({ error: "Endpoint not found" }, 404))
