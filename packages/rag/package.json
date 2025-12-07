@@ -20,7 +20,6 @@
     "test": "evalite"
   },
   "dependencies": {
-    "@kellemes/api": "workspace:*",
     "@kellemes/common": "workspace:*",
     "dotenv": "^17.2.3",
     "kysely": "^0.28.8",
