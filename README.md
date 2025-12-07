@@ -8,7 +8,7 @@ Bunch of packages that play around with [Ollama](https://ollama.com)'s small and
 
 Although the majority of the source code is generated, I still can't really embrace my inner **vibe-code**r. Without a project plan, I constantly have to convince the agents about the uncertain future of this write-only code from my _tiny content-window world_. :neckbeard:
 
-> :shrug: If you're looking for user-facing **documentation**, they'll be on [:link: the website](https://kellemes.net)... at some point.
+> :shrug: If you're looking for user-facing **documentation**, they'll be on [the website](https://kellemes.net)... at some point.
 
 ## Features
 
@@ -17,7 +17,7 @@ Although the majority of the source code is generated, I still can't really embr
 - [ ] Retrieval-Augmented Generation (RAG) support for custom datasets
 - [ ] Mobile chat app for the finalised AI bot
 - [ ] **?**
-- [ ] Profit :money_with_wings:
+- [ ] Profit
 
 ## Prerequisites
 
