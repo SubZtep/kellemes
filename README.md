@@ -4,20 +4,20 @@
 
 # :rainbow::sparkler:<sub><sub>`k`</sub>e</sub>**~~L~~L**<sup>e</sup>**M**<sub>e`$`</sub>:heartpulse::sweat_drops:
 
-Bunch of packages that play around with [Ollama](https://ollama.com)'s small and **large language model**s to see what's what.
+Bunch of packages playing around with small and **large language model**s to see what’s what.
 
-Although the majority of the source code is generated, I still can't really embrace my inner **vibe-code**r. Without a project plan, I constantly have to convince the agents about the uncertain future of this write-only code from my _tiny content-window world_. :neckbeard:
+Although the majority of the source code is initially generated, I still can’t fully embrace my inner **vibe-code**r. Without a project plan, I keep having to convince the agents about the uncertain future of this write-only code from my _tiny content-window world_. :neckbeard:
 
-> If you're looking for user-facing **documentation**, they'll be on [the website](https://kellemes.net)... :shrug: at some point.
+> If you’re looking for user-facing **documentation**, it’ll be on [the website](https://kellemes.net)… :shrug: eventually.
 
 ## Features
 
 - [x] :hatching_chick:
-- [ ] CLI app for model tweaking – even in your local rig
-- [ ] Retrieval-Augmented Generation (RAG) support for custom datasets
-- [ ] Mobile chat app for the finalised AI bot
+- [ ] :computer: **Simple CLI** tool compiled into an installable binary that communicates with an [Ollama](https://ollama.com) service on- or offline. Set **AI parameters**, change personality traits, and let the chatbot talk to you satisfied.
+- [ ] :books: Bring your own documents and datasets, the Retrieval-Augmented Generation (**RAG**) system uses vector embeddings and semantic search to give context-aware responses based on a knowledge base.
+- [ ] :iphone: Push your model to the cloud and chat through the **mobile app** without touching _Evil Corp_’s server.
 - [ ] **?**
-- [ ] Profit
+- [ ] :money_with_wings: Profit
 
 ## Prerequisites
 
