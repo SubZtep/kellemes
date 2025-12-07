@@ -9,6 +9,7 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "docker"
-    directory: "/packages/*"
+    directories:
+      - "/packages/api"
     schedule:
       interval: "weekly"
