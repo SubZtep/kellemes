@@ -1,24 +1,25 @@
-> ##
->
-> ## Work In Progress :construction:
->
-> ---
->
-> ##
 
-# :rainbow::sparkler: keLLeMes :love_letter:
+> [!CAUTION] 
+> This repository is a work in progress. :construction:
 
-Tweak chatbot settings for the big app.
+# :rainbow::sparkler:<sub><sub>`k`</sub>e</sub>**~~L~~L**<sup>e</sup>**M**<sub>e`$`</sub>:heartpulse::sweat_drops:
 
-An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation (RAG) system for a keLLeMes chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base.
+Experimental project based on [Ollama](https://ollama.com)'s large (and small) language models. It helps you to try out various chatbots with different settings.
 
-> The [rest of](https://subztep.github.io/kellemes) the ~~docs~~ are a work in progress.
+> If you're looking for end-user documentation, you'll find it on [:link: the website](https://kellemes.net) (at some point).
+
+## Features
+
+- [ ] CLI app for model tweaking – even in your local rig
+- [ ] Retrieval-Augmented Generation (RAG) support for custom datasets
+- [ ] Mobile chat app for the finalised AI bot
+- [ ] :hatching_chick:
 
 ## Prerequisites
 
-**Setup [MISE-EN-PLACE](https://mise.jdx.dev/)** in the dev environment to handle tool version management.
+Running the **[Docker](https://www.docker.com/)** deamon is recommended for smooth service execution.
 
-Running **[Docker](https://www.docker.com/)** deamon for services.
+Setup **[MISE-EN-PLACE](https://mise.jdx.dev/)** in the dev environment to handle tool version management.
 
 ## Configuration
 
@@ -27,9 +28,13 @@ All required environment variable defaults are in [`mise.toml`](mise.toml#L1), w
 ****
 If you want to override any of them, create a `.env` file with the updated values.
 
-## Run developer environment
+## Run as a developer
 
-1. Run `docker compose up -d`.
+1. Clone the project
+2. `pnpm i`
+3. `pnpm build`
+4. `docker compose --profile backend up -d`
+5. `pnpm --filter cli dev`
 
 ## Terminal Commands
 
