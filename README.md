@@ -4,16 +4,20 @@
 
 # :rainbow::sparkler:<sub><sub>`k`</sub>e</sub>**~~L~~L**<sup>e</sup>**M**<sub>e`$`</sub>:heartpulse::sweat_drops:
 
-Experimental project based on [Ollama](https://ollama.com)'s large (and small) language models. It helps you to try out various chatbots with different settings.
+Bunch of packages that play around with [Ollama](https://ollama.com)'s small and **large language model**s to see what's what.
 
-> If you're looking for end-user documentation, you'll find it on [:link: the website](https://kellemes.net) (at some point).
+Although the majority of the source code is generated, I still can't really embrace my inner **vibe-code**r. Without a project plan, I constantly have to convince the agents about the uncertain future of this write-only code from my _tiny content-window world_. :neckbeard:
+
+> :shrug: If you're looking for user-facing **documentation**, they'll be on [:link: the website](https://kellemes.net)... at some point.
 
 ## Features
 
+- [x] :hatching_chick:
 - [ ] CLI app for model tweaking – even in your local rig
 - [ ] Retrieval-Augmented Generation (RAG) support for custom datasets
 - [ ] Mobile chat app for the finalised AI bot
-- [ ] :hatching_chick:
+- [ ] **?**
+- [ ] Profit :money_with_wings:
 
 ## Prerequisites
 
