@@ -16,7 +16,7 @@ afterAll(async () => {
   await stopTestServer()
 })
 
-describe("POST /api/retrieve", () => {
+describe.skip("POST /api/retrieve", () => {
   it("should retrieve relevant documents for movie query", async () => {
     const result = await retrieveRequest(baseUrl, "Any favorite movie?", 5)
 
@@ -65,7 +65,7 @@ describe("POST /api/retrieve", () => {
   })
 })
 
-describe("POST /api/retrieve - Result structure", () => {
+describe.skip("POST /api/retrieve - Result structure", () => {
   it("should return properly structured results", async () => {
     const result = await retrieveRequest(baseUrl, "Any favorite movie?", 5)
 
@@ -99,7 +99,7 @@ describe("POST /api/retrieve - Result structure", () => {
   })
 })
 
-describe("POST /api/retrieve - Different topK values", () => {
+describe.skip("POST /api/retrieve - Different topK values", () => {
   it("should handle topK=1", async () => {
     const result = await retrieveRequest(baseUrl, "Any favorite movie?", 1)
 

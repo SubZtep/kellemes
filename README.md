@@ -6,7 +6,9 @@
 >
 > ##
 
-# :rainbow::sparkler: keLLeMes, the untouchable :love_letter:
+# :rainbow::sparkler: keLLeMes :love_letter:
+
+Tweak chatbot settings for the big app.
 
 An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation (RAG) system for a keLLeMes chatbot. This system uses vector embeddings and semantic search to provide context-aware responses based on a knowledge base.
 
@@ -16,12 +18,18 @@ An [Ollama](https://ollama.com) based TypeScript Retrieval-Augmented Generation 
 
 **Setup [MISE-EN-PLACE](https://mise.jdx.dev/)** in the dev environment to handle tool version management.
 
+Running **[Docker](https://www.docker.com/)** deamon for services.
+
 ## Configuration
 
 All required environment variable defaults are in [`mise.toml`](mise.toml#L1), without change any of them the rig should work with empty data.
 
 ****
 If you want to override any of them, create a `.env` file with the updated values.
+
+## Run developer environment
+
+1. Run `docker compose up -d`.
 
 ## Terminal Commands
 

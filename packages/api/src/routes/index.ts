@@ -1,8 +1,13 @@
-import type { OpenAPIHono } from "@hono/zod-openapi"
-import { registerChatRoutes } from "./chat.routes"
-import { registerInfoRoutes } from "./info.routes"
+import { OpenAPIHono } from "@hono/zod-openapi"
+import { registerChatRoutes } from "./chat.routes.js"
+import { registerInfoRoutes } from "./info.routes.js"
 
 export function registerRoutes(app: OpenAPIHono) {
-  registerChatRoutes(app)
+  // Mount chat routes under /api
+  const apiApp = new OpenAPIHono()
+  registerChatRoutes(apiApp)
+  app.route("/api", apiApp)
+
+  // Info routes at root level
   registerInfoRoutes(app)
 }

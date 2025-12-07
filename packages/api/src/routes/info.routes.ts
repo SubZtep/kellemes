@@ -1,5 +1,6 @@
 import { createRoute, type OpenAPIHono } from "@hono/zod-openapi"
 import { HealthSchema } from "@kellemes/common"
+import { ragService } from "@kellemes/rag"
 import { Ollama } from "ollama"
 
 const healthRoute = createRoute({
@@ -42,12 +43,12 @@ const ollama = new Ollama({ host: process.env.OLLAMA_BASE_URL! })
 
 export function registerInfoRoutes(app: OpenAPIHono) {
   app.openapi(healthRoute, async c => {
-    const ollamaVersion = await ollama.version()
+    const ollamaVersion = await ollama.version().catch(() => null)
     const ollamaHealthy = !!ollamaVersion?.version
-    const ragReady = true //ragService.isReady()
+    const ragReady = await ragService.isReady()
 
-    const status = ollamaHealthy && ragReady ? "ok" : ollamaHealthy ? "alright" : "degraded"
-    const statusCode = ollamaHealthy ? 200 : 503
+    const status = ollamaHealthy && ragReady ? "healthy" : "degraded"
+    const statusCode = status === "healthy" ? 200 : 503
 
     return c.json(
       {
@@ -61,11 +62,15 @@ export function registerInfoRoutes(app: OpenAPIHono) {
   })
 
   app.get("/", c => {
-    const url = new URL(c.req.url, `http://${c.req.header("host") || "localhost"}`)
-    const base = `${url.origin}${url.pathname.endsWith("/") ? url.pathname : `${url.pathname}/`}`
     return c.json({
-      timestamp: new Date().toISOString(),
-      docs: [`${base}docs`, `${base}openapi.json`, `${base}llms.txt`],
+      name: "keLLeMes RAG API",
+      version: "1.0.0",
+      endpoints: {
+        chat: "POST /api/chat",
+        retrieve: "POST /api/retrieve",
+        stats: "GET /api/stats",
+        health: "GET /health",
+      },
     })
   })
   app.get("/robots.txt", c => c.text("User-agent: *\nDisallow: /"))

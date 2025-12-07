@@ -300,6 +300,8 @@ Response:`
     const count = await this.getCount()
     return {
       totalDocuments: count,
+      modelName: process.env.OLLAMA_MODEL || "kellemes",
+      embeddingModel: process.env.EMBEDDING_MODEL || "nomic-embed-text",
       isReady: count > 0,
       topK: Number(process.env.TOP_K_RESULTS),
       similarityThreshold: Number(process.env.SIMILARITY_THRESHOLD),

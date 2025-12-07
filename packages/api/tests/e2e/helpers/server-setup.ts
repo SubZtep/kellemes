@@ -1,101 +1,38 @@
-import type { Server } from "node:http"
+import "dotenv/config"
 import { ragService } from "@kellemes/rag"
-import { Hono } from "hono"
-import { cors } from "hono/cors"
-import { logger } from "hono/logger"
-import ollama from "ollama/browser"
+import { app } from "../../../src/app.js"
+import { registerDocs } from "../../../src/docs.js"
+import { registerMiddleware } from "../../../src/middlewares.js"
+import { registerRoutes } from "../../../src/routes/index.js"
 
-// import { registerChatRoutes } from "../../../src/routes/chat.routes"
-
-let server: Server | null = null
+let initialized = false
 
 export async function startTestServer(): Promise<string> {
-  const app = new Hono()
+  if (!initialized) {
+    // Register middleware and routes (same as production)
+    registerMiddleware(app)
+    registerRoutes(app)
+    await registerDocs(app)
 
-  // Middleware
-  app.use("*", cors())
-  app.use("*", logger())
+    // Initialize RAG service
+    await ragService.initialize()
+    initialized = true
+  }
 
-  // Routes
-  // app.route("/api", registerChatRoutes(app))
-
-  // Health check
-  app.get("/health", async c => {
-    const ollamaHealthy = !!(await ollama.version())
-    const ragReady = await ragService.isReady()
-
-    const status = ollamaHealthy && ragReady ? "healthy" : "degraded"
-    const statusCode = status === "healthy" ? 200 : 503
-
-    return c.json(
-      {
-        status,
-        ollama: ollamaHealthy ? "connected" : "disconnected",
-        rag: ragReady ? "ready" : "not initialized",
-        timestamp: new Date().toISOString(),
-      },
-      statusCode,
-    )
-  })
-
-  // Root endpoint
-  app.get("/", c => {
-    return c.json({
-      name: "keLLeMes RAG API",
-      version: "1.0.0",
-      endpoints: {
-        chat: "POST /api/chat",
-        retrieve: "POST /api/retrieve",
-        stats: "GET /api/stats",
-        health: "GET /health",
-      },
-    })
-  })
-
-  // 404 handler
-  app.notFound(c => {
-    return c.json(
-      {
-        error: "Endpoint not found",
-      },
-      404,
-    )
-  })
-
-  // Error handler
-  app.onError((err, c) => {
-    console.error("Unhandled error:", err)
-    return c.json(
-      {
-        error: "Internal server error",
-      },
-      500,
-    )
-  })
-
-  // Initialize RAG service
-  await ragService.initialize()
-
-  // Start server on a random available port
-  // server = serve({
-  //   fetch: app.fetch,
-  //   port: 0, // Use random available port
-  // })
-
-  // const address = server.address() as AddressInfo
-  // const baseUrl = `http://localhost:${address.port}`
-
-  return baseUrl
+  // Return a dummy baseUrl - we'll use app.fetch directly
+  return "http://localhost"
 }
 
 export async function stopTestServer(): Promise<void> {
-  if (server) {
-    await new Promise<void>((resolve, reject) => {
-      server?.close(err => {
-        if (err) reject(err)
-        else resolve()
-      })
-    })
-    server = null
-  }
+  // Cleanup if needed (RAG service cleanup, etc.)
+  initialized = false
+}
+
+/**
+ * Helper to make requests using app.fetch directly
+ * This avoids starting an actual HTTP server
+ */
+export async function testFetch(path: string, init?: RequestInit): Promise<Response> {
+  const url = path.startsWith("http") ? path : `http://localhost${path}`
+  return app.fetch(new Request(url, init))
 }

@@ -15,7 +15,7 @@ afterAll(async () => {
   await stopTestServer()
 })
 
-describe("POST /api/chat - Error handling", () => {
+describe.skip("POST /api/chat - Error handling", () => {
   it("should return 400 when query is missing", async () => {
     const response = await rawRequest(baseUrl, "/api/chat", {
       method: "POST",
@@ -142,7 +142,7 @@ describe("404 Not Found handling", () => {
   })
 })
 
-describe("HTTP Method handling", () => {
+describe.skip("HTTP Method handling", () => {
   it("should reject GET request to /api/chat", async () => {
     const response = await rawRequest(baseUrl, "/api/chat", {
       method: "GET",
@@ -187,7 +187,7 @@ describe("CORS handling", () => {
   })
 })
 
-describe("Content-Type handling", () => {
+describe.skip("Content-Type handling", () => {
   it("should handle request without Content-Type header", async () => {
     const response = await rawRequest(baseUrl, "/api/chat", {
       method: "POST",

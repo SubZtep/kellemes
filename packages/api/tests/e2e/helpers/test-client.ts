@@ -1,3 +1,5 @@
+import { testFetch } from "./server-setup.js"
+
 interface ChatResponse {
   response: string
   sources?: Array<{
@@ -32,11 +34,11 @@ interface StatsResponse {
 }
 
 export async function chatRequest(
-  baseUrl: string,
+  _baseUrl: string,
   query: string,
   options?: { topK?: number; useRAG?: boolean },
 ): Promise<ChatResponse> {
-  const response = await fetch(`${baseUrl}/api/chat`, {
+  const response = await testFetch("/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -55,8 +57,8 @@ export async function chatRequest(
   return response.json()
 }
 
-export async function retrieveRequest(baseUrl: string, query: string, topK: number = 5): Promise<RetrieveResponse> {
-  const response = await fetch(`${baseUrl}/api/retrieve`, {
+export async function retrieveRequest(_baseUrl: string, query: string, topK: number = 5): Promise<RetrieveResponse> {
+  const response = await testFetch("/api/retrieve", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -74,8 +76,19 @@ export async function retrieveRequest(baseUrl: string, query: string, topK: numb
   return response.json()
 }
 
-export async function healthRequest(baseUrl: string): Promise<HealthResponse> {
-  const response = await fetch(`${baseUrl}/health`)
+export async function healthRequest(_baseUrl: string): Promise<HealthResponse> {
+  const response = await testFetch("/health")
+
+  // Health endpoint can return 200 (healthy) or 503 (degraded), both are valid
+  if (response.status !== 200 && response.status !== 503) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  return response.json()
+}
+
+export async function statsRequest(_baseUrl: string): Promise<StatsResponse> {
+  const response = await testFetch("/api/stats")
 
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`)
@@ -84,16 +97,6 @@ export async function healthRequest(baseUrl: string): Promise<HealthResponse> {
   return response.json()
 }
 
-export async function statsRequest(baseUrl: string): Promise<StatsResponse> {
-  const response = await fetch(`${baseUrl}/api/stats`)
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
-  }
-
-  return response.json()
-}
-
-export async function rawRequest(baseUrl: string, path: string, options?: RequestInit): Promise<Response> {
-  return fetch(`${baseUrl}${path}`, options)
+export async function rawRequest(_baseUrl: string, path: string, options?: RequestInit): Promise<Response> {
+  return testFetch(path, options)
 }
