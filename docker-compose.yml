@@ -1,7 +1,11 @@
 services:
   postgres:
+    profiles:
+      - backend
+      - server
     image: pgvector/pgvector:0.8.1-pg18-trixie
     restart: unless-stopped
+    shm_size: 128mb
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -11,10 +15,13 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
 
   ollama:
-    image: ollama/ollama:0.13.0
+    profiles:
+      - backend
+      - server
+    image: ollama/ollama:0.13.1
     restart: unless-stopped
     ports:
       - "11434:11434"
@@ -22,6 +29,8 @@ services:
       test: [ "CMD-SHELL", "ollama --version" ]
 
   api:
+    profiles:
+      - backend
     build:
       context: .
       dockerfile: packages/api/Dockerfile
