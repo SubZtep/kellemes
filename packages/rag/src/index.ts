@@ -65,7 +65,9 @@ export class RAGService {
 
     try {
       // Load Q&A data
-      const data = await fs.readFile(join(process.env.DATA_DIR!, "training/qa.json"), "utf-8")
+      // const data = await fs.readFile(join(process.env.DATA_DIR!, "training/qa.json"), "utf-8")
+      // TODO: read data good
+      const data = "[]"
       const qaPairs: QAPair[] = JSON.parse(data)
 
       console.log(`Loaded ${qaPairs.length} Q&A pairs`)
