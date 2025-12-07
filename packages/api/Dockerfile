@@ -1,4 +1,4 @@
-FROM oven/bun:1.3.3-slim
+FROM oven/bun:1.3.4-slim
 ENV NODE_ENV=production
 WORKDIR /app
 RUN bun install pnpm@10.23.0 --global
