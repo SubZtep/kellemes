@@ -1,7 +1,7 @@
 [env]
 NODE_ENV = "development"
 
-OLLAMA_BASE_URL = "https://ollama.kaja.io"
+OLLAMA_BASE_URL = "https://ollama.kellemes.net"
 # OLLAMA_DEFAULT_MODEL = "smollm2:1.7b"
 OLLAMA_DEFAULT_MODEL = "smollm2:135m"
 
@@ -19,6 +19,9 @@ POSTGRES_PORT = "5432"
 POSTGRES_DB = "kellemes"
 POSTGRES_USER = "kellemes"
 POSTGRES_PASSWORD = { value = "kellemes_password", redact = true }
+
+BETTER_AUTH_SECRET = "2R5VZmqXbcIsO0Jw6eiIeRaBpz7XZ9pL"
+BETTER_AUTH_URL = "http://localhost:8080"
 
 _.file = ".env"
 

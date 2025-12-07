@@ -5,6 +5,7 @@ import { registerDocs } from "./docs"
 import { registerMiddleware } from "./middlewares"
 import { registerRoutes } from "./routes/index"
 
+// @ts-ignore
 registerMiddleware(app)
 registerRoutes(app)
 await registerDocs(app)

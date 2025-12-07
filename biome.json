@@ -11,11 +11,11 @@
   },
   "formatter": {
     "enabled": true,
+    "formatWithErrors": false,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineWidth": 120,
-    "lineEnding": "lf",
-    "formatWithErrors": true
+    "lineEnding": "lf"
   },
   "linter": {
     "enabled": true,

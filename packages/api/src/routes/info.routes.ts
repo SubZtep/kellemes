@@ -63,7 +63,7 @@ export function registerInfoRoutes(app: OpenAPIHono) {
 
   app.get("/", c => {
     return c.json({
-      name: "keLLeMes RAG API",
+      name: "keLLeMes API",
       version: "1.0.0",
       endpoints: {
         chat: "POST /api/chat",
