@@ -5,6 +5,8 @@ import { db } from "./database"
 
 const migrationFolder = path.join(import.meta.dir, "migrations")
 
+console.log("Migration folder:", migrationFolder)
+
 export const migrator = new Migrator({
   db,
   provider: new FileMigrationProvider({

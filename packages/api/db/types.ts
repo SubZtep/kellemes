@@ -30,6 +30,7 @@ export interface UserTable {
   email: string
   emailVerified: boolean
   image: string | null
+  isAnonymous: ColumnType<boolean, boolean | undefined, boolean>
   createdAt: ColumnType<Date, Date | undefined, Date>
   updatedAt: ColumnType<Date, Date | undefined, Date>
 }

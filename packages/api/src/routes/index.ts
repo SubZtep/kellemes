@@ -1,11 +1,12 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
-import { registerAuthRoutes } from "./auth.routes"
+import type { AppType } from "../app.js"
+import { registerAuthRoutes } from "./auth.routes.js"
 // import { cors } from "hono/cors"
 // import { auth } from "../lib/auth"
-import { registerChatRoutes } from "./chat.routes"
-import { registerInfoRoutes } from "./info.routes"
+import { registerChatRoutes } from "./chat.routes.js"
+import { registerInfoRoutes } from "./info.routes.js"
 
-export function registerRoutes(app: OpenAPIHono) {
+export function registerRoutes(app: AppType) {
   const apiApp = new OpenAPIHono()
 
   // app.use(

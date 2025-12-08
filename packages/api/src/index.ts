@@ -1,11 +1,10 @@
 import "dotenv/config"
-import { migrateToLatest } from "../db/migrator"
-import { app } from "./app"
-import { registerDocs } from "./docs"
-import { registerMiddleware } from "./middlewares"
-import { registerRoutes } from "./routes/index"
+import { migrateToLatest } from "../db/migrator.js"
+import { app } from "./app.js"
+import { registerDocs } from "./docs.js"
+import { registerMiddleware } from "./middlewares.js"
+import { registerRoutes } from "./routes/index.js"
 
-// @ts-ignore
 registerMiddleware(app)
 registerRoutes(app)
 await registerDocs(app)

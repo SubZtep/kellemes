@@ -110,7 +110,7 @@ kellemes/
 
 ### Configuration
 Configuration loads from `.env` at the repository root:
-- `API_PORT` - HTTP server port (e.g., 3001)
+- `API_PORT` - HTTP server port (e.g., 8080)
 - `OLLAMA_BASE_URL` - Ollama API endpoint
 - `POSTGRES_HOST` - PostgreSQL host
 - `POSTGRES_PORT` - PostgreSQL port

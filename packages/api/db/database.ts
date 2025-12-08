@@ -3,6 +3,8 @@ import { CamelCasePlugin, Kysely } from "kysely"
 import { PostgresJSDialect } from "kysely-postgres-js"
 import type { Database } from "./types.js"
 
+console.log("DB", process.env)
+
 const dialect = new PostgresJSDialect({
   postgres: new SQL({
     hostname: process.env.POSTGRES_HOST,

@@ -36,14 +36,16 @@ Set **PostgreSQL** to **UTC**. For consistent timestamps, set `timezone = 'UTC'`
 ## Run as a developer
 
 1. Clone the project
-2. `pnpm i`
-3. `pnpm build`
-4. `docker compose --profile backend up -d`
+<!-- 2. `pnpm i`
+3. `pnpm build` -->
+4. `docker compose --profile backend up -d --progress=plain`
 5. `pnpm --filter cli dev`
 
 ## Terminal Commands
 
 Run these commands from the project root:
+
+CLI logout: `rm -rf ~/.config/kellemes`
 
 | Command                 | Description                           |
 | ----------------------- | ------------------------------------- |

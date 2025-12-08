@@ -1,17 +1,10 @@
-import type { OpenAPIHono } from "@hono/zod-openapi"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
 import { trimTrailingSlash } from "hono/trailing-slash"
-import { auth } from "./lib/auth"
+import type { AppType } from "./app.js"
+import { auth } from "./lib/auth.js"
 
-export function registerMiddleware(
-  app: OpenAPIHono<{
-    Variables: {
-      user: typeof auth.$Infer.Session.user | null
-      session: typeof auth.$Infer.Session.session | null
-    }
-  }>,
-) {
+export function registerMiddleware(app: AppType) {
   app.use("*", async (c, next) => {
     const session = await auth.api.getSession({ headers: c.req.raw.headers })
     if (!session) {
@@ -28,7 +21,7 @@ export function registerMiddleware(
   app.use(
     "/api/auth/*", // or replace with "*" to enable cors for all routes
     cors({
-      origin: `http://localhost:${process.env.API_PORT}`,
+      origin: process.env.API_BASE_URL,
       allowHeaders: ["Content-Type", "Authorization"],
       allowMethods: ["POST", "GET", "OPTIONS"],
       exposeHeaders: ["Content-Length"],
