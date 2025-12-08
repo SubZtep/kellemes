@@ -4,9 +4,8 @@ WORKDIR /app
 COPY . .
 RUN bun install
 # RUN bun x @better-auth/cli@latest generate
-CMD ["bun", "packages/api/src/index.ts"]
-
-
+# CMD ["bun", "packages/api/src/index.ts"]
+CMD ["bun", "start"]
 # # Copy workspace files
 # COPY package.json bun.lockb* ./
 # COPY packages/common/package.json ./packages/common/

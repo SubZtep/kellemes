@@ -14,14 +14,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-        with:
-          ref: main
+        # with:
+        #   ref: main
 
       - name: Get API version
         id: version
         run: |
-          VERSION=$(node -p "require('./packages/api/package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          BRANCH_NAME=$(echo "${GITHUB_REF##*/}")
+          echo "version=$BRANCH_NAME" >> $GITHUB_OUTPUT
+        # VERSION=$(node -p "require('./packages/api/package.json').version")
+        # echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Add support for more platforms with QEMU
         uses: docker/setup-qemu-action@v3
@@ -42,7 +44,7 @@ jobs:
           file: "{context}/packages/api/Dockerfile"
           push: true
           tags: |
-            ${{ vars.DOCKER_IMAGE }}:latest
+            # ${{ vars.DOCKER_IMAGE }}:latest
             ${{ vars.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
 
   release:

@@ -1,17 +1,19 @@
-import { migrateToLatest } from "../db/migrator"
+// import { migrateToLatest } from "../db/migrator"
 import { app } from "./app"
-import { registerDocs } from "./docs"
-import { registerMiddleware } from "./middlewares"
-import { registerRoutes } from "./routes/index"
 
-registerMiddleware(app)
-registerRoutes(app)
-await registerDocs(app)
+// import { registerDocs } from "./docs"
+
+// import { registerMiddleware } from "./middlewares"
+// import { registerRoutes } from "./routes/index"
+
+// registerMiddleware(app)
+// registerRoutes(app)
+// await registerDocs(app)
 
 try {
   console.log("=== keLLeMes API ===\n")
   console.log("Running database migrations...")
-  await migrateToLatest()
+  // await migrateToLatest()
 
   console.log("✓ Migrations complete\n")
   console.log(`✓ Server running on ${process.env.API_URL}`)
