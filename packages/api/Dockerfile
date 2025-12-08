@@ -10,7 +10,7 @@ COPY packages/common ./packages/common
 COPY packages/api ./packages/api
 
 # Install dependencies
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Build common package (api depends on it)
 RUN bun run --filter @kellemes/common build
