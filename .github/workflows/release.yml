@@ -1,4 +1,4 @@
-name: Release
+name: Versioning a Release
 
 on:
   push:
@@ -15,24 +15,11 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24.11.1
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.23.0
-          run_install: false
-
-      - name: Install dependencies and build
-        run: |
-          pnpm i --frozen-lockfile --ignore-scripts
-          pnpm build
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile --ignore-scripts
 
       - name: Version packages and update changelog
-        run: pnpm version-packages
+        run: bun run version-packages
 
       - name: Push version bumps and changelog
         run: |
@@ -42,6 +29,6 @@ jobs:
           git push origin main --follow-tags
 
       # - name: Publish packages
-      #   run: pnpm publish-packages
+      #   run: bun run publish-packages
       #   env:
       #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
