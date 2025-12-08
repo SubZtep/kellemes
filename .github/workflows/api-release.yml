@@ -40,12 +40,11 @@ jobs:
       - name: 🍺 Build and Push Docker image
         uses: docker/build-push-action@v6
         with:
+          platforms: linux/amd64,linux/amd64/v4,linux/arm64
           context: .
           file: "{context}/packages/api/Dockerfile"
           push: true
-          tags: |
-            # ${{ vars.DOCKER_IMAGE }}:latest
-            ${{ vars.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
+          tags: ${{ vars.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
 
   release:
     needs: api-docker

@@ -1,5 +1,5 @@
 FROM oven/bun:latest
-
+ENV NODE_ENV=production
 WORKDIR /app
 COPY . .
 RUN bun install
