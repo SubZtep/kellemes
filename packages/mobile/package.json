@@ -16,7 +16,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@lynx-js/react": "^0.114.5"
+    "@lynx-js/react": "^0.115.0"
   },
   "devDependencies": {
     "@lynx-js/preact-devtools": "^5.0.1-cf9aef5",
