@@ -44,7 +44,7 @@ jobs:
           context: .
           file: "{context}/packages/api/Dockerfile"
           push: true
-          tags: ${{ vars.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
+          tags: subztep/kellemes-api:${{ steps.version.outputs.version }}
 
   release:
     needs: api-docker
