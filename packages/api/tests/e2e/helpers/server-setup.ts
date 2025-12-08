@@ -1,9 +1,9 @@
 import "dotenv/config"
-import { ragService } from "@kellemes/rag"
-import { app } from "../../../src/app.js"
-import { registerDocs } from "../../../src/docs.js"
-import { registerMiddleware } from "../../../src/middlewares.js"
-import { registerRoutes } from "../../../src/routes/index.js"
+// import { ragService } from "@kellemes/rag"
+import { app } from "../../../src/app"
+import { registerDocs } from "../../../src/docs"
+import { registerMiddleware } from "../../../src/middlewares"
+import { registerRoutes } from "../../../src/routes/index"
 
 let initialized = false
 
@@ -15,7 +15,7 @@ export async function startTestServer(): Promise<string> {
     await registerDocs(app)
 
     // Initialize RAG service
-    await ragService.initialize()
+    // await ragService.initialize()
     initialized = true
   }
 

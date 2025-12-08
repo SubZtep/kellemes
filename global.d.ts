@@ -1,14 +1,24 @@
 declare global {
   namespace NodeJS {
+    interface AppEnv {
+      user: any
+    }
     interface ProcessEnv {
+      DATABASE_URL: string
+
+      SMTP_HOST: string
+      SMTP_PORT: string
+
+      BETTER_AUTH_SECRET: string
+
       /** Default Ollama model to download when no models are available. */
-      OLLAMA_DEFAULT_MODEL: string
+      OLLAMA_MODEL: string
 
       // /** Ollama API base URL */
-      // OLLAMA_BASE_URL: string
+      OLLAMA_HOST: string
 
       /** Base URL for this Kellemes API */
-      API_BASE_URL: string
+      API_URL: string
 
       /** Primary Ollama model for chat generation */
       OLLAMA_MODEL: string
@@ -27,24 +37,6 @@ declare global {
 
       // /** Directory path for data storage */
       // DATA_DIR: string
-
-      // /** HTTP server port for API */
-      // API_PORT: string
-
-      // /** PostgreSQL database host */
-      // POSTGRES_HOST: string
-
-      // /** PostgreSQL database port */
-      // POSTGRES_PORT: string
-
-      // /** PostgreSQL database name */
-      // POSTGRES_DB: string
-
-      // /** PostgreSQL database user */
-      // POSTGRES_USER: string
-
-      // /** PostgreSQL database password */
-      // POSTGRES_PASSWORD: string
     }
   }
 }

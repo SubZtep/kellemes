@@ -39,7 +39,6 @@ pnpm ingest          # Ingest Q&A data and generate embeddings (10-15 min)
 kellemes/
 ├── packages/
 │   ├── common/             # @kellemes/common - Shared types/schemas/constants
-│   ├── vector-service/     # @kellemes/vector-service - Vector DB & similarity search
 │   ├── rag/                # @kellemes/rag - RAG orchestration
 │   ├── api/                # @kellemes/api - Hono HTTP API server with PostgreSQL
 │   │   └── db/             # Database migrations, schemas, and Kysely setup
@@ -52,8 +51,7 @@ kellemes/
 
 ### Package Dependency Graph
 - `@kellemes/common` → Shared primitives (types/schemas/constants), no deps
-- `@kellemes/vector-service` → Depends on types
-- `@kellemes/rag` → Depends on common, vector-service
+- `@kellemes/rag` → Depends on common
 - `@kellemes/api` → Depends on rag, common
 - `@kellemes/cli` → Depends on rag, common
 
@@ -65,12 +63,7 @@ kellemes/
    - Handles casual conversational queries without RAG context
    - Key methods: `ingestData()`, `retrieve()`, `generateResponse()`
 
-2. **VectorService** (`packages/vector-service/src/index.ts`)
-   - In-memory vector database with cosine similarity search
-   - Persists vectors to JSON file at `./data/vectors/qa_vectors.json`
-   - Key methods: `search()`, `save()`, `load()`, `cosineSimilarity()`
-
-3. **Database Layer** (`packages/api/db/`)
+2. **Database Layer** (`packages/api/db/`)
    - PostgreSQL database with Kysely query builder
    - Uses Bun's native SQL with kysely-postgres-js dialect
    - **CamelCasePlugin**: Converts snake_case DB columns to camelCase JS properties automatically
@@ -94,7 +87,6 @@ kellemes/
      - `GET /health` - Health check (Ollama + RAG status)
      - `GET /docs` - Interactive API documentation
      - `GET /openapi.json` - OpenAPI specification
-   - Runs on port specified in `.env` as `API_PORT` (e.g., 3001)
 
 2. **CLI** (`packages/cli/src/index.tsx`)
    - Interactive Ink-based chat interface
@@ -110,14 +102,9 @@ kellemes/
 
 ### Configuration
 Configuration loads from `.env` at the repository root:
-- `API_PORT` - HTTP server port (e.g., 8080)
-- `OLLAMA_BASE_URL` - Ollama API endpoint
-- `POSTGRES_HOST` - PostgreSQL host
-- `POSTGRES_PORT` - PostgreSQL port
-- `POSTGRES_DB` - Database name
-- `POSTGRES_USER` - Database user
-- `POSTGRES_PASSWORD` - Database password
-- Vector database path and RAG parameters
+- `API_URL` - HTTP server base url
+- `OLLAMA_HOST` - Ollama API endpoint
+- `DATABASE_URL` - Postgrsesql connection string
 
 ## TypeScript Configuration
 
@@ -214,7 +201,7 @@ This creates richer semantic representations than embedding questions alone.
 ## External Requirements
 
 - **Bun** runtime must be installed (https://bun.sh) - Required for API server
-- **Ollama** must be running (configurable via `OLLAMA_BASE_URL`)
+- **Ollama** must be running (configurable via `OLLAMA_HOST`)
 - **PostgreSQL** database must be available and configured via environment variables
   - For non-Docker deployments, ensure UTC timezone: set `timezone = 'UTC'` in `postgresql.conf` or run `ALTER DATABASE dbname SET timezone TO 'UTC';`
 - **Models required**:

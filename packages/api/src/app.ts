@@ -1,10 +1,10 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
-import type { auth } from "./lib/auth.js"
+import type { Session, User } from "../db/types"
 
 export type AppEnv = {
   Variables: {
-    user: typeof auth.$Infer.Session.user | null
-    session: typeof auth.$Infer.Session.session | null
+    user: User | null
+    session: Session | null
   }
 }
 

@@ -2,9 +2,9 @@ import { Box, Text, useInput } from "ink"
 import Spinner from "ink-spinner"
 import TextInput from "ink-text-input"
 import { useCallback, useEffect, useState } from "react"
-import { getSession, sendMagicLink, signInAnonymous } from "../../api.js"
-import { useStore } from "../../store.js"
-import FocusBox from "../ui/FocusBox.js"
+import { getSession, sendMagicLink, signInAnonymous } from "../../api"
+import { useStore } from "../../store"
+import FocusBox from "../ui/FocusBox"
 
 export default function AuthBox() {
   const authStatus = useStore(state => state.authStatus)
@@ -17,7 +17,7 @@ export default function AuthBox() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Handle anonymous login with Tab key
-  useInput((input, key) => {
+  useInput((_input, key) => {
     if (key.tab && authStatus === "unauthenticated" && !isSubmitting) {
       handleAnonymousLogin()
     }

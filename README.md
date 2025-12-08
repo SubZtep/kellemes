@@ -36,10 +36,9 @@ Set **PostgreSQL** to **UTC**. For consistent timestamps, set `timezone = 'UTC'`
 ## Run as a developer
 
 1. Clone the project
-<!-- 2. `pnpm i`
-3. `pnpm build` -->
-4. `docker compose --profile backend up -d --progress=plain`
-5. `pnpm --filter cli dev`
+2. Run `bun init`
+3. Run `docker compose --profile backend up -d`
+4. Run `bun --env-file .env --watch packages/cli/src/index.tsx`
 
 ## Terminal Commands
 

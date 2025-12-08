@@ -1,6 +1,4 @@
-import { loadSession, type StoredSession } from "./lib/session.js"
-
-const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8080"
+import { loadSession, type StoredSession } from "./lib/session"
 
 interface ApiResponse<T> {
   data?: T
@@ -16,14 +14,11 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<Api
 
   // Include session token if available
   if (session?.token) {
-    // biome-ignore lint/complexity/useLiteralKeys: boo
     headers["Authorization"] = `Bearer ${session.token}`
   }
 
-  console.log("XXX", `${API_BASE_URL}${path}`)
-
   try {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const response = await fetch(process.env.API_URL + path, {
       ...options,
       headers,
     })

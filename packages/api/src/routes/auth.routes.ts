@@ -1,5 +1,5 @@
-import type { AppType } from "../app.js"
-import { auth, getSessionByToken } from "../lib/auth.js"
+import type { AppType } from "../app"
+import { auth, getSessionByToken } from "../lib/auth"
 
 export function registerAuthRoutes(app: AppType) {
   app.on(["POST", "GET"], "/api/auth/*", c => {

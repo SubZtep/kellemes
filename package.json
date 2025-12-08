@@ -5,15 +5,19 @@
   "description": "RAG-based chatbot (keLLeMes) - Monorepo",
   "license": "BSD-3-Clause",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "type": "module",
   "scripts": {
-    "build": "pnpm -r build",
-    "start": "pnpm --filter @kellemes/api start",
-    "test": "pnpm -r test",
-    "typecheck": "pnpm -r exec tsc --noEmit",
+    "build": "bun run --filter '*' build",
+    "start": "bun run --filter @kellemes/api start",
+    "test": "bun run --filter '*' test",
+    "typecheck": "bun run --filter '*' tsc --noEmit",
     "lint": "biome check .",
-    "ingest": "pnpm --filter @kellemes/api ingest",
-    "cli": "pnpm --filter @kellemes/cli start",
+    "ingest": "bun run --filter @kellemes/api ingest",
+    "cli": "bun run --filter @kellemes/cli start",
+    "cli:dev": "bun --env-file .env --watch packages/cli/src/index.tsx",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "publish-packages": "changeset publish",
@@ -31,6 +35,7 @@
     "husky": "^9.1.7",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.12"
+    "vitest": "^4.0.12",
+    "@types/bun": "latest"
   }
 }
