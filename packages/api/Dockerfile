@@ -3,7 +3,7 @@ FROM oven/bun:debian
 WORKDIR /app
 
 # Copy workspace root files
-COPY package.json bun.lock* ./
+COPY tsconfig.base.json package.json bun.lock* ./
 
 # Copy all packages
 COPY packages/common ./packages/common
