@@ -64,7 +64,7 @@ importers:
         version: 0.3.5(typescript@5.9.3)
       better-auth:
         specifier: ^1.4.5
-        version: 1.4.5(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(react@19.2.1)(vue@3.5.24(typescript@5.9.3))
+        version: 1.4.5(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(react@19.2.1)(vue@3.5.24(typescript@5.9.3))
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
@@ -183,8 +183,8 @@ importers:
   packages/mobile:
     dependencies:
       '@lynx-js/react':
-        specifier: ^0.114.5
-        version: 0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7)
+        specifier: ^0.115.0
+        version: 0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7)
     devDependencies:
       '@lynx-js/preact-devtools':
         specifier: ^5.0.1-cf9aef5
@@ -194,7 +194,7 @@ importers:
         version: 0.4.3
       '@lynx-js/react-rsbuild-plugin':
         specifier: ^0.11.4
-        version: 0.11.4(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(webpack@5.103.0)
+        version: 0.11.4(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(webpack@5.103.0)
       '@lynx-js/rspeedy':
         specifier: ^0.12.0
         version: 0.12.0(@rspack/core@1.6.4(@swc/helpers@0.5.17))(typescript@5.9.3)(webpack@5.103.0)
@@ -1101,8 +1101,8 @@ packages:
       '@lynx-js/react':
         optional: true
 
-  '@lynx-js/react@0.114.5':
-    resolution: {integrity: sha512-SMgVHSbM3YLrrkl4zhvyjKlVo4N4MQWOe+Ni6sFqkubj5ozdkCdlI9BnNGnbE5RS3Q+bu3+qSa4DBG6Qi2phIw==}
+  '@lynx-js/react@0.115.0':
+    resolution: {integrity: sha512-cE1fFBsIkArbQf81da10NTicuCuTBCiT0Fp/4/qxmdOH/ssQdspunzYggydniu2S7Jf33vgBZvq4kurm80IoKQ==}
     peerDependencies:
       '@lynx-js/types': '*'
       '@types/react': ^18
@@ -6402,34 +6402,34 @@ snapshots:
     dependencies:
       unrs-resolver: 1.11.1
 
-  '@lynx-js/react-refresh-webpack-plugin@0.3.4(@lynx-js/react-webpack-plugin@0.7.2(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1))':
+  '@lynx-js/react-refresh-webpack-plugin@0.3.4(@lynx-js/react-webpack-plugin@0.7.2(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1))':
     dependencies:
-      '@lynx-js/react-webpack-plugin': 0.7.2(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1)
+      '@lynx-js/react-webpack-plugin': 0.7.2(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1)
 
-  '@lynx-js/react-rsbuild-plugin@0.11.4(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(webpack@5.103.0)':
+  '@lynx-js/react-rsbuild-plugin@0.11.4(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(webpack@5.103.0)':
     dependencies:
       '@lynx-js/css-extract-webpack-plugin': 0.6.4(@lynx-js/template-webpack-plugin@0.9.1)(webpack@5.103.0)
       '@lynx-js/react-alias-rsbuild-plugin': 0.11.4
-      '@lynx-js/react-refresh-webpack-plugin': 0.3.4(@lynx-js/react-webpack-plugin@0.7.2(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1))
-      '@lynx-js/react-webpack-plugin': 0.7.2(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1)
+      '@lynx-js/react-refresh-webpack-plugin': 0.3.4(@lynx-js/react-webpack-plugin@0.7.2(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1))
+      '@lynx-js/react-webpack-plugin': 0.7.2(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1)
       '@lynx-js/runtime-wrapper-webpack-plugin': 0.1.3
       '@lynx-js/template-webpack-plugin': 0.9.1
-      '@lynx-js/use-sync-external-store': 1.5.0(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))
+      '@lynx-js/use-sync-external-store': 1.5.0(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))
       background-only: 0.0.1
     optionalDependencies:
-      '@lynx-js/react': 0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7)
+      '@lynx-js/react': 0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7)
     transitivePeerDependencies:
       - webpack
 
-  '@lynx-js/react-webpack-plugin@0.7.2(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1)':
+  '@lynx-js/react-webpack-plugin@0.7.2(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(@lynx-js/template-webpack-plugin@0.9.1)':
     dependencies:
       '@lynx-js/template-webpack-plugin': 0.9.1
       '@lynx-js/webpack-runtime-globals': 0.0.6
       tiny-invariant: 1.3.3
     optionalDependencies:
-      '@lynx-js/react': 0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7)
+      '@lynx-js/react': 0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7)
 
-  '@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7)':
+  '@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7)':
     dependencies:
       '@types/react': 19.2.7
       preact: '@hongzhiyuan/preact@10.24.0-00213bad'
@@ -6481,9 +6481,9 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
-  '@lynx-js/use-sync-external-store@1.5.0(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))':
+  '@lynx-js/use-sync-external-store@1.5.0(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))':
     dependencies:
-      '@lynx-js/react': 0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7)
+      '@lynx-js/react': 0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7)
 
   '@lynx-js/web-rsbuild-server-middleware@0.18.4': {}
 
@@ -7692,7 +7692,7 @@ snapshots:
 
   baseline-browser-mapping@2.9.4: {}
 
-  better-auth@1.4.5(@lynx-js/react@0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7))(react@19.2.1)(vue@3.5.24(typescript@5.9.3)):
+  better-auth@1.4.5(@lynx-js/react@0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7))(react@19.2.1)(vue@3.5.24(typescript@5.9.3)):
     dependencies:
       '@better-auth/core': 1.4.5(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.18)(better-call@1.1.4(zod@4.1.13))(jose@6.1.3)(kysely@0.28.8)(nanostores@1.1.0)
       '@better-auth/telemetry': 1.4.5(@better-auth/core@1.4.5(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.18)(better-call@1.1.4(zod@4.1.13))(jose@6.1.3)(kysely@0.28.8)(nanostores@1.1.0))
@@ -7708,7 +7708,7 @@ snapshots:
       nanostores: 1.1.0
       zod: 4.1.13
     optionalDependencies:
-      '@lynx-js/react': 0.114.5(@lynx-js/types@3.6.0)(@types/react@19.2.7)
+      '@lynx-js/react': 0.115.0(@lynx-js/types@3.6.0)(@types/react@19.2.7)
       react: 19.2.1
       vue: 3.5.24(typescript@5.9.3)
 
