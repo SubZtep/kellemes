@@ -40,9 +40,9 @@ jobs:
       - name: 🍺 Build and Push Docker image
         uses: docker/build-push-action@v6
         with:
+          context: .
+          file: ./packages/api/Dockerfile
           platforms: linux/amd64,linux/arm64
-          # context: "./packages/api"
-          file: "{context}/packages/api/Dockerfile"
           push: true
           tags: subztep/kellemes-api:${{ steps.version.outputs.version }}
 

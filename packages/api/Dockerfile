@@ -1,29 +1,21 @@
 FROM oven/bun:latest
-ENV NODE_ENV=production
+
 WORKDIR /app
-COPY . .
-RUN bun install
-# RUN bun x @better-auth/cli@latest generate
-# CMD ["bun", "packages/api/src/index.ts"]
-CMD ["bun", "start"]
-# # Copy workspace files
-# COPY package.json bun.lockb* ./
-# COPY packages/common/package.json ./packages/common/
-# COPY packages/rag/package.json ./packages/rag/
-# COPY packages/api/package.json ./packages/api/
 
-# # Install dependencies
+# Copy workspace root files
+COPY package.json bun.lock* ./
 
-# RUN bun install
+# Copy all packages
+COPY packages/common ./packages/common
+COPY packages/api ./packages/api
 
-# # Copy source code
-# COPY packages/common ./packages/common
-# COPY packages/rag ./packages/rag
-# COPY packages/api ./packages/api
+# Install dependencies
+RUN bun install --frozen-lockfile
 
-# # Build packages that need building
-# RUN bun run --filter @kellemes/common build || true
-# RUN bun run --filter @kellemes/rag build || true
+# Build common package (api depends on it)
+RUN bun run --filter @kellemes/common build
 
-# Run API (env vars provided by docker-compose)
-# CMD ["bun", "packages/api/src/index.ts"]
+ENV NODE_ENV=production
+
+# Run API
+CMD ["bun", "run", "--filter", "@kellemes/api", "start"]
