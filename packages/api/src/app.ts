@@ -1,10 +1,11 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
-import type { Session, User } from "../db/types"
+// import type { Session, User } from "../db/types"
 
 export type AppEnv = {
+  // biome-ignore lint/complexity/noBannedTypes: <exbooplanation>
   Variables: {
-    user: User | null
-    session: Session | null
+    // user: User | null
+    // session: Session | null
   }
 }
 
