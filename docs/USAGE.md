@@ -9,7 +9,7 @@ PORT=3000
 NODE_ENV=development
 
 # Ollama Configuration
-OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=kellemes
 
 # Embedding Configuration

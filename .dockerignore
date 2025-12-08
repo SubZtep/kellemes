@@ -1,11 +1,12 @@
 .claude/
 .git/
 .github/
-.husky/
+# .husky/
 .vscode/
 data/
 dist/
-node_modules/
+# node_modules/
 *.md
 .dockerignore
 .gitignore
+.env

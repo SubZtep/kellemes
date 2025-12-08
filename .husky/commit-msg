@@ -1,2 +1,2 @@
-pnpm run lint
+bun lint
 commitlint --edit $1

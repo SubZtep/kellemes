@@ -5,7 +5,7 @@
  * Run this to populate the vector database with Q&A embeddings
  */
 
-import { ragService } from "@kellemes/rag"
+// import { ragService } from "@kellemes/rag"
 import ollama from "ollama"
 
 async function main() {
@@ -25,15 +25,15 @@ async function main() {
 
     console.log("✓ Ollama is running\n")
 
-    console.log("Initializing RAG service...")
-    await ragService.initialize()
+    // console.log("Initializing RAG service...")
+    // await ragService.initialize()
 
-    await ragService.ingestData()
+    // await ragService.ingestData()
 
-    const stats = ragService.getStats()
-    console.log("\n=== Ingestion Complete ===")
-    console.log(`Total documents: ${(await stats).totalDocuments}`)
-    console.log(`Ready: ${(await stats).isReady}`)
+    // const stats = ragService.getStats()
+    // console.log("\n=== Ingestion Complete ===")
+    // console.log(`Total documents: ${(await stats).totalDocuments}`)
+    // console.log(`Ready: ${(await stats).isReady}`)
 
     process.exit(0)
   } catch (error) {

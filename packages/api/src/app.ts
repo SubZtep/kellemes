@@ -1,6 +1,17 @@
 import { OpenAPIHono } from "@hono/zod-openapi"
+// import type { Session, User } from "../db/types"
 
-export const app = new OpenAPIHono({ strict: true })
+export type AppEnv = {
+  // biome-ignore lint/complexity/noBannedTypes: <exbooplanation>
+  Variables: {
+    // user: User | null
+    // session: Session | null
+  }
+}
+
+export type AppType = OpenAPIHono<AppEnv>
+
+export const app: AppType = new OpenAPIHono<AppEnv>({ strict: true })
 
 // 404 handler
 app.notFound(c => c.json({ error: "Endpoint not found" }, 404))

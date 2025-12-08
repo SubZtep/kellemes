@@ -1,6 +1,9 @@
 import type { ChatResponse } from "@kellemes/common"
 import type { ModelResponse, Options } from "ollama"
 import { create } from "zustand"
+import type { AuthSession, User } from "./api.js"
+import { toStoredSession } from "./api.js"
+import { clearSession, loadSession, saveSession } from "./lib/session.js"
 
 export const _parameters: Partial<
   Record<keyof Options | "system_prompt", { default: number | string; type: "float" | "number" | "string" }>
@@ -26,11 +29,17 @@ export type ChatMessage = ChatResponse & {
 }
 export type OllamaStatus = "connected" | "disconnected" | "checking"
 export type RAGStatus = "ready" | "not ready" | "initializing"
+export type AuthStatus = "checking" | "authenticated" | "unauthenticated" | "awaiting_magic_link"
 export type Hotkey = "escape" | "return" | "space" | "leftArrow" | "rightArrow" | "upArrow" | "downArrow"
 
 export interface State {
   /** Displayed key bindings on the footer. */
   keyBindings: { keys: string | string[]; description: string }[]
+
+  // Auth state
+  authStatus: AuthStatus
+  user: User | null
+  authError: string | null
 
   /** Ollama version or null if the service is not available. */
   ollamaVersion: string | null
@@ -57,6 +66,14 @@ export interface State {
 
 export interface Actions {
   setKeyBindings: (keyBindings: { keys: string | string[]; description: string }[]) => void
+
+  // Auth actions
+  setAuthStatus: (authStatus: AuthStatus) => void
+  setUser: (user: User | null) => void
+  setAuthError: (error: string | null) => void
+  loginWithSession: (authSession: AuthSession) => void
+  logout: () => void
+
   setOllamaVersion: (ollamaVersion: string | null) => void
   setOllamaModels: (ollamaModels: ModelResponse[]) => void
   setActiveModel: (activeModel: string | null) => void
@@ -72,8 +89,14 @@ export interface Actions {
 
 type Store = State & Actions
 
+// Check for existing session on load
+const existingSession = loadSession()
+
 const initialState: State = {
   keyBindings: [],
+  authStatus: existingSession ? "authenticated" : "checking",
+  user: null,
+  authError: null,
   ollamaVersion: null,
   ollamaModels: [],
   activeModel: null,
@@ -89,6 +112,28 @@ const initialState: State = {
 export const useStore = create<Store>()((set, get) => ({
   ...initialState,
   setKeyBindings: keyBindings => set({ keyBindings }),
+
+  // Auth actions
+  setAuthStatus: authStatus => set({ authStatus }),
+  setUser: user => set({ user }),
+  setAuthError: authError => set({ authError }),
+  loginWithSession: authSession => {
+    saveSession(toStoredSession(authSession))
+    set({
+      user: authSession.user,
+      authStatus: "authenticated",
+      authError: null,
+    })
+  },
+  logout: () => {
+    clearSession()
+    set({
+      user: null,
+      authStatus: "unauthenticated",
+      authError: null,
+    })
+  },
+
   setOllamaVersion: ollamaVersion => {
     if (get().ollamaVersion !== ollamaVersion) {
       set({ ollamaVersion })

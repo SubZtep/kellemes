@@ -12,18 +12,12 @@ interface Database {
   }
 }
 import "dotenv/config"
-import * as fs from "node:fs/promises"
-import { join } from "node:path"
 import ollama from "ollama/browser"
 
 // Create database connection to avoid circular dependency
 const dialect = new PostgresDialect({
   pool: new Pool({
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    database: process.env.POSTGRES_DB,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
+    connectionString: process.env.DATABASE_URL,
     max: 10,
   }),
 })
