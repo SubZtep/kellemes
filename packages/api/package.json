@@ -39,7 +39,7 @@
     "@scalar/openapi-to-markdown": "^0.3.5",
     "better-auth": "^1.4.5",
     "dotenv": "^17.2.3",
-    "hono": "^4.10.7",
+    "hono": "^4.10.8",
     "kysely": "^0.28.8",
     "kysely-postgres-js": "^3.0.0",
     "ollama": "^0.6.3",
