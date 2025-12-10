@@ -1,11 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Box, useApp, useInput } from "ink"
-// import Spinner from "ink-spinner"
-// import { useEffect } from "react"
-// import { getSession } from "./api"
-// import { AuthBox } from "./components/auth/index"
-import OllamaBox from "./components/boxes/OllamaBox/index"
-import ParametersBox from "./components/boxes/ParametersBox/index"
+import OllamaBox from "./components/boxes/OllamaBox"
+import ParametersBox from "./components/boxes/ParametersBox"
 import ChatPanel from "./components/chat/ChatPanel"
 import FindingOllama from "./components/layout/FindingOllama"
 import KeyBindings from "./components/layout/KeyBindings"
@@ -16,9 +12,6 @@ const queryClient = new QueryClient()
 
 export default function App() {
   const activeModel = useStore(state => state.activeModel)
-  // const authStatus = useStore(state => state.authStatus)
-  // const setAuthStatus = useStore(state => state.setAuthStatus)
-  // const loginWithSession = useStore(state => state.loginWithSession)
   const { exit } = useApp()
 
   useInput((input, key) => {
@@ -26,42 +19,6 @@ export default function App() {
       exit()
     }
   })
-
-  // Check session on mount
-  // useEffect(() => {
-  //   if (authStatus === "checking") {
-  //     getSession().then(result => {
-  //       if (result.data) {
-  //         loginWithSession(result.data)
-  //       } else {
-  //         setAuthStatus("unauthenticated")
-  //       }
-  //     })
-  //   }
-  // }, [authStatus, setAuthStatus, loginWithSession])
-
-  // Show loading while checking auth
-  // if (authStatus === "checking") {
-  //   return (
-  //     <Box padding={1}>
-  //       <Spinner type="dots" />
-  //       <Text> Checking session...</Text>
-  //     </Box>
-  //   )
-  // }
-
-  // Show auth screen if not authenticated
-  // if (authStatus === "unauthenticated" || authStatus === "awaiting_magic_link") {
-  //   return (
-  //     <QueryClientProvider client={queryClient}>
-  //       <Box flexDirection="column" padding={1}>
-  //         <Logo />
-  //         <AuthBox />
-  //       </Box>
-  //       <KeyBindings />
-  //     </QueryClientProvider>
-  //   )
-  // }
 
   return (
     <QueryClientProvider client={queryClient}>

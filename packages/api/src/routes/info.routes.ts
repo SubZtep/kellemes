@@ -1,8 +1,7 @@
-import { createRoute } from "@hono/zod-openapi"
+import { createRoute, type OpenAPIHono } from "@hono/zod-openapi"
 import { HealthSchema } from "@kellemes/common"
-// import { ragService } from "@kellemes/rag"
+import { ragService } from "@kellemes/rag"
 import { Ollama } from "ollama"
-import type { AppType } from "../app"
 
 const healthRoute = createRoute({
   method: "get",
@@ -40,13 +39,13 @@ const healthRoute = createRoute({
 })
 
 // Initialize Ollama client with custom host from environment
-const ollama = new Ollama({ host: process.env.OLLAMA_HOST })
+const ollama = new Ollama({ host: process.env.OLLAMA_BASE_URL! })
 
-export function registerInfoRoutes(app: AppType) {
+export function registerInfoRoutes(app: OpenAPIHono) {
   app.openapi(healthRoute, async c => {
     const ollamaVersion = await ollama.version().catch(() => null)
     const ollamaHealthy = !!ollamaVersion?.version
-    const ragReady = false //await ragService.isReady()
+    const ragReady = await ragService.isReady()
 
     const status = ollamaHealthy && ragReady ? "healthy" : "degraded"
     const statusCode = status === "healthy" ? 200 : 503

@@ -1,4 +1,5 @@
 import { render } from "ink"
+import "dotenv/config"
 import App from "./App"
 
 // Check if stdin supports raw mode (required for keyboard input)

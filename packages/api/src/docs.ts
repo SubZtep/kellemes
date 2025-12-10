@@ -1,8 +1,8 @@
+import type { OpenAPIHono } from "@hono/zod-openapi"
 import { Scalar } from "@scalar/hono-api-reference"
 import { createMarkdownFromOpenApi } from "@scalar/openapi-to-markdown"
-import type { AppType } from "./app.js"
 
-export async function registerDocs(app: AppType) {
+export async function registerDocs(app: OpenAPIHono) {
   const packageJson = (await import("../../../package.json", { assert: { type: "json" } })).default
   const content = app.getOpenAPI31Document({
     openapi: "3.1.1",

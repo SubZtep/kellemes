@@ -20,7 +20,7 @@ export default function OllamaBox({ ...props }: Pick<BoxProps, "flexGrow">) {
           <SelectModel />
         ) : (
           <PullModel
-            model={process.env.OLLAMA_MODEL}
+            model={process.env.OLLAMA_DEFAULT_MODEL}
             onPulled={model => {
               if (!activeModel) {
                 setActiveModel(model)

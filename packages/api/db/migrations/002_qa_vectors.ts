@@ -8,7 +8,7 @@ export async function up(db: Kysely<any>): Promise<void> {
   // Create qa_vectors table
   await db.schema
     .createTable("qa_vectors")
-    .addColumn("id", "uuid", col => col.primaryKey().defaultTo(sql`gen_random_uuid()`))
+    .addColumn("id", "varchar", col => col.primaryKey())
     .addColumn("question", "text", col => col.notNull())
     .addColumn("answer", "text", col => col.notNull())
     .addColumn("embedding", sql`vector(768)`, col => col.notNull())

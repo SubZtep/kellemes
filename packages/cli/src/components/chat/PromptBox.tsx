@@ -37,7 +37,6 @@ export default function PromptBox({
               }
             }}
             focus={isFocused}
-            placeholder='Try "Why is the sky blue?"'
           />
         )}
       </Box>

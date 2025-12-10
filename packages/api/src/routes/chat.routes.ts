@@ -1,7 +1,6 @@
 import { createRoute, type OpenAPIHono, z } from "@hono/zod-openapi"
 import { ChatRequestSchema, ChatResponseSchema } from "@kellemes/common"
-
-// import { ragService } from "@kellemes/rag"
+import { ragService } from "@kellemes/rag"
 
 const chatRoute = createRoute({
   method: "post",
@@ -51,34 +50,33 @@ const chatRoute = createRoute({
 export function registerChatRoutes(app: OpenAPIHono) {
   app.openapi(chatRoute, async c => {
     try {
-      // const { query, topK, useRAG = false } = await c.req.valid("json")
-      // let response: z.infer<typeof ChatResponseSchema>
+      const { query, topK, useRAG = false } = await c.req.valid("json")
+      let response: z.infer<typeof ChatResponseSchema>
 
-      // if (useRAG) {
-      //   if (!(await ragService.isReady())) {
-      //     return c.json(
-      //       {
-      //         error: "RAG service is not ready. Please run data ingestion first.",
-      //       },
-      //       503,
-      //     )
-      //   }
-      //   const result = await ragService.generateResponse(query, topK)
-      //   response = {
-      //     response: result.response,
-      //     sources: result.sources,
-      //     model: "kellemes-rag",
-      //   }
-      // } else {
-      //   const directResponse = await ragService.generateDirectResponse(query)
-      //   response = {
-      //     response: directResponse,
-      //     model: "kellemes",
-      //   }
-      // }
+      if (useRAG) {
+        if (!(await ragService.isReady())) {
+          return c.json(
+            {
+              error: "RAG service is not ready. Please run data ingestion first.",
+            },
+            503,
+          )
+        }
+        const result = await ragService.generateResponse(query, topK)
+        response = {
+          response: result.response,
+          sources: result.sources,
+          model: "kellemes-rag",
+        }
+      } else {
+        const directResponse = await ragService.generateDirectResponse(query)
+        response = {
+          response: directResponse,
+          model: "kellemes",
+        }
+      }
 
-      // return c.json(response, 200)
-      return c.json({ response: c.req.text() }, 200)
+      return c.json(response, 200)
     } catch (error: any) {
       console.error("Error in chat endpoint:", error)
       return c.json(
@@ -93,10 +91,7 @@ export function registerChatRoutes(app: OpenAPIHono) {
 
   app.post("/retrieve", async c => {
     try {
-      const {
-        query,
-        // topK
-      } = await c.req.json()
+      const { query, topK } = await c.req.json()
 
       if (!query || typeof query !== "string") {
         return c.json(
@@ -107,21 +102,21 @@ export function registerChatRoutes(app: OpenAPIHono) {
         )
       }
 
-      // if (!(await ragService.isReady())) {
-      //   return c.json(
-      //     {
-      //       error: "RAG service is not ready. Please run data ingestion first.",
-      //     },
-      //     503,
-      //   )
-      // }
+      if (!(await ragService.isReady())) {
+        return c.json(
+          {
+            error: "RAG service is not ready. Please run data ingestion first.",
+          },
+          503,
+        )
+      }
 
-      // const results = await ragService.retrieve(query, topK)
+      const results = await ragService.retrieve(query, topK)
 
       return c.json({
         query,
-        // // results,
-        // count: results.length,
+        results,
+        count: results.length,
       })
     } catch (error) {
       console.error("Error in retrieve endpoint:", error)
@@ -136,13 +131,7 @@ export function registerChatRoutes(app: OpenAPIHono) {
 
   app.get("/stats", async c => {
     try {
-      // const stats = await ragService.getStats()
-      const stats = {
-        totalDocuments: 0,
-        isReady: false,
-        topK: 0,
-        similarityThreshold: 0,
-      }
+      const stats = await ragService.getStats()
       return c.json(stats)
     } catch (error) {
       console.error("Error in stats endpoint:", error)
