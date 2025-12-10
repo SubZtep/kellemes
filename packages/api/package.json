@@ -35,7 +35,7 @@
     "@hono/zod-openapi": "^1.1.5",
     "@kellemes/common": "workspace:*",
     "@kellemes/rag": "workspace:*",
-    "@scalar/hono-api-reference": "^0.9.26",
+    "@scalar/hono-api-reference": "^0.9.28",
     "@scalar/openapi-to-markdown": "^0.3.5",
     "better-auth": "^1.4.5",
     "dotenv": "^17.2.3",
