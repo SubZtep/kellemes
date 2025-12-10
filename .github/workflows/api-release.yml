@@ -7,22 +7,20 @@ jobs:
   api-docker:
     name: Build API Docker Image
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     permissions:
-      contents: write
+      contents: read
 
     steps:
-      - name: Checkout source code
+      - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          ref: main
 
       - name: Get API version
         id: version
         run: |
-          VERSION=$(bun -e "console.log(require('./packages/api/package.json').version)")
+          VERSION=$(node -p "require('./packages/api/package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      # - name: Add support for more platforms with QEMU
-      #   uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -38,8 +36,19 @@ jobs:
         with:
           context: .
           file: ./packages/api/Dockerfile
-          # platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            subztep/kellemes-api:latest
-            subztep/kellemes-api:${{ steps.version.outputs.version }}
+            ${{ vars.DOCKER_IMAGE }}:latest
+            ${{ vars.DOCKER_IMAGE }}:${{ steps.version.outputs.version }}
+
+  release:
+    needs: api-docker
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

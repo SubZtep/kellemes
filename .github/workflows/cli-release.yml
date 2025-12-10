@@ -10,19 +10,27 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
         with:
-          persist-credentials: false
+          version: 10.23.0
+          run_install: false
+
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.3
 
-      - name: Compile CLI binaries for all platforms
-        working-directory: ./
+      - name: Install dependencies and build
+        working-directory: ./ # root of repo
         env:
-          OLLAMA_HOST: ${{ vars.OLLAMA_HOST }}
+          OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL }}
         run: |
-          bun install --frozen-lockfile --ignore-scripts
-          bun run --filter @kellemes/cli compile:all
+          pnpm i --frozen-lockfile --ignore-scripts
+          pnpm build
+          pnpm --filter @kellemes/cli compile:all
 
-      - uses: actions/upload-artifact@v5
+      - name: Upload CLI binaries
+        uses: actions/upload-artifact@v5
         with:
           name: cli-bin
           path: ./packages/cli/dist/kellemes-cli-*
@@ -34,7 +42,8 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/download-artifact@v6
+      - name: Download all artifacts
+        uses: actions/download-artifact@v6
         with:
           path: dist-all
 
@@ -43,6 +52,6 @@ jobs:
         with:
           tag_name: cli-v${{ github.run_number }}
           name: "Kellemes CLI v${{ github.run_number }}"
-          files: dist-all/**/*
+          files: dist-all/**/* # all files fetched from artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

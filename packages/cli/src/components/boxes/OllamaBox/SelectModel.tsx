@@ -46,7 +46,6 @@ export default function SelectModel() {
         onHighlight={item => setHighlightedModel(item.value)}
         isFocused={!isDeleting}
       />
-      <Text dimColor> ✈{process.env.OLLAMA_HOST}</Text>
     </Box>
   )
 }

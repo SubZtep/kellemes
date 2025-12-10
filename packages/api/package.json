@@ -22,39 +22,36 @@
     }
   },
   "scripts": {
-    "dev": "bun --env-file .env --hot src/index.ts",
-    "start": "bun --env-file .env src/index.ts",
-    "migrate": "bun --env-file ../../.env scripts/migrate.ts",
+    "dev": "bun --hot src/index.ts --console",
+    "build": "echo 'No, the API no. Build not for here, bun runs TS from the source.'; exit 0",
+    "start": "bun src/index.ts --console",
+    "migrate": "bun scripts/migrate.ts",
     "test": "vitest run",
     "test:e2e": "vitest run tests/e2e",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "ingest": "bun scripts/ingest-data.ts"
   },
   "dependencies": {
     "@hono/zod-openapi": "^1.1.5",
     "@kellemes/common": "workspace:*",
+    "@kellemes/rag": "workspace:*",
     "@scalar/hono-api-reference": "^0.9.26",
     "@scalar/openapi-to-markdown": "^0.3.5",
     "better-auth": "^1.4.5",
+    "dotenv": "^17.2.3",
     "hono": "^4.10.7",
     "kysely": "^0.28.8",
     "kysely-postgres-js": "^3.0.0",
-    "nodemailer": "^7.0.11",
     "ollama": "^0.6.3",
-    "pg": "^8.16.3",
-    "pg-cursor": "^2.15.3"
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
     "@types/node": "^24.10.1",
-    "@types/nodemailer": "^7.0.4",
     "@types/pg": "^8.15.6",
-    "@types/pg-cursor": "^2.7.2",
     "bun-types": "^1.3.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
-  },
-  "optionalDependencies": {
-    "better-sqlite3": "11.10.0"
   }
 }

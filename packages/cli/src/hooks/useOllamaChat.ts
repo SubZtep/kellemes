@@ -30,6 +30,7 @@ export default function useOllamaChat() {
       content: msg.response,
     }))
 
+    // console.log(parameters)
     // @ts-ignore
     const stream = await ollama.chat({
       model: activeModel!,
