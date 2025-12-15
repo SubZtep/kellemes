@@ -30,7 +30,7 @@ jobs:
           pnpm --filter @kellemes/cli compile:all
 
       - name: Upload CLI binaries
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: cli-bin
           path: ./packages/cli/dist/kellemes-cli-*
