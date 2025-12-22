@@ -1,5 +1,5 @@
 # Builder stage
-FROM oven/bun:1.3.4-slim AS builder
+FROM oven/bun:1.3.5-slim AS builder
 ENV NODE_ENV=production
 WORKDIR /app
 RUN bun install pnpm@10.23.0 --global
@@ -17,7 +17,7 @@ COPY packages/rag ./packages/rag
 RUN pnpm --filter @kellemes/common build
 RUN pnpm --filter @kellemes/rag build
 
-FROM oven/bun:1.3.4-slim
+FROM oven/bun:1.3.5-slim
 ENV NODE_ENV=production
 WORKDIR /app
 RUN bun install pnpm@10.23.0 --global
